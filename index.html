@@ -29,6 +29,7 @@
                         'brand-dark': '#2a2f3b',   // Gris oscuro del logo
                         'brand-blue': '#0071bc',   // Azul principal del logo
                         'brand-cyan': '#00a8e1',   // Cian/Azul claro del logo
+                        'slate-900': '#0f172a',    // Consistent slate color
                     }
                 }
             }
@@ -37,10 +38,7 @@
     <!-- Custom styles for hero effects -->
     <style>
         #hero-background {
-            transition: transform 0.5s ease-out;
-        }
-        #hero-background.scrolled {
-            transform: scale(1.05);
+            /* transition is removed to allow smooth JS-driven animation */
         }
         .wave-g > use {
             animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite;
@@ -137,7 +135,7 @@
                 </a>
             </div>
 
-            <!-- Animated Wave Separator -->
+            <!-- Wave Separator to White -->
             <div class="absolute bottom-0 left-0 w-full h-[7vw] min-h-[100px] max-h-[150px]" aria-hidden="true">
                 <svg class="absolute bottom-0 left-0 w-[200%] h-full" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
                     <defs>
@@ -154,7 +152,7 @@
         </section>
 
         <!-- ===== SECCIÓN DE MARCAS ===== -->
-        <section id="marcas" class="py-20 bg-white">
+        <section id="marcas" class="pt-20 bg-white relative pb-32">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center">
                     <h2 class="text-3xl font-extrabold text-brand-dark tracking-tight sm:text-4xl">
@@ -181,10 +179,24 @@
                     </div>
                 </div>
             </div>
+            <!-- Wave Separator to Slate -->
+            <div class="absolute bottom-0 left-0 w-full h-[7vw] min-h-[100px] max-h-[150px]" aria-hidden="true">
+                <svg class="absolute bottom-0 left-0 w-[200%] h-full" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                    <defs>
+                        <path id="gentle-wave-path-slate" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                    </defs>
+                    <g class="wave-g">
+                        <use xlink:href="#gentle-wave-path-slate" x="48" y="0" fill="rgba(15, 23, 42, 0.7)" />
+                        <use xlink:href="#gentle-wave-path-slate" x="48" y="3" fill="rgba(15, 23, 42, 0.5)" />
+                        <use xlink:href="#gentle-wave-path-slate" x="48" y="5" fill="rgba(15, 23, 42, 0.3)" />
+                        <use xlink:href="#gentle-wave-path-slate" x="48" y="7" fill="#0f172a" />
+                    </g>
+                </svg>
+            </div>
         </section>
 
         <!-- ===== SECCIÓN DE PRODUCTOS (REDESIGN) ===== -->
-        <section id="productos" class="py-20 bg-slate-900">
+        <section id="productos" class="pt-20 bg-slate-900 relative pb-32">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                      <h2 class="text-3xl font-extrabold text-white tracking-tight sm:text-4xl">
@@ -243,12 +255,26 @@
 
                 </div>
             </div>
+            <!-- Wave Separator to Brand Dark -->
+            <div class="absolute bottom-0 left-0 w-full h-[7vw] min-h-[100px] max-h-[150px]" aria-hidden="true">
+                <svg class="absolute bottom-0 left-0 w-[200%] h-full" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                    <defs>
+                        <path id="gentle-wave-path-dark" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                    </defs>
+                    <g class="wave-g">
+                        <use xlink:href="#gentle-wave-path-dark" x="48" y="0" fill="rgba(42, 47, 59, 0.7)" />
+                        <use xlink:href="#gentle-wave-path-dark" x="48" y="3" fill="rgba(42, 47, 59, 0.5)" />
+                        <use xlink:href="#gentle-wave-path-dark" x="48" y="5" fill="rgba(42, 47, 59, 0.3)" />
+                        <use xlink:href="#gentle-wave-path-dark" x="48" y="7" fill="#2a2f3b" />
+                    </g>
+                </svg>
+            </div>
         </section>
 
     </main>
 
     <!-- ===== SECCIÓN DE CONTACTO (NUEVA) ===== -->
-    <section id="contacto" class="bg-brand-dark py-20 sm:py-24">
+    <section id="contacto" class="bg-brand-dark pt-28 pb-20 sm:pb-24">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <!-- Frase destacada -->
@@ -325,14 +351,19 @@
                 });
             }
 
-            // Fluid hero background effect
+            // Fluid hero background parallax effect
             const heroBg = document.getElementById('hero-background');
             if (heroBg) {
+                let ticking = false;
                 window.addEventListener('scroll', () => {
-                    if (window.scrollY > 10) {
-                        heroBg.classList.add('scrolled');
-                    } else {
-                        heroBg.classList.remove('scrolled');
+                    if (!ticking) {
+                        window.requestAnimationFrame(() => {
+                            const yOffset = window.scrollY * 0.3;
+                            const scale = 1 + Math.min(window.scrollY / 10000, 0.05);
+                            heroBg.style.transform = `scale(${scale}) translateY(${yOffset}px)`;
+                            ticking = false;
+                        });
+                        ticking = true;
                     }
                 });
             }
