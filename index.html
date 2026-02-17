@@ -138,7 +138,7 @@
             <canvas id="particle-canvas"></canvas>
 
             <!-- Background Layers -->
-            <div id="hero-background" class="absolute inset-0 z-0 w-full h-full" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center;"></div>
+            <div id="hero-background" class="absolute inset-0 z-0 w-full h-full" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center; will-change: transform;"></div>
             <div class="absolute inset-0 z-0 bg-black/60"></div>
             <div class="absolute inset-0 z-0 bg-gradient-to-br from-brand-blue/30 via-brand-cyan/20 to-brand-dark/50"></div>
             
@@ -336,7 +336,7 @@
     <!-- ===== FOOTER (MINIMALISTA) ===== -->
     <footer class="bg-brand-dark relative overflow-hidden">
         <!-- Parallax background -->
-        <div id="footer-background" class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center;"></div>
+        <div id="footer-background" class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center; will-change: transform;"></div>
         <div class="absolute inset-0 z-0 bg-brand-dark/90"></div>
     
         <!-- Content -->
@@ -386,7 +386,8 @@
                             // Parallax effect: moves at 50% of the scroll speed.
                             const yOffset = window.scrollY * 0.5; 
                             parallaxBgs.forEach(bg => {
-                                bg.style.transform = `translateY(${yOffset}px)`;
+                                // Use translate3d to hint at hardware acceleration for smoother mobile performance
+                                bg.style.transform = `translate3d(0, ${yOffset}px, 0)`;
                             });
                             ticking = false;
                         });
