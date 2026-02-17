@@ -73,8 +73,20 @@
 <body class="bg-slate-100 font-sans text-slate-800 antialiased">
 
     <!-- ===== HEADER ===== -->
-    <header class="bg-white/90 backdrop-blur-lg sticky top-0 z-50 shadow-sm" x-data="{ open: false }">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm relative overflow-hidden" x-data="{ open: false }">
+        <!-- Full-width animated background -->
+        <div class="absolute inset-0 z-0 opacity-80" style="filter: blur(10px);">
+            <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 10 150 28" preserveAspectRatio="none">
+                <g class="wave-g">
+                    <use xlink:href="#gentle-wave-path" x="48" y="0" fill="rgba(0, 113, 188, 0.5)" />
+                    <use xlink:href="#gentle-wave-path" x="48" y="3" fill="rgba(0, 168, 225, 0.4)" />
+                    <use xlink:href="#gentle-wave-path" x="48" y="5" fill="rgba(42, 47, 59, 0.2)" />
+                </g>
+            </svg>
+        </div>
+
+        <!-- Header Content -->
+        <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <!-- Logo -->
                 <div class="flex-shrink-0">
@@ -314,8 +326,13 @@
     </section>
 
     <!-- ===== FOOTER (MINIMALISTA) ===== -->
-    <footer class="bg-brand-dark">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <footer class="bg-brand-dark relative">
+        <!-- Parallax background -->
+        <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center; background-attachment: fixed;"></div>
+        <div class="absolute inset-0 z-0 bg-brand-dark/80"></div>
+    
+        <!-- Content -->
+        <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="border-t border-slate-700 pt-8 flex justify-center items-center">
                  <img class="h-8 w-auto opacity-75" src="https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/ec7bd95b784026814da2aa44ed944de09efad62c/contivaltecnica%20logo.svg" alt="Logo Contival Técnica">
             </div>
