@@ -37,27 +37,27 @@
     </script>
     <!-- Custom styles for hero effects -->
     <style>
-        #hero-background {
-            /* transition is removed to allow smooth JS-driven animation */
+        body {
+            background-color: transparent !important; /* Make sure body is transparent to show canvas */
         }
         .wave-g > use {
-            animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite;
+            animation: move-forever 40s cubic-bezier(.55,.5,.45,.5) infinite;
         }
         .wave-g > use:nth-child(1) {
             animation-delay: -2s;
-            animation-duration: 7s;
+            animation-duration: 15s;
         }
         .wave-g > use:nth-child(2) {
             animation-delay: -3s;
-            animation-duration: 10s;
+            animation-duration: 20s;
         }
         .wave-g > use:nth-child(3) {
             animation-delay: -4s;
-            animation-duration: 13s;
+            animation-duration: 25s;
         }
         .wave-g > use:nth-child(4) {
             animation-delay: -5s;
-            animation-duration: 20s;
+            animation-duration: 35s;
         }
         @keyframes move-forever {
             0% {
@@ -67,10 +67,21 @@
                 transform: translate3d(85px,0,0);
             }
         }
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
     </style>
 <link rel="stylesheet" href="/index.css">
 </head>
-<body class="bg-slate-100 font-sans text-slate-800 antialiased">
+<body class="font-sans text-slate-800 antialiased">
+    
+    <!-- Global Particle Canvas -->
+    <canvas id="particle-canvas"></canvas>
 
     <!-- ===== HEADER ===== -->
     <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm relative overflow-hidden" x-data="{ open: false }">
@@ -78,9 +89,9 @@
         <div class="absolute inset-0 z-0 opacity-80" style="filter: blur(10px);">
             <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 10 150 28" preserveAspectRatio="none">
                 <g class="wave-g">
-                    <use xlink:href="#gentle-wave-path" x="48" y="0" fill="rgba(0, 113, 188, 0.5)" />
-                    <use xlink:href="#gentle-wave-path" x="48" y="3" fill="rgba(0, 168, 225, 0.4)" />
-                    <use xlink:href="#gentle-wave-path" x="48" y="5" fill="rgba(42, 47, 59, 0.2)" />
+                    <use xlink:href="#gentle-wave-path" x="48" y="0" fill="rgba(0, 113, 188, 0.7)" />
+                    <use xlink:href="#gentle-wave-path" x="48" y="3" fill="rgba(0, 168, 225, 0.5)" />
+                    <use xlink:href="#gentle-wave-path" x="48" y="5" fill="rgba(42, 47, 59, 0.3)" />
                 </g>
             </svg>
         </div>
@@ -130,12 +141,12 @@
         <!-- ===== HERO SECTION ===== -->
         <section id="inicio" class="relative text-white overflow-hidden">
             <!-- Background Layers -->
-            <div id="hero-background" class="absolute inset-0 w-full h-full" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center; background-attachment: fixed;"></div>
-            <div class="absolute inset-0 bg-black/60"></div>
-            <div class="absolute inset-0 bg-gradient-to-br from-brand-blue/30 via-brand-cyan/20 to-brand-dark/50"></div>
+            <div id="hero-background" class="absolute inset-0 z-0 w-full h-full" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center;"></div>
+            <div class="absolute inset-0 z-0 bg-black/60"></div>
+            <div class="absolute inset-0 z-0 bg-gradient-to-br from-brand-blue/30 via-brand-cyan/20 to-brand-dark/50"></div>
             
             <!-- Content -->
-            <div class="relative container mx-auto px-4 sm:px-6 lg:px-8 py-32 md:py-48 text-center">
+            <div class="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 py-32 md:py-48 text-center">
                 <h1 class="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight mb-6">
                     CONTROL AVANZADO DE FLUIDOS.<br class="hidden md:block"> INGENIERÍA DE PRECISIÓN.
                 </h1>
@@ -329,7 +340,7 @@
     <footer class="bg-brand-dark relative">
         <!-- Parallax background -->
         <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center; background-attachment: fixed;"></div>
-        <div class="absolute inset-0 z-0 bg-brand-dark/80"></div>
+        <div class="absolute inset-0 z-0 bg-brand-dark/90"></div>
     
         <!-- Content -->
         <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -368,20 +379,126 @@
                 });
             }
 
-            // Fluid hero background parallax effect
+            // Hero background parallax effect
             const heroBg = document.getElementById('hero-background');
             if (heroBg) {
                 let ticking = false;
                 window.addEventListener('scroll', () => {
                     if (!ticking) {
                         window.requestAnimationFrame(() => {
-                            const yOffset = window.scrollY * 0.3;
-                            const scale = 1 + Math.min(window.scrollY / 10000, 0.05);
-                            heroBg.style.transform = `scale(${scale}) translateY(${yOffset}px)`;
+                            // This creates the slow-moving parallax effect. 
+                            // A multiplier of 0.2 means it moves at 20% of the scroll speed.
+                            const yOffset = window.scrollY * 0.2; 
+                            heroBg.style.transform = `translateY(${yOffset}px)`;
                             ticking = false;
                         });
                         ticking = true;
                     }
+                });
+            }
+
+
+            // ===== GLOBAL PARTICLE ANIMATION =====
+            const canvas = document.getElementById('particle-canvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let particlesArray;
+
+                // Accelerometer data
+                let accelX = 0;
+                let accelY = 0;
+
+                const handleMotionEvent = (event) => {
+                    if(event.accelerationIncludingGravity.x && event.accelerationIncludingGravity.y) {
+                        accelX = event.accelerationIncludingGravity.x * 0.2;
+                        accelY = event.accelerationIncludingGravity.y * 0.2;
+                    }
+                };
+                
+                const requestMotionPermission = () => {
+                    if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
+                        DeviceMotionEvent.requestPermission()
+                            .then(permissionState => {
+                                if (permissionState === 'granted') {
+                                    window.addEventListener('devicemotion', handleMotionEvent);
+                                }
+                            })
+                            .catch(console.error);
+                    } else {
+                        // handle non-iOS 13+ devices
+                        window.addEventListener('devicemotion', handleMotionEvent);
+                    }
+                    document.body.removeEventListener('click', requestMotionPermission);
+                    document.body.removeEventListener('touchstart', requestMotionPermission);
+                };
+
+                document.body.addEventListener('click', requestMotionPermission);
+                document.body.addEventListener('touchstart', requestMotionPermission);
+
+
+                function setCanvasSize() {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                }
+
+                class Particle {
+                    constructor() {
+                        this.x = Math.random() * canvas.width;
+                        this.y = Math.random() * canvas.height;
+                        this.size = Math.random() * 2 + 1;
+                        this.speedX = (Math.random() * 0.4 - 0.2);
+                        this.speedY = (Math.random() * 0.4 - 0.2);
+                        this.color = Math.random() > 0.3 ? `rgba(0, 168, 225, ${Math.random() * 0.4 + 0.1})` : `rgba(255, 255, 255, ${Math.random() * 0.3 + 0.1})`;
+                    }
+                    update() {
+                        // Add inherent speed and accelerometer influence
+                        this.x += this.speedX + accelX;
+                        // Invert Y axis for accelerometer because canvas Y=0 is at the top
+                        this.y += this.speedY - accelY;
+
+                        // Wrap around screen edges
+                        if (this.x > canvas.width) this.x = 0;
+                        if (this.x < 0) this.x = canvas.width;
+                        if (this.y > canvas.height) this.y = 0;
+                        if (this.y < 0) this.y = canvas.height;
+                    }
+                    draw() {
+                        ctx.fillStyle = this.color;
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+
+                function init() {
+                    setCanvasSize();
+                    particlesArray = [];
+                    // Adjust particle density for a full screen
+                    let numberOfParticles = (canvas.width * canvas.height) / 15000;
+                    numberOfParticles = Math.min(numberOfParticles, 120); // Max 120 particles
+                    for (let i = 0; i < numberOfParticles; i++) {
+                        particlesArray.push(new Particle());
+                    }
+                }
+
+                function animate() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    for (let i = 0; i < particlesArray.length; i++) {
+                        particlesArray[i].update();
+                        particlesArray[i].draw();
+                    }
+                    requestAnimationFrame(animate);
+                }
+                
+                init();
+                animate();
+
+                let resizeTimer;
+                window.addEventListener('resize', () => {
+                    clearTimeout(resizeTimer);
+                    resizeTimer = setTimeout(() => {
+                        init();
+                    }, 250);
                 });
             }
         });
@@ -390,3 +507,4 @@
 <script type="module" src="/index.tsx"></script>
 </body>
 </html>
+```
