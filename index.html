@@ -34,29 +34,40 @@
             }
         }
     </script>
-    <!-- Custom styles for particle animation -->
+    <!-- Custom styles for hero effects -->
     <style>
-        @keyframes float {
-            0% {
-                transform: translateY(10vh) translateX(0);
-                opacity: 0;
-            }
-            25% {
-                opacity: 0.4;
-            }
-            50% {
-                opacity: 0.7;
-            }
-            100% {
-                transform: translateY(-30vh) translateX(var(--float-x, 0));
-                opacity: 0;
-            }
+        #hero-background {
+            transition: transform 0.5s ease-out;
         }
-        .particle {
-            position: absolute;
-            border-radius: 9999px; /* full */
-            filter: blur(12px);
-            animation: float ease-in-out infinite;
+        #hero-background.scrolled {
+            transform: scale(1.05);
+        }
+        .wave-g > use {
+            animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite;
+        }
+        .wave-g > use:nth-child(1) {
+            animation-delay: -2s;
+            animation-duration: 7s;
+        }
+        .wave-g > use:nth-child(2) {
+            animation-delay: -3s;
+            animation-duration: 10s;
+        }
+        .wave-g > use:nth-child(3) {
+            animation-delay: -4s;
+            animation-duration: 13s;
+        }
+        .wave-g > use:nth-child(4) {
+            animation-delay: -5s;
+            animation-duration: 20s;
+        }
+        @keyframes move-forever {
+            0% {
+                transform: translate3d(-90px,0,0);
+            }
+            100% { 
+                transform: translate3d(85px,0,0);
+            }
         }
     </style>
 <link rel="stylesheet" href="/index.css">
@@ -107,19 +118,13 @@
 
     <main>
         <!-- ===== HERO SECTION ===== -->
-        <section id="inicio" class="relative bg-brand-dark text-white overflow-hidden">
-            <!-- Updated dynamic gradient -->
-            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-brand-cyan/15 via-brand-blue/30 to-brand-dark"></div>
+        <section id="inicio" class="relative text-white overflow-hidden">
+            <!-- Background Layers -->
+            <div id="hero-background" class="absolute inset-0 w-full h-full" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center; background-attachment: fixed;"></div>
+            <div class="absolute inset-0 bg-black/60"></div>
+            <div class="absolute inset-0 bg-gradient-to-br from-brand-blue/30 via-brand-cyan/20 to-brand-dark/50"></div>
             
-            <!-- Animated Particles Container -->
-            <div class="absolute inset-0 w-full h-full overflow-hidden" aria-hidden="true">
-                <div class="particle bg-brand-cyan" style="width: 80px; height: 80px; top: 10%; left: 15%; animation-duration: 14s; animation-delay: 0s; --float-x: -20px;"></div>
-                <div class="particle bg-brand-blue" style="width: 120px; height: 120px; top: 20%; left: 80%; animation-duration: 18s; animation-delay: -2s; --float-x: 30px;"></div>
-                <div class="particle bg-brand-cyan" style="width: 60px; height: 60px; top: 80%; left: 10%; animation-duration: 20s; animation-delay: -5s; --float-x: 25px;"></div>
-                <div class="particle bg-brand-blue" style="width: 150px; height: 150px; top: 70%; left: 45%; animation-duration: 12s; animation-delay: -8s; --float-x: -35px;"></div>
-                 <div class="particle bg-brand-cyan" style="width: 100px; height: 100px; bottom: 5%; right: 15%; animation-duration: 16s; animation-delay: -10s; --float-x: 20px;"></div>
-            </div>
-
+            <!-- Content -->
             <div class="relative container mx-auto px-4 sm:px-6 lg:px-8 py-32 md:py-48 text-center">
                 <h1 class="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight mb-6">
                     CONTROL AVANZADO DE FLUIDOS.<br class="hidden md:block"> INGENIERÍA DE PRECISIÓN.
@@ -130,6 +135,21 @@
                 <a href="#productos" class="inline-block bg-brand-blue text-white font-bold text-base py-3 px-8 rounded-md hover:bg-brand-cyan transition-all duration-300 transform hover:scale-105 shadow-lg">
                     Conoce Nuestros Productos
                 </a>
+            </div>
+
+            <!-- Animated Wave Separator -->
+            <div class="absolute bottom-0 left-0 w-full h-[7vw] min-h-[100px] max-h-[150px]" aria-hidden="true">
+                <svg class="absolute bottom-0 left-0 w-[200%] h-full" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                    <defs>
+                        <path id="gentle-wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                    </defs>
+                    <g class="wave-g">
+                        <use xlink:href="#gentle-wave-path" x="48" y="0" fill="rgba(255,255,255,0.7)" />
+                        <use xlink:href="#gentle-wave-path" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+                        <use xlink:href="#gentle-wave-path" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+                        <use xlink:href="#gentle-wave-path" x="48" y="7" fill="#ffffff" />
+                    </g>
+                </svg>
             </div>
         </section>
 
@@ -282,8 +302,8 @@
     <!-- Script for scroll animations -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            // Product card animation
             const animatedElements = document.querySelectorAll('.product-card');
-
             if ("IntersectionObserver" in window) {
                 const observer = new IntersectionObserver((entries, observer) => {
                     entries.forEach(entry => {
@@ -294,16 +314,26 @@
                         }
                     });
                 }, { threshold: 0.15 });
-
                 animatedElements.forEach((el, index) => {
                     el.style.opacity = 0; // Hide element initially
                     el.style.animationDelay = `${index * 100}ms`; // Stagger the animation
                     observer.observe(el);
                 });
             } else {
-                // Fallback for older browsers
                 animatedElements.forEach(el => {
                     el.style.opacity = 1;
+                });
+            }
+
+            // Fluid hero background effect
+            const heroBg = document.getElementById('hero-background');
+            if (heroBg) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 10) {
+                        heroBg.classList.add('scrolled');
+                    } else {
+                        heroBg.classList.remove('scrolled');
+                    }
                 });
             }
         });
