@@ -37,9 +37,6 @@
     </script>
     <!-- Custom styles for hero effects -->
     <style>
-        body {
-            background-color: transparent !important; /* Make sure body is transparent to show canvas */
-        }
         .wave-g > use {
             animation: move-forever 40s cubic-bezier(.55,.5,.45,.5) infinite;
         }
@@ -68,21 +65,18 @@
             }
         }
         #particle-canvas {
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
+            z-index: 10;
         }
     </style>
 <link rel="stylesheet" href="/index.css">
 </head>
-<body class="font-sans text-slate-800 antialiased">
+<body class="font-sans text-slate-800 antialiased bg-white">
     
-    <!-- Global Particle Canvas -->
-    <canvas id="particle-canvas"></canvas>
-
     <!-- ===== HEADER ===== -->
     <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm relative overflow-hidden" x-data="{ open: false }">
         <!-- Full-width animated background -->
@@ -140,6 +134,9 @@
     <main>
         <!-- ===== HERO SECTION ===== -->
         <section id="inicio" class="relative text-white overflow-hidden">
+            <!-- Particle Canvas (Now local to Hero) -->
+            <canvas id="particle-canvas"></canvas>
+
             <!-- Background Layers -->
             <div id="hero-background" class="absolute inset-0 z-0 w-full h-full" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center;"></div>
             <div class="absolute inset-0 z-0 bg-black/60"></div>
@@ -337,9 +334,9 @@
     </section>
 
     <!-- ===== FOOTER (MINIMALISTA) ===== -->
-    <footer class="bg-brand-dark relative">
+    <footer class="bg-brand-dark relative overflow-hidden">
         <!-- Parallax background -->
-        <div class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center; background-attachment: fixed;"></div>
+        <div id="footer-background" class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center;"></div>
         <div class="absolute inset-0 z-0 bg-brand-dark/90"></div>
     
         <!-- Content -->
@@ -379,17 +376,18 @@
                 });
             }
 
-            // Hero background parallax effect
-            const heroBg = document.getElementById('hero-background');
-            if (heroBg) {
+            // Parallax effect for Hero and Footer
+            const parallaxBgs = document.querySelectorAll('#hero-background, #footer-background');
+            if (parallaxBgs.length > 0) {
                 let ticking = false;
                 window.addEventListener('scroll', () => {
                     if (!ticking) {
                         window.requestAnimationFrame(() => {
-                            // This creates the slow-moving parallax effect. 
-                            // A multiplier of 0.2 means it moves at 20% of the scroll speed.
-                            const yOffset = window.scrollY * 0.2; 
-                            heroBg.style.transform = `translateY(${yOffset}px)`;
+                            // Slower parallax effect: moves at 10% of the scroll speed.
+                            const yOffset = window.scrollY * 0.1; 
+                            parallaxBgs.forEach(bg => {
+                                bg.style.transform = `translateY(${yOffset}px)`;
+                            });
                             ticking = false;
                         });
                         ticking = true;
@@ -398,11 +396,12 @@
             }
 
 
-            // ===== GLOBAL PARTICLE ANIMATION =====
+            // ===== PARTICLE ANIMATION (LOCAL TO HERO) =====
             const canvas = document.getElementById('particle-canvas');
             if (canvas) {
                 const ctx = canvas.getContext('2d');
                 let particlesArray;
+                const heroSection = document.getElementById('inicio');
 
                 // Accelerometer data
                 let accelX = 0;
@@ -437,8 +436,10 @@
 
 
                 function setCanvasSize() {
-                    canvas.width = window.innerWidth;
-                    canvas.height = window.innerHeight;
+                    if (heroSection) {
+                        canvas.width = heroSection.offsetWidth;
+                        canvas.height = heroSection.offsetHeight;
+                    }
                 }
 
                 class Particle {
@@ -473,7 +474,7 @@
                 function init() {
                     setCanvasSize();
                     particlesArray = [];
-                    // Adjust particle density for a full screen
+                    // Adjust particle density for the section size
                     let numberOfParticles = (canvas.width * canvas.height) / 15000;
                     numberOfParticles = Math.min(numberOfParticles, 120); // Max 120 particles
                     for (let i = 0; i < numberOfParticles; i++) {
@@ -507,4 +508,3 @@
 <script type="module" src="/index.tsx"></script>
 </body>
 </html>
-```
