@@ -383,8 +383,8 @@
                 window.addEventListener('scroll', () => {
                     if (!ticking) {
                         window.requestAnimationFrame(() => {
-                            // Slower parallax effect: moves at 10% of the scroll speed.
-                            const yOffset = window.scrollY * 0.1; 
+                            // Parallax effect: moves at 50% of the scroll speed.
+                            const yOffset = window.scrollY * 0.5; 
                             parallaxBgs.forEach(bg => {
                                 bg.style.transform = `translateY(${yOffset}px)`;
                             });
