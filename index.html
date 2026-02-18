@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contival Técnica | Distribuidora de Productos</title>
+    <title>Contival Técnica | Control de Vapor, Gases y Fluidos Industriales</title>
     
     <!-- REQUISITO IMPRESCINDIBLE: Tailwind CSS vía CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -72,6 +73,9 @@
             border-left-color: #0071bc;
             box-shadow: 0 2px 8px rgba(0,113,188,0.08);
         }
+        .badge-hero {
+            @apply flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/5 backdrop-blur-md text-xs font-bold uppercase tracking-widest text-white transition-all duration-300 hover:bg-white/10 hover:border-brand-cyan/50;
+        }
     </style>
 <link rel="stylesheet" href="/index.css">
 </head>
@@ -111,20 +115,37 @@
     </header>
 
     <main>
-        <!-- ===== HERO SECTION ===== -->
+        <!-- ===== HERO SECTION ACTUALIZADA ===== -->
         <section id="inicio" class="relative text-white overflow-hidden scroll-mt-20">
             <canvas id="particle-canvas"></canvas>
             <div id="hero-background" class="absolute inset-0 z-0 w-full h-full" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center; will-change: transform;"></div>
             <div class="absolute inset-0 z-0 bg-black/60"></div>
-            <div class="absolute inset-0 z-0 bg-gradient-to-br from-brand-blue/30 via-brand-cyan/20 to-brand-dark/50"></div>
+            <div class="absolute inset-0 z-0 bg-gradient-to-br from-brand-blue/40 via-brand-cyan/20 to-brand-dark/60"></div>
             
-            <div class="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 text-center">
-                <h1 class="text-3xl md:text-5xl font-extrabold leading-tight tracking-tight mb-4">
-                    DISTRIBUIDORA de PRODUCTOS para el<br class="hidden md:block"> CONTROL AVANZADO de FLUIDOS
+            <div class="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 flex flex-col items-center text-center">
+                <h1 class="text-3xl md:text-6xl font-extrabold leading-tight tracking-tight mb-6 animate__animated animate__fadeIn">
+                    Distribuidora de Soluciones para el Control de<br class="hidden md:block"> 
+                    <span class="text-brand-cyan">Vapor, Gases y Fluidos</span> Industriales
                 </h1>
-                <p class="max-w-2xl mx-auto text-base md:text-lg text-slate-300">
-                    Soluciones robustas y fiables para la industria moderna.
+                <p class="max-w-3xl mx-auto text-base md:text-xl text-slate-300 mb-10 animate__animated animate__fadeIn animate__delay-1s leading-relaxed">
+                    Especialistas en equipamiento de alta performance para procesos industriales críticos y eficiencia energética en plantas.
                 </p>
+
+                <!-- Badges Visuales de Categorías -->
+                <div class="flex flex-wrap justify-center gap-4 animate__animated animate__fadeInUp animate__delay-1s">
+                    <div class="badge-hero group">
+                        <svg class="w-4 h-4 text-brand-cyan group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                        Línea de Vapor
+                    </div>
+                    <div class="badge-hero group">
+                        <svg class="w-4 h-4 text-brand-cyan group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg>
+                        Gases Industriales
+                    </div>
+                    <div class="badge-hero group">
+                        <svg class="w-4 h-4 text-brand-cyan group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.423 15.423a2 2 0 01-2.828 0l-1.414-1.414a2 2 0 010-2.828l1.414-1.414a2 2 0 012.828 0l1.414 1.414a2 2 0 010 2.828l-1.414 1.414zm-9 0a2 2 0 01-2.828 0l-1.414-1.414a2 2 0 010-2.828l1.414-1.414a2 2 0 012.828 0l1.414 1.414a2 2 0 010 2.828l-1.414 1.414z" /></svg>
+                        Fluidos y Líquidos
+                    </div>
+                </div>
             </div>
 
             <div class="absolute bottom-0 left-0 w-full h-[5vw] min-h-[80px] overflow-hidden" aria-hidden="true">
@@ -262,7 +283,7 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     <div class="text-center lg:text-left">
                         <h2 class="text-2xl md:text-3xl font-extrabold text-white leading-tight tracking-tight">
-                            DISTRIBUIDORA de PRODUCTOS para el<br> CONTROL AVANZADO de FLUIDOS
+                            Soluciones Expertas para el<br> CONTROL de VAPOR, GASES y FLUIDOS
                         </h2>
                     </div>
                     <div class="space-y-6">
