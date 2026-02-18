@@ -36,6 +36,12 @@
     <style>
         [x-cloak] { display: none !important; }
         
+        /* Smooth Parallax Transition - Adjusted for a more "liquid" feel */
+        #hero-background, #especialidades-background, #footer-background {
+            transition: transform 0.25s cubic-bezier(0.1, 0, 0.2, 1);
+            will-change: transform;
+        }
+
         .wave-g > use {
             animation: move-forever 40s cubic-bezier(.55,.5,.45,.5) infinite;
         }
@@ -88,7 +94,6 @@
             letter-spacing: 0.2em;
             color: #cbd5e1;
         }
-        /* Pulse Skeleton Style */
         .skeleton {
             background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
             background-size: 200% 100%;
@@ -103,7 +108,6 @@
             0% { background-position: 200% 0; }
             100% { background-position: -200% 0; }
         }
-        /* Prevención de parpadeo en móviles */
         section {
             backface-visibility: hidden;
             -webkit-font-smoothing: antialiased;
@@ -168,7 +172,7 @@
         <!-- ===== HERO SECTION ===== -->
         <section id="inicio" class="relative text-white overflow-hidden scroll-mt-20 min-h-[500px]">
             <canvas id="particle-canvas"></canvas>
-            <div id="hero-background" class="absolute inset-0 z-0 w-full h-full scale-150" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center; will-change: transform;"></div>
+            <div id="hero-background" class="absolute inset-0 z-0 w-full h-full scale-150" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center;"></div>
             <div class="absolute inset-0 z-0 bg-black/60"></div>
             <div class="absolute inset-0 z-0 bg-gradient-to-br from-brand-blue/40 via-brand-cyan/20 to-brand-dark/60"></div>
             
@@ -286,7 +290,7 @@
         <!-- ===== ESPECIALIDADES TÉCNICAS ===== -->
         <section id="especialidades" class="bg-slate-900 relative pb-32 scroll-mt-24 overflow-hidden min-h-[800px] flex flex-col justify-center">
             <div id="especialidades-background" class="absolute inset-0 z-0 opacity-40 scale-150" 
-                 style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo2.jpg'); background-size: cover; background-position: center top; will-change: transform;">
+                 style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo2.jpg'); background-size: cover; background-position: center top;">
             </div>
 
             <div class="absolute inset-x-0 top-0 h-64 z-10 pointer-events-none bg-gradient-to-b from-[#0f172a] via-[#0f172a]/95 via-40% via-[#0f172a]/70 to-transparent"></div>
@@ -399,7 +403,7 @@
 
     <!-- ===== FOOTER ===== -->
     <footer id="footer-section" class="bg-brand-dark relative overflow-hidden w-full">
-        <div id="footer-background" class="absolute inset-0 z-0 opacity-10 scale-150" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center; will-change: transform;"></div>
+        <div id="footer-background" class="absolute inset-0 z-0 opacity-10 scale-150" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center;"></div>
         <div class="absolute inset-0 z-0 bg-brand-dark/90"></div>
         <div class="relative z-10">
             <div class="bg-slate-700/70 backdrop-blur-sm py-6">

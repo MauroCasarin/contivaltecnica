@@ -6,12 +6,10 @@ import Alpine from 'alpinejs';
  */
 
 // 1. Inicialización Global de Alpine.js
-// La asignamos al objeto window para que el HTML pueda ver las variables de estado inmediatamente.
 (window as any).Alpine = Alpine;
 
-// Función de inicialización de la lógica personalizada
 const initApp = () => {
-    console.log("Contival Técnica: Inicializando módulos técnicos...");
+    console.log("Contival Técnica: Sincronizando efectos visuales...");
 
     // --- MÓDULO: ANIMACIONES DE ENTRADA ---
     const setupAnimations = () => {
@@ -39,12 +37,13 @@ const initApp = () => {
         }
     };
 
-    // --- MÓDULO: PARALLAX INDUSTRIAL (Robusto) ---
+    // --- MÓDULO: PARALLAX INDUSTRIAL (Sincronizado y Fluido) ---
     const setupParallax = () => {
+        // Factores sutiles para un movimiento más "pesado" y fluido (Slower motion)
         const parallaxBgs = [
-            { id: 'hero-background', factor: 0.12 },
-            { id: 'especialidades-background', factor: 0.10 },
-            { id: 'footer-background', factor: 0.12 }
+            { id: 'hero-background', factor: 0.04 },
+            { id: 'especialidades-background', factor: 0.03 },
+            { id: 'footer-background', factor: 0.04 }
         ];
 
         let ticking = false;
@@ -55,7 +54,7 @@ const initApp = () => {
 
             parallaxBgs.forEach(item => {
                 const bg = document.getElementById(item.id);
-                if (!bg) return; // Guarda de seguridad
+                if (!bg) return;
 
                 const section = bg.parentElement;
                 if (!section) return;
@@ -64,9 +63,12 @@ const initApp = () => {
                 const inView = rect.top < vh && rect.bottom > 0;
                 
                 if (inView) {
+                    // Cálculo de desplazamiento relativo al centro del viewport
                     const sectionCenter = (rect.top + yOffset) + (section.offsetHeight / 2);
                     const viewportCenter = yOffset + (vh / 2);
                     const relativeDistance = viewportCenter - sectionCenter;
+                    
+                    // Aplicación de transform con GPU
                     bg.style.transform = `translate3d(0, ${relativeDistance * item.factor}px, 0)`;
                 }
             });
@@ -81,6 +83,7 @@ const initApp = () => {
         };
 
         window.addEventListener('scroll', onScroll, { passive: true });
+        // Disparo inicial
         updateParallax();
     };
 
@@ -130,7 +133,7 @@ const initApp = () => {
         const init = () => {
             if (animationFrame) cancelAnimationFrame(animationFrame);
             resize();
-            const count = window.innerWidth < 768 ? 30 : 60;
+            const count = window.innerWidth < 768 ? 25 : 50;
             particles = Array.from({ length: count }, () => new Particle());
             render();
         };
@@ -145,19 +148,23 @@ const initApp = () => {
         window.addEventListener('resize', init);
     };
 
-    // Ejecutar todos los módulos de forma segura
-    try { setupAnimations(); } catch (e) { console.error("Error en Animaciones:", e); }
-    try { setupParallax(); } catch (e) { console.error("Error en Parallax:", e); }
-    try { setupParticles(); } catch (e) { console.error("Error en Partículas:", e); }
+    // Ejecutar módulos de forma aislada para evitar que fallos parciales bloqueen todo el sitio
+    const modules = [setupAnimations, setupParallax, setupParticles];
+    modules.forEach(fn => {
+        try { fn(); } catch (e) { console.error("Modulo fallido:", e); }
+    });
 };
 
-// 2. Ciclo de Vida: Aseguramos que Alpine comience DESPUÉS de definir la lógica de la App
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        initApp();
-        Alpine.start();
-    });
-} else {
+// 2. Control de Ciclo de Vida Mejorado
+const startEverything = () => {
+    if ((window as any)._appInitialized) return;
+    (window as any)._appInitialized = true;
     initApp();
     Alpine.start();
+};
+
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    startEverything();
+} else {
+    document.addEventListener('DOMContentLoaded', startEverything);
 }
