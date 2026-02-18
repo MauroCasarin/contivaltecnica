@@ -1,3 +1,4 @@
+
 import Alpine from 'alpinejs';
 
 /**
@@ -11,35 +12,8 @@ import Alpine from 'alpinejs';
 const initApp = () => {
     console.log("Contival Técnica: Sincronizando efectos visuales...");
 
-    // --- MÓDULO: ANIMACIONES DE ENTRADA ---
-    const setupAnimations = () => {
-        const animatedElements = document.querySelectorAll('.product-card, .distributor-item');
-        if (animatedElements.length === 0) return;
-
-        if ("IntersectionObserver" in window) {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const target = entry.target as HTMLElement;
-                        target.classList.add('animate__animated', 'animate__fadeInUp');
-                        target.style.opacity = '1';
-                        observer.unobserve(target);
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            animatedElements.forEach(el => {
-                (el as HTMLElement).style.opacity = '0';
-                observer.observe(el);
-            });
-        } else {
-            animatedElements.forEach(el => (el as HTMLElement).style.opacity = '1');
-        }
-    };
-
     // --- MÓDULO: PARALLAX INDUSTRIAL (Sincronizado y Fluido) ---
     const setupParallax = () => {
-        // Factores sutiles para un movimiento más "pesado" y fluido (Slower motion)
         const parallaxBgs = [
             { id: 'hero-background', factor: 0.04 },
             { id: 'especialidades-background', factor: 0.03 },
@@ -63,12 +37,10 @@ const initApp = () => {
                 const inView = rect.top < vh && rect.bottom > 0;
                 
                 if (inView) {
-                    // Cálculo de desplazamiento relativo al centro del viewport
                     const sectionCenter = (rect.top + yOffset) + (section.offsetHeight / 2);
                     const viewportCenter = yOffset + (vh / 2);
                     const relativeDistance = viewportCenter - sectionCenter;
                     
-                    // Aplicación de transform con GPU
                     bg.style.transform = `translate3d(0, ${relativeDistance * item.factor}px, 0)`;
                 }
             });
@@ -83,7 +55,6 @@ const initApp = () => {
         };
 
         window.addEventListener('scroll', onScroll, { passive: true });
-        // Disparo inicial
         updateParallax();
     };
 
@@ -148,14 +119,12 @@ const initApp = () => {
         window.addEventListener('resize', init);
     };
 
-    // Ejecutar módulos de forma aislada para evitar que fallos parciales bloqueen todo el sitio
-    const modules = [setupAnimations, setupParallax, setupParticles];
+    const modules = [setupParallax, setupParticles];
     modules.forEach(fn => {
         try { fn(); } catch (e) { console.error("Modulo fallido:", e); }
     });
 };
 
-// 2. Control de Ciclo de Vida Mejorado
 const startEverything = () => {
     if ((window as any)._appInitialized) return;
     (window as any)._appInitialized = true;

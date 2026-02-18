@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth overflow-x-hidden">
 <head>
@@ -13,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Animate.css -->
+    <!-- Animate.css (Se mantiene el link por si se usa en otros elementos, pero se quitan las clases del core) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
     <script>
@@ -36,7 +37,6 @@
     <style>
         [x-cloak] { display: none !important; }
         
-        /* Smooth Parallax Transition - Adjusted for a more "liquid" feel */
         #hero-background, #especialidades-background, #footer-background {
             transition: transform 0.25s cubic-bezier(0.1, 0, 0.2, 1);
             will-change: transform;
@@ -130,8 +130,8 @@
         loadingSpec: true 
     }" 
     x-init="
-        setTimeout(() => loadingDist = false, 1200);
-        setTimeout(() => loadingSpec = false, 2000);
+        setTimeout(() => loadingDist = false, 500);
+        setTimeout(() => loadingSpec = false, 800);
     "
     @keydown.escape.window="openModal = null">
     
@@ -158,7 +158,7 @@
                 </div>
             </div>
         </div>
-        <div x-show="mobileMenu" x-transition x-cloak @click.away="mobileMenu = false" class="md:hidden bg-white border-t border-slate-100 py-4 shadow-xl">
+        <div x-show="mobileMenu" x-cloak @click.away="mobileMenu = false" class="md:hidden bg-white border-t border-slate-100 py-4 shadow-xl">
             <div class="flex flex-col space-y-4 px-4">
                 <a href="#inicio" @click="mobileMenu = false" class="text-sm font-bold text-brand-dark uppercase tracking-wider">Inicio</a>
                 <a href="#distribucion" @click="mobileMenu = false" class="text-sm font-bold text-brand-dark uppercase tracking-wider">Distribución</a>
@@ -177,16 +177,16 @@
             <div class="absolute inset-0 z-0 bg-gradient-to-br from-brand-blue/40 via-brand-cyan/20 to-brand-dark/60"></div>
             
             <div class="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 flex flex-col items-center text-center">
-                <h1 class="text-3xl md:text-6xl font-extrabold leading-tight tracking-tight mb-6 animate__animated animate__fadeIn">
+                <h1 class="text-3xl md:text-6xl font-extrabold leading-tight tracking-tight mb-6">
                     Distribuidora de Soluciones para el Control de<br class="hidden md:block"> 
                     <span class="text-brand-cyan">Vapor, Gases y Fluidos</span> Industriales
                 </h1>
-                <p class="max-w-3xl mx-auto text-base md:text-xl text-slate-300 mb-12 animate__animated animate__fadeIn animate__delay-1s leading-relaxed">
+                <p class="max-w-3xl mx-auto text-base md:text-xl text-slate-300 mb-12 leading-relaxed">
                     Especialistas en equipamiento de alta performance para procesos industriales críticos y eficiencia energética en plantas.
                 </p>
 
                 <!-- LEYENDA TÉCNICA -->
-                <div class="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-0 animate__animated animate__fadeInUp animate__delay-1s border-t border-white/10 pt-10">
+                <div class="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-0 border-t border-white/10 pt-10">
                     <div class="hero-spec-item md:pr-12">
                         <svg class="hero-spec-icon" viewBox="0 0 100 120" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path d="M38.5,102.7c-8.6-13.8-1.4-26.6,2.4-40.4c3.8-13.8-1.5-23.8-8.4-32.8c9.3,5.9,17.1,18.7,17.1,32.7 C49.6,76.2,43.6,90.9,38.5,102.7z" />
@@ -249,7 +249,7 @@
                         </template>
                     </div>
 
-                    <div x-show="!loadingDist" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div x-show="!loadingDist" class="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <div class="distributor-item p-4 rounded-r shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
                             <h3 class="text-brand-blue font-bold text-sm uppercase mb-0.5 tracking-tight">SARCO</h3>
                             <p class="text-slate-500 text-[11px] font-medium leading-tight">Línea completa de productos</p>
@@ -316,7 +316,7 @@
                     </template>
                 </div>
 
-                <div x-show="!loadingSpec" x-transition:enter="transition ease-out duration-700" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div x-show="!loadingSpec" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div @click.stop="openModal = 'refrigeracion'" class="product-card bg-slate-900/85 backdrop-blur-md rounded-xl shadow-2xl p-6 ring-1 ring-slate-700 hover:ring-brand-cyan transition-all duration-300 flex flex-col cursor-pointer hover:-translate-y-1">
                         <div class="mb-4">
                             <svg class="w-8 h-8 text-brand-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v18m0-18l-3 3m3-3l3 3m-3 15l-3-3m3 3l3-3M3 12h18M3 12l3-3m-3 3l3 3m15-3l-3-3m3 3l-3 3" /></svg>
@@ -427,12 +427,6 @@
         id="modals-container"
         x-show="openModal" 
         x-cloak
-        x-transition:enter="transition ease-out duration-300"
-        x-transition:enter-start="opacity-0 scale-95"
-        x-transition:enter-end="opacity-100 scale-100"
-        x-transition:leave="transition ease-in duration-200"
-        x-transition:leave-start="opacity-100 scale-100"
-        x-transition:leave-end="opacity-0 scale-95"
         class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/95 backdrop-blur-xl"
     >
         <div 
