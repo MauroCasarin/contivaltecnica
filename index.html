@@ -12,7 +12,7 @@
     <!-- Google Fonts: Inter para una tipografía moderna y legible -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Animate.css for animations -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
@@ -59,6 +59,16 @@
         .logo-white {
             filter: brightness(0) invert(1);
         }
+        .distributor-item {
+            border-left: 2px solid #00a8e1;
+            background: white;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .distributor-item:hover {
+            transform: translateX(4px);
+            border-left-color: #0071bc;
+            box-shadow: 0 2px 8px rgba(0,113,188,0.08);
+        }
     </style>
 <link rel="stylesheet" href="/index.css">
 </head>
@@ -77,7 +87,7 @@
                 <!-- Navegación Desktop -->
                 <nav class="hidden md:flex items-center space-x-8">
                     <a href="#inicio" class="text-sm font-bold text-brand-dark hover:text-brand-blue transition-colors uppercase tracking-wider">Inicio</a>
-                    <a href="#marcas" class="text-sm font-bold text-brand-dark hover:text-brand-blue transition-colors uppercase tracking-wider">Marcas</a>
+                    <a href="#distribucion" class="text-sm font-bold text-brand-dark hover:text-brand-blue transition-colors uppercase tracking-wider">Distribución</a>
                     <a href="#productos" class="text-sm font-bold text-brand-dark hover:text-brand-blue transition-colors uppercase tracking-wider">Productos</a>
                     <a href="#contacto" class="text-sm font-bold text-brand-dark hover:text-brand-blue transition-colors uppercase tracking-wider">Contacto</a>
                 </nav>
@@ -94,7 +104,7 @@
         <div x-show="mobileMenu" x-transition @click.away="mobileMenu = false" class="md:hidden bg-white border-t border-slate-100 py-4 shadow-xl" style="display:none;">
             <div class="flex flex-col space-y-4 px-4">
                 <a href="#inicio" @click="mobileMenu = false" class="text-sm font-bold text-brand-dark uppercase tracking-wider">Inicio</a>
-                <a href="#marcas" @click="mobileMenu = false" class="text-sm font-bold text-brand-dark uppercase tracking-wider">Marcas</a>
+                <a href="#distribucion" @click="mobileMenu = false" class="text-sm font-bold text-brand-dark uppercase tracking-wider">Distribución</a>
                 <a href="#productos" @click="mobileMenu = false" class="text-sm font-bold text-brand-dark uppercase tracking-wider">Productos</a>
                 <a href="#contacto" @click="mobileMenu = false" class="text-sm font-bold text-brand-dark uppercase tracking-wider">Contacto</a>
             </div>
@@ -131,35 +141,50 @@
             </div>
         </section>
 
-        <!-- ===== SECCIÓN DE MARCAS (TAMAÑO REDUCIDO) ===== -->
-        <section id="marcas" class="pt-12 bg-white relative pb-24 scroll-mt-24">
+        <!-- ===== SECCIÓN DE DISTRIBUCIÓN (ESTILO REFINADO) ===== -->
+        <section id="distribucion" class="pt-12 bg-slate-50 relative pb-24 scroll-mt-24">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center">
-                    <h2 class="text-xl font-extrabold text-brand-dark tracking-widest uppercase mb-10">
-                        Marcas con las que trabajamos
-                    </h2>
-                </div>
-                <div class="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6 max-w-4xl mx-auto">
-                    <div class="flex justify-center items-center p-2 bg-slate-50 rounded border border-slate-100">
-                        <span class="text-[10px] sm:text-xs font-bold text-slate-500 tracking-tighter uppercase">JEFFERSON</span>
+                <div class="max-w-3xl mx-auto">
+                    <div class="text-center mb-10">
+                        <h2 class="text-xl font-bold text-slate-400 tracking-[0.2em] uppercase inline-flex items-center gap-2">
+                            DISTRIBUIDORES <span class="text-brand-blue lowercase font-semibold text-lg tracking-normal">de</span>
+                        </h2>
                     </div>
-                    <div class="flex justify-center items-center p-2 bg-slate-50 rounded border border-slate-100">
-                        <span class="text-[10px] sm:text-xs font-bold text-slate-500 tracking-tighter uppercase">SPIRAX SARCO</span>
-                    </div>
-                    <div class="flex justify-center items-center p-2 bg-slate-50 rounded border border-slate-100">
-                         <span class="text-[10px] sm:text-xs font-bold text-slate-500 tracking-tighter uppercase">KLINGER</span>
-                    </div>
-                    <div class="flex justify-center items-center p-2 bg-slate-50 rounded border border-slate-100">
-                        <span class="text-[10px] sm:text-xs font-bold text-slate-500 tracking-tighter uppercase">BEYCA</span>
-                    </div>
-                    <div class="flex justify-center items-center p-2 bg-slate-50 rounded border border-slate-100">
-                        <span class="text-[10px] sm:text-xs font-bold text-slate-500 tracking-tighter uppercase">CIMPA</span>
-                    </div>
-                    <div class="flex justify-center items-center p-2 bg-slate-50 rounded border border-slate-100">
-                        <span class="text-[10px] sm:text-xs font-bold text-slate-500 tracking-tighter uppercase">CURVO-SOLD</span>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <!-- SARCO -->
+                        <div class="distributor-item p-4 rounded-r shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+                            <h3 class="text-brand-blue font-bold text-sm uppercase mb-0.5 tracking-tight">SARCO</h3>
+                            <p class="text-slate-500 text-[11px] font-medium leading-tight">Línea completa de productos</p>
+                        </div>
+                        
+                        <!-- JEFFERSON -->
+                        <div class="distributor-item p-4 rounded-r shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+                            <h3 class="text-brand-blue font-bold text-sm uppercase mb-0.5 tracking-tight">JEFFERSON</h3>
+                            <p class="text-slate-500 text-[11px] font-medium leading-tight">Válvulas solenoide</p>
+                        </div>
+                        
+                        <!-- SAUNDERS -->
+                        <div class="distributor-item p-4 rounded-r shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+                            <h3 class="text-brand-blue font-bold text-sm uppercase mb-0.5 tracking-tight">SAUNDERS</h3>
+                            <p class="text-slate-500 text-[11px] font-medium leading-tight">Válvulas a diafragma</p>
+                        </div>
+                        
+                        <!-- KLINGER -->
+                        <div class="distributor-item p-4 rounded-r shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+                            <h3 class="text-brand-blue font-bold text-sm uppercase mb-0.5 tracking-tight">KLINGER</h3>
+                            <p class="text-slate-500 text-[11px] font-medium leading-tight">Válvulas y repuestos</p>
+                        </div>
+                        
+                        <!-- BEYCA-CIMPA -->
+                        <div class="distributor-item p-4 rounded-r shadow-[0_1px_3px_rgba(0,0,0,0.02)] md:col-span-2">
+                            <h3 class="text-brand-blue font-bold text-sm uppercase mb-0.5 tracking-tight">BEYCA-CIMPA</h3>
+                            <p class="text-slate-500 text-[11px] font-medium leading-tight">Manómetros y termómetros</p>
+                        </div>
                     </div>
                 </div>
             </div>
+            
             <!-- Separador Wave a Slate -->
             <div class="absolute bottom-0 left-0 w-full h-[5vw] min-h-[80px] overflow-hidden" aria-hidden="true">
                 <svg class="absolute bottom-0 left-0 w-[200%] h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
@@ -325,7 +350,7 @@
     <script src="//unpkg.com/alpinejs" defer></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const animatedElements = document.querySelectorAll('.product-card');
+            const animatedElements = document.querySelectorAll('.product-card, .distributor-item');
             if ("IntersectionObserver" in window) {
                 const observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
