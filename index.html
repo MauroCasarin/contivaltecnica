@@ -164,7 +164,7 @@
         </div>
     </header>
 
-    <main class="w-full">
+    <main id="main-content" class="w-full">
         <!-- ===== HERO SECTION ===== -->
         <section id="inicio" class="relative text-white overflow-hidden scroll-mt-20 min-h-[500px]">
             <canvas id="particle-canvas"></canvas>
@@ -398,7 +398,7 @@
     </main>
 
     <!-- ===== FOOTER ===== -->
-    <footer class="bg-brand-dark relative overflow-hidden w-full">
+    <footer id="footer-section" class="bg-brand-dark relative overflow-hidden w-full">
         <div id="footer-background" class="absolute inset-0 z-0 opacity-10 scale-150" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center; will-change: transform;"></div>
         <div class="absolute inset-0 z-0 bg-brand-dark/90"></div>
         <div class="relative z-10">
@@ -420,6 +420,7 @@
 
     <!-- ===== MODALES ===== -->
     <div 
+        id="modals-container"
         x-show="openModal" 
         x-cloak
         x-transition:enter="transition ease-out duration-300"
@@ -516,7 +517,7 @@
         </div>
     </div>
     
-    <!-- Alpine.js vía módulo en index.tsx para evitar conflictos -->
+    <!-- Script principal como módulo -->
     <script type="module" src="./index.tsx"></script>
 <script type="module" src="/index.tsx"></script>
 </body>
