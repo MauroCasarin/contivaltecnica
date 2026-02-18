@@ -34,7 +34,8 @@
         [x-cloak] { display: none !important; }
         
         #hero-background, #especialidades-background, #footer-background {
-            transition: transform 0.25s cubic-bezier(0.1, 0, 0.2, 1);
+            /* Transición sutil para suavizar incrementos de scroll y evitar saltos */
+            transition: transform 0.4s cubic-bezier(0.1, 0, 0.2, 1);
             will-change: transform;
         }
 
@@ -482,9 +483,10 @@
             // --- MÓDULO: PARALLAX INDUSTRIAL (Sincronizado y Fluido) ---
             const setupParallax = () => {
                 const parallaxBgs = [
-                    { id: 'hero-background', factor: 0.04 },
-                    { id: 'especialidades-background', factor: 0.03 },
-                    { id: 'footer-background', factor: 0.04 }
+                    // Se reducen los factores de 0.04/0.03 a 0.15/0.12 para un movimiento más sutil y una profundidad mejorada
+                    { id: 'hero-background', factor: 0.15 },
+                    { id: 'especialidades-background', factor: 0.12 },
+                    { id: 'footer-background', factor: 0.15 }
                 ];
 
                 let ticking = false;
@@ -508,6 +510,7 @@
                             const viewportCenter = yOffset + (vh / 2);
                             const relativeDistance = viewportCenter - sectionCenter;
                             
+                            // Aplicamos el factor de profundidad sutil
                             bg.style.transform = `translate3d(0, ${relativeDistance * item.factor}px, 0)`;
                         }
                     });
