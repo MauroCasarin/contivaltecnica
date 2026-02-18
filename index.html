@@ -72,6 +72,10 @@
             height: 100%;
             z-index: 10;
         }
+        /* Filter to make the logo white */
+        .logo-white {
+            filter: brightness(0) invert(1);
+        }
     </style>
 <link rel="stylesheet" href="/index.css">
 </head>
@@ -182,22 +186,22 @@
                 <div class="mt-12">
                     <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                         <div class="flex justify-center items-center p-6 bg-slate-100 rounded-lg">
-                            <span class="text-2xl font-bold text-slate-500 tracking-wider">Jefferson</span>
+                            <span class="text-lg sm:text-xl font-bold text-slate-500 tracking-wider uppercase">JEFFERSON</span>
                         </div>
                         <div class="flex justify-center items-center p-6 bg-slate-100 rounded-lg">
-                            <span class="text-2xl font-bold text-slate-500 tracking-wider">Spirax Sarco</span>
+                            <span class="text-lg sm:text-xl font-bold text-slate-500 tracking-wider uppercase">SPIRAX SARCO</span>
                         </div>
                         <div class="flex justify-center items-center p-6 bg-slate-100 rounded-lg">
-                             <span class="text-2xl font-bold text-slate-500 tracking-wider">KLINGER</span>
+                             <span class="text-lg sm:text-xl font-bold text-slate-500 tracking-wider uppercase">KLINGER</span>
                         </div>
                         <div class="flex justify-center items-center p-6 bg-slate-100 rounded-lg">
-                            <span class="text-2xl font-bold text-slate-500 tracking-wider">Beyca</span>
+                            <span class="text-lg sm:text-xl font-bold text-slate-500 tracking-wider uppercase">BEYCA</span>
                         </div>
                         <div class="flex justify-center items-center p-6 bg-slate-100 rounded-lg">
-                            <span class="text-2xl font-bold text-slate-500 tracking-wider">CIMPA</span>
+                            <span class="text-lg sm:text-xl font-bold text-slate-500 tracking-wider uppercase">CIMPA</span>
                         </div>
                         <div class="flex justify-center items-center p-6 bg-slate-100 rounded-lg">
-                            <span class="text-2xl font-bold text-slate-500 tracking-wider">CURVO-SOLD</span>
+                            <span class="text-lg sm:text-xl font-bold text-slate-500 tracking-wider uppercase">CURVO-SOLD</span>
                         </div>
                     </div>
                 </div>
@@ -233,7 +237,12 @@
                     
                     <!-- Card 1: Refrigeración -->
                     <div @click="openModal = 'refrigeracion'" class="product-card bg-slate-900 rounded-xl shadow-2xl p-8 ring-1 ring-slate-800 hover:ring-brand-cyan transition-all duration-300 flex flex-col cursor-pointer hover:-translate-y-1">
-                        <div class="mb-6"><svg class="w-10 h-10 text-brand-cyan" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25z" /></svg></div>
+                        <div class="mb-6">
+                            <!-- Snowflake/Cooling Icon -->
+                            <svg class="w-10 h-10 text-brand-cyan" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18m0-18l-3 3m3-3l3 3m-3 15l-3-3m3 3l3-3M3 12h18M3 12l3-3m-3 3l3 3m15-3l-3-3m3 3l-3 3" />
+                            </svg>
+                        </div>
                         <h3 class="text-xl font-bold text-white mb-4">Control de Amoníaco y Refrigeración</h3>
                         <ul class="space-y-3 text-slate-400 flex-grow">
                             <li class="flex items-start gap-x-3"><svg class="w-5 h-5 mt-1 text-brand-cyan flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg><span>Especialistas en Válvulas de Expansión (L.E.) y de Paso (L.P.).</span></li>
@@ -244,7 +253,12 @@
 
                     <!-- Card 2: Válvulas -->
                      <div @click="openModal = 'valvulas'" class="product-card bg-slate-900 rounded-xl shadow-2xl p-8 ring-1 ring-slate-800 hover:ring-brand-cyan transition-all duration-300 flex flex-col cursor-pointer hover:-translate-y-1">
-                        <div class="mb-6"><svg class="w-10 h-10 text-brand-cyan" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.092 1.21-.138 2.43-.138 3.662v4.5a4.006 4.006 0 003.7 3.7 48.678 48.678 0 007.324 0 4.006 4.006 0 003.7-3.7v-4.5z" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 12.75a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" /></svg></div>
+                        <div class="mb-6">
+                            <!-- Gate Valve / Industrial Valve Icon -->
+                            <svg class="w-10 h-10 text-brand-cyan" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                            </svg>
+                        </div>
                         <h3 class="text-xl font-bold text-white mb-4">Válvulas de Proceso y Vapor</h3>
                         <ul class="space-y-3 text-slate-400 flex-grow">
                             <li class="flex items-start gap-x-3"><svg class="w-5 h-5 mt-1 text-brand-cyan flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg><span>Válvulas Esféricas para Vapor (1 pieza, Bipartidas, Económicas).</span></li>
@@ -255,7 +269,13 @@
 
                     <!-- Card 3: Instrumentación -->
                     <div @click="openModal = 'instrumentacion'" class="product-card bg-slate-900 rounded-xl shadow-2xl p-8 ring-1 ring-slate-800 hover:ring-brand-cyan transition-all duration-300 flex flex-col cursor-pointer hover:-translate-y-1">
-                        <div class="mb-6"><svg class="w-10 h-10 text-brand-cyan" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.036.243c-2.132 0-4.14-.354-6.042-.983m12.162-1.328a48.409 48.409 0 01-12.162 0m12.162 0c-1.052 0-2.083.156-3.085.438m-6.992 0c-1.002-.282-2.033-.438-3.085-.438m0 0s-1.242 1.5-2.62 10.726c-.122.499.106 1.028.589 1.202a5.989 5.989 0 002.036.243c2.132 0 4.14-.354 6.042-.983" /></svg></div>
+                        <div class="mb-6">
+                            <!-- Gauge / Measurement Icon -->
+                            <svg class="w-10 h-10 text-brand-cyan" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z" />
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" />
+                            </svg>
+                        </div>
                         <h3 class="text-xl font-bold text-white mb-4">Instrumentación y Medición</h3>
                         <ul class="space-y-3 text-slate-400 flex-grow">
                             <li class="flex items-start gap-x-3"><svg class="w-5 h-5 mt-1 text-brand-cyan flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg><span>Manómetros de alta precisión en Acero Inoxidable.</span></li>
@@ -266,7 +286,12 @@
 
                     <!-- Card 4: Suministros -->
                     <div @click="openModal = 'suministros'" class="product-card bg-slate-900 rounded-xl shadow-2xl p-8 ring-1 ring-slate-800 hover:ring-brand-cyan transition-all duration-300 flex flex-col cursor-pointer hover:-translate-y-1">
-                        <div class="mb-6"><svg class="w-10 h-10 text-brand-cyan" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg></div>
+                        <div class="mb-6">
+                            <!-- Nut/Bolt / Hardware Icon -->
+                            <svg class="w-10 h-10 text-brand-cyan" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M11.423 20.11l3.29-1.212m-3.29 1.212a9.25 9.25 0 01-8.132-8.131m8.132 8.131l-.499-3.31m3.789-1.213L16.485 19l-2.43 2.903m3.235-4.516a9.25 9.25 0 01-8.132-8.131m8.132 8.131l.499-3.31m-3.789 1.213L7.515 5l2.43-2.903m3.235 4.516a9.25 9.25 0 018.132 8.131m-8.132-8.131l-.499 3.31" />
+                            </svg>
+                        </div>
                         <h3 class="text-xl font-bold text-white mb-4">Suministros y Conducción</h3>
                         <ul class="space-y-3 text-slate-400 flex-grow">
                             <li class="flex items-start gap-x-3"><svg class="w-5 h-5 mt-1 text-brand-cyan flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg><span>Línea CURVO-SOLD: Accesorios para soldar.</span></li>
@@ -348,7 +373,7 @@
             <div class="bg-slate-700/70 backdrop-blur-sm py-6">
                 <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <a href="#inicio" aria-label="Volver al inicio" class="inline-block transition-transform duration-300 hover:scale-105">
-                         <img class="h-10 w-auto" src="https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/ec7bd95b784026814da2aa44ed944de09efad62c/contivaltecnica%20logo.svg" alt="Logo Contival Técnica">
+                         <img class="h-10 w-auto logo-white" src="https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/ec7bd95b784026814da2aa44ed944de09efad62c/contivaltecnica%20logo.svg" alt="Logo Contival Técnica">
                     </a>
                 </div>
             </div>
