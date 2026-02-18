@@ -37,12 +37,12 @@ const initApp = () => {
         }
     };
 
-    // 2. Parallax Sincronizado para Fondos Industriales
+    // 2. Parallax Sincronizado para Fondos Industriales (Optimizado)
     const setupParallax = () => {
         const parallaxBgs = [
-            { id: 'hero-background', factor: 0.3 },
-            { id: 'especialidades-background', factor: 0.3 },
-            { id: 'footer-background', factor: 0.3 }
+            { id: 'hero-background', factor: 0.15 },
+            { id: 'especialidades-background', factor: 0.15 },
+            { id: 'footer-background', factor: 0.15 }
         ];
 
         const onScroll = () => {
@@ -59,20 +59,27 @@ const initApp = () => {
                     const inView = rect.top < vh && rect.bottom > 0;
                     
                     if (inView) {
-                        // Cálculo del desplazamiento relativo
-                        // Si es el Hero, se basa en 0. Si no, se ajusta al offset de la sección
-                        const relativeScroll = item.id === 'hero-background' 
-                            ? yOffset 
-                            : (yOffset - (section.offsetTop - vh));
+                        /**
+                         * NUEVO CÁLCULO DE PARALLAX: Centrado en el Viewport
+                         * Calcula la distancia del centro de la sección al centro de la pantalla.
+                         * Esto asegura que la imagen esté centrada cuando la sección está centrada,
+                         * permitiendo un movimiento más natural y evitando cortes.
+                         */
+                        const sectionCenter = section.offsetTop + section.offsetHeight / 2;
+                        const viewportCenter = yOffset + vh / 2;
+                        const relativeDistance = viewportCenter - sectionCenter;
                         
-                        bg.style.transform = `translate3d(0, ${relativeScroll * item.factor}px, 0)`;
+                        // Aplicamos el movimiento sutil mediante transformaciones 3D
+                        bg.style.transform = `translate3d(0, ${relativeDistance * item.factor}px, 0)`;
                     }
                 }
             });
         };
 
+        // Escuchamos el scroll con passive: true para no bloquear el hilo principal
         window.addEventListener('scroll', onScroll, { passive: true });
-        onScroll(); // Disparo inicial
+        // Ejecutamos una vez al inicio para posicionar correctamente
+        onScroll();
     };
 
     // 3. Sistema de Partículas Ambientales (Efecto Polvo Industrial/Atmósfera)

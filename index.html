@@ -63,7 +63,6 @@
             border-left: 2px solid #00a8e1;
             background: white;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0; /* Controlado por JS */
         }
         .distributor-item:hover {
             transform: translateX(4px);
@@ -88,8 +87,20 @@
             letter-spacing: 0.2em;
             color: #cbd5e1;
         }
-        .product-card {
-            opacity: 0; /* Controlado por JS */
+        /* Pulse Skeleton Style */
+        .skeleton {
+            background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+        }
+        .skeleton-dark {
+            background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+        }
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
     </style>
 <script type="importmap">
@@ -101,7 +112,18 @@
 </script>
 <link rel="stylesheet" href="/index.css">
 </head>
-<body class="font-sans text-slate-800 antialiased bg-white" x-data="{ openModal: null, mobileMenu: false }" @keydown.escape.window="openModal = null">
+<body class="font-sans text-slate-800 antialiased bg-white" 
+    x-data="{ 
+        openModal: null, 
+        mobileMenu: false, 
+        loadingDist: true, 
+        loadingSpec: true 
+    }" 
+    x-init="
+        setTimeout(() => loadingDist = false, 1200);
+        setTimeout(() => loadingSpec = false, 2000);
+    "
+    @keydown.escape.window="openModal = null">
     
     <!-- ===== HEADER ===== -->
     <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 shadow-sm transition-all duration-300">
@@ -109,7 +131,7 @@
             <div class="flex items-center justify-between h-20">
                 <div class="flex-shrink-0">
                     <a href="#inicio" class="block">
-                        <img class="h-10 w-auto" src="https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/ec7bd95b784026814da2aa44ed944de09efad62c/contivaltecnica%20logo.svg" alt="Logo Contival Técnica">
+                        <img class="h-10 w-auto" src="https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/ec7bd95b784026814da2aa44ed944ed944de09efad62c/contivaltecnica%20logo.svg" alt="Logo Contival Técnica">
                     </a>
                 </div>
                 <nav class="hidden md:flex items-center space-x-8">
@@ -140,7 +162,8 @@
         <!-- ===== HERO SECTION ===== -->
         <section id="inicio" class="relative text-white overflow-hidden scroll-mt-20">
             <canvas id="particle-canvas"></canvas>
-            <div id="hero-background" class="absolute inset-0 z-0 w-full h-full scale-110" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center; will-change: transform;"></div>
+            <!-- Ajuste scale-150 para asegurar cobertura completa durante el desplazamiento -->
+            <div id="hero-background" class="absolute inset-0 z-0 w-full h-full scale-150" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center; will-change: transform;"></div>
             <div class="absolute inset-0 z-0 bg-black/60"></div>
             <div class="absolute inset-0 z-0 bg-gradient-to-br from-brand-blue/40 via-brand-cyan/20 to-brand-dark/60"></div>
             
@@ -208,7 +231,18 @@
                         </h2>
                     </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <!-- Skeleton Container -->
+                    <div x-show="loadingDist" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <template x-for="i in 5">
+                            <div class="p-4 rounded-r bg-white border-l-2 border-slate-200 shadow-sm flex flex-col gap-2">
+                                <div class="h-4 w-24 skeleton rounded"></div>
+                                <div class="h-3 w-40 skeleton rounded"></div>
+                            </div>
+                        </template>
+                    </div>
+
+                    <!-- Real Content -->
+                    <div x-show="!loadingDist" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" class="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <div class="distributor-item p-4 rounded-r shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
                             <h3 class="text-brand-blue font-bold text-sm uppercase mb-0.5 tracking-tight">SARCO</h3>
                             <p class="text-slate-500 text-[11px] font-medium leading-tight">Línea completa de productos</p>
@@ -248,8 +282,8 @@
 
         <!-- ===== ESPECIALIDADES TÉCNICAS ===== -->
         <section id="especialidades" class="bg-slate-900 relative pb-32 scroll-mt-24 overflow-hidden min-h-[800px] flex flex-col justify-center">
-            
-            <div id="especialidades-background" class="absolute inset-0 z-0 opacity-40 scale-110" 
+            <!-- Ajuste scale-150 -->
+            <div id="especialidades-background" class="absolute inset-0 z-0 opacity-40 scale-150" 
                  style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo2.jpg'); background-size: cover; background-position: center top; will-change: transform;">
             </div>
 
@@ -262,7 +296,23 @@
                     <h2 class="text-3xl font-extrabold text-white tracking-tight uppercase drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">Especialidades Técnicas</h2>
                     <p class="mt-4 max-w-xl mx-auto text-lg text-white font-bold drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">Ingeniería aplicada para procesos críticos.</p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                <!-- Skeleton Container -->
+                <div x-show="loadingSpec" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <template x-for="i in 4">
+                        <div class="bg-slate-900/60 backdrop-blur-md rounded-xl p-6 ring-1 ring-slate-700 flex flex-col gap-4">
+                            <div class="w-10 h-10 skeleton-dark rounded-lg"></div>
+                            <div class="h-5 w-3/4 skeleton-dark rounded"></div>
+                            <div class="space-y-2">
+                                <div class="h-3 w-full skeleton-dark rounded opacity-50"></div>
+                                <div class="h-3 w-5/6 skeleton-dark rounded opacity-50"></div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Real Content -->
+                <div x-show="!loadingSpec" x-transition:enter="transition ease-out duration-700" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <!-- Refrigeración -->
                     <div @click.stop="openModal = 'refrigeracion'" class="product-card bg-slate-900/85 backdrop-blur-md rounded-xl shadow-2xl p-6 ring-1 ring-slate-700 hover:ring-brand-cyan transition-all duration-300 flex flex-col cursor-pointer hover:-translate-y-1">
                         <div class="mb-4">
@@ -353,7 +403,8 @@
 
     <!-- ===== FOOTER ===== -->
     <footer class="bg-brand-dark relative overflow-hidden">
-        <div id="footer-background" class="absolute inset-0 z-0 opacity-10 scale-110" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center; will-change: transform;"></div>
+        <!-- Ajuste scale-150 -->
+        <div id="footer-background" class="absolute inset-0 z-0 opacity-10 scale-150" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center; will-change: transform;"></div>
         <div class="absolute inset-0 z-0 bg-brand-dark/90"></div>
         <div class="relative z-10">
             <div class="bg-slate-700/70 backdrop-blur-sm py-6">
@@ -405,12 +456,30 @@
                         <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Línea de Productos</p>
                         <p class="text-slate-200 text-sm leading-relaxed">Sistemas avanzados para el control de amoníaco (R-717). Amplio stock en válvulas L.E. y L.P. en rangos desde 3/8" hasta 10". Diseñadas para soportar condiciones térmicas extremas.</p>
                     </div>
+                    <div class="space-y-3 pt-2">
+                        <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Industrias de Aplicación</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Frigoríficos</span>
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Alimenticia</span>
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Bebidas</span>
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Logística de Frío</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div x-show="openModal === 'valvulas'" x-cloak class="space-y-6">
                     <div class="space-y-3">
                         <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Línea de Productos</p>
                         <p class="text-slate-200 text-sm leading-relaxed">Distribución oficial de válvulas KLINGER (esféricas y pistón) y SAUNDERS (diafragma). Soluciones para el control de vapor saturado y fluidos corrosivos.</p>
+                    </div>
+                    <div class="space-y-3 pt-2">
+                        <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Industrias de Aplicación</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Farmacéutica</span>
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Química</span>
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Petroquímica</span>
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Energía</span>
+                        </div>
                     </div>
                 </div>
 
@@ -419,12 +488,28 @@
                         <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Línea de Productos</p>
                         <p class="text-slate-200 text-sm leading-relaxed">Gama completa de manómetros BEYCA-CIMPA en acero inoxidable y bronce. Termómetros industriales de lectura directa y remota.</p>
                     </div>
+                    <div class="space-y-3 pt-2">
+                        <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Industrias de Aplicación</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Laboratorios</span>
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Manufactura</span>
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Control de Calidad</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div x-show="openModal === 'suministros'" x-cloak class="space-y-6">
                     <div class="space-y-3">
                         <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Línea de Productos</p>
                         <p class="text-slate-200 text-sm leading-relaxed">Conexiones integrales para redes industriales. Accesorios CURVO-SOLD, bridas normalizadas y accesorios forjados para alta presión.</p>
+                    </div>
+                    <div class="space-y-3 pt-2">
+                        <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Industrias de Aplicación</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Mantenimiento</span>
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Montajes</span>
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Vapor y Gas</span>
+                        </div>
                     </div>
                 </div>
 
