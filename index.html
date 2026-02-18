@@ -130,7 +130,7 @@
          x-transition:leave="transition ease-in duration-200"
          x-transition:leave-start="opacity-100"
          x-transition:leave-end="opacity-0"
-         class="fixed inset-0 bg-black/60 z-[45] backdrop-blur-[2px]"
+         class="fixed inset-0 bg-black/70 z-[45] backdrop-blur-[3px]"
          @click="mobileMenu = false">
     </div>
 
@@ -165,12 +165,12 @@
              x-transition:leave="transition ease-in duration-200"
              x-transition:leave-start="translate-y-0 opacity-100"
              x-transition:leave-end="-translate-y-full opacity-0"
-             class="md:hidden absolute top-20 left-0 w-full bg-white border-t border-slate-100 py-6 shadow-2xl z-[50]">
-            <div class="flex flex-col space-y-6 px-6">
-                <a href="#inicio" @click="mobileMenu = false" class="text-sm font-bold text-brand-dark uppercase tracking-wider border-b border-slate-50 pb-2">Inicio</a>
-                <a href="#distribucion" @click="mobileMenu = false" class="text-sm font-bold text-brand-dark uppercase tracking-wider border-b border-slate-50 pb-2">Distribución</a>
-                <a href="#especialidades" @click="mobileMenu = false" class="text-sm font-bold text-brand-dark uppercase tracking-wider border-b border-slate-50 pb-2">Especialidades</a>
-                <a href="#contacto" @click="mobileMenu = false" class="text-sm font-bold text-brand-dark uppercase tracking-wider border-b border-slate-50 pb-2">Contacto</a>
+             class="md:hidden absolute top-20 left-0 w-full bg-white border-t border-slate-100 py-8 shadow-2xl z-[50]">
+            <div class="flex flex-col space-y-8 px-8">
+                <a href="#inicio" @click="mobileMenu = false" class="text-base font-bold text-brand-dark uppercase tracking-wider border-b border-slate-50 pb-3">Inicio</a>
+                <a href="#distribucion" @click="mobileMenu = false" class="text-base font-bold text-brand-dark uppercase tracking-wider border-b border-slate-50 pb-3">Distribución</a>
+                <a href="#especialidades" @click="mobileMenu = false" class="text-base font-bold text-brand-dark uppercase tracking-wider border-b border-slate-50 pb-3">Especialidades</a>
+                <a href="#contacto" @click="mobileMenu = false" class="text-base font-bold text-brand-dark uppercase tracking-wider border-b border-slate-50 pb-3">Contacto</a>
             </div>
         </div>
     </header>
@@ -549,7 +549,7 @@
                 updateParallax();
             };
 
-            // --- MÓDULO: PARTÍCULAS ATMOSFÉRICAS (FÍSICA DE BURBUJAS REACTIVA A ACELERÓMETRO) ---
+            // --- MÓDULO: PARTÍCULAS ATMOSFÉRICAS (FÍSICA DE BURBUJAS DINÁMICAS PRO) ---
             const setupParticles = () => {
                 const canvas = document.getElementById('particle-canvas');
                 if (!canvas) return;
@@ -559,11 +559,11 @@
                 let particles = [];
                 let animationFrame;
                 
-                // Sensores
-                let currentBeta = 0; // Inclinación frontal (Burbujas: verticalidad)
-                let currentGamma = 0; // Inclinación lateral (Curvatura lateral)
+                // Sensores de orientación
+                let currentBeta = 0; // Inclinación vertical (Burbujas: potencia de ascenso)
+                let currentGamma = 0; // Inclinación lateral (Curvatura de trayectoria)
                 
-                const BUBBLE_BASE_UP = 0.55; // Velocidad de ascenso vertical base
+                const BUBBLE_MAX_UP = 2.4; // Velocidad de ascenso máxima
 
                 const resize = () => {
                     const parent = canvas.parentElement;
@@ -584,7 +584,9 @@
                         try {
                             const res = await DeviceOrientationEvent.requestPermission();
                             if (res === 'granted') window.addEventListener('deviceorientation', handleOrientation);
-                        } catch(e) {}
+                        } catch(e) {
+                            console.error("Permiso denegado para sensores.");
+                        }
                     } else {
                         window.addEventListener('deviceorientation', handleOrientation);
                     }
@@ -599,46 +601,48 @@
                     init() {
                         this.x = Math.random() * canvas.width;
                         this.y = Math.random() * canvas.height;
-                        this.s = Math.random() * 2 + 0.6;
-                        this.vx = Math.random() * 0.4 - 0.2; 
-                        this.vy = Math.random() * 0.4 - 0.2;
-                        this.alpha = Math.random() * 0.4 + 0.15;
+                        this.s = Math.random() * 2.2 + 0.5;
+                        this.vx = (Math.random() - 0.5) * 0.5; 
+                        this.vy = (Math.random() - 0.5) * 0.5;
+                        this.alpha = Math.random() * 0.35 + 0.15;
                         this.osc = Math.random() * Math.PI * 2;
-                        this.oscSpeed = 0.012 + Math.random() * 0.025;
+                        this.oscSpeed = 0.015 + Math.random() * 0.03;
                     }
                     update() {
-                        // Proporcional a la inclinación vertical (beta)
-                        // Beta 0 = plano (acostado), Beta 90 = vertical (frente al usuario)
-                        const verticality = Math.min(Math.max((Math.abs(currentBeta) - 10) / 75, 0), 1);
+                        // Cálculo de verticalidad (0 plano, 1 vertical)
+                        // Utilizamos un exponente para dar una sensación de empuje progresivo según la inclinación
+                        let verticality = Math.abs(currentBeta) / 90;
+                        verticality = Math.pow(Math.max(0, Math.min(1, verticality)), 1.4);
                         
-                        // Fuerza de ascenso proporcional a la verticalidad
-                        const riseForce = -BUBBLE_BASE_UP * (0.6 + verticality * 1.8);
+                        // Velocidad de burbuja proporcional a la verticalidad
+                        const riseForce = -0.4 - (verticality * BUBBLE_MAX_UP);
                         
-                        // Curvatura lateral proporcional a Gamma escalada por la verticalidad
-                        const curveForce = (currentGamma / 45) * 1.4 * verticality;
+                        // Curvatura lateral basada en Gamma escalada por la verticalidad detectada
+                        const horizontalDrift = (currentGamma / 45) * 1.8 * verticality;
 
-                        // Si el móvil está plano, mantenemos el movimiento errático original (vx/vy).
-                        // Si está vertical, vx/vy se reducen para que domine el ascenso fluido.
-                        const idleFactor = 1 - (verticality * 0.85); 
+                        // Cuando el móvil está plano (verticality ~ 0), permitimos movimiento aleatorio drift.
+                        // Cuando está vertical (verticality ~ 1), vx/vy pierden relevancia frente al ascenso.
+                        const randomInfluence = 1 - (verticality * 0.95); 
                         
                         this.osc += this.oscSpeed;
-                        const wobble = Math.sin(this.osc) * 0.22 * verticality;
+                        const wobbleX = Math.sin(this.osc) * 0.25 * verticality;
 
-                        this.x += (this.vx * idleFactor) + curveForce + wobble;
-                        this.y += (this.vy * idleFactor) + (riseForce * verticality);
+                        this.x += (this.vx * randomInfluence) + horizontalDrift + wobbleX;
+                        this.y += (this.vy * randomInfluence) + (riseForce * verticality) + (riseForce * 0.15); // Un ascenso mínimo siempre presente
 
-                        // Wrap-around con regeneración aleatoria para evitar patrones rígidos
-                        const margin = 25;
+                        // Wrap-around mejorado
+                        const margin = 30;
                         if (this.x > canvas.width + margin) this.x = -margin;
                         if (this.x < -margin) this.x = canvas.width + margin;
                         
-                        if (this.y > canvas.height + margin) {
-                            this.y = -margin;
-                            this.x = Math.random() * canvas.width;
-                        }
+                        // Si la burbuja sale por arriba, renace abajo
                         if (this.y < -margin) {
                             this.y = canvas.height + margin;
                             this.x = Math.random() * canvas.width;
+                        }
+                        // Si por algún motivo sale por abajo, renace arriba
+                        if (this.y > canvas.height + margin) {
+                            this.y = -margin;
                         }
                     }
                     draw() {
@@ -652,7 +656,7 @@
                 const init = () => {
                     if (animationFrame) cancelAnimationFrame(animationFrame);
                     resize();
-                    const count = window.innerWidth < 768 ? 35 : 70;
+                    const count = window.innerWidth < 768 ? 40 : 80;
                     particles = Array.from({ length: count }, () => new Particle());
                     render();
                 };
