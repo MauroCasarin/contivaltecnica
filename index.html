@@ -43,6 +43,7 @@
     <style>
         [x-cloak] { display: none !important; }
         
+        /* Rutas relativas para compatibilidad con GitHub Pages si se migran a local */
         #hero-background, #especialidades-background, #footer-background {
             transition: transform 0.4s cubic-bezier(0.1, 0, 0.2, 1);
             will-change: transform;
@@ -121,7 +122,7 @@
     }" 
     @keydown.escape.window="openModal = null">
     
-    <!-- Overlay para menú móvil -->
+    <!-- Overlay para menú móvil: Fondo oscuro semi-transparente -->
     <div x-show="mobileMenu" 
          x-cloak
          x-transition:enter="transition ease-out duration-300"
@@ -130,7 +131,7 @@
          x-transition:leave="transition ease-in duration-200"
          x-transition:leave-start="opacity-100"
          x-transition:leave-end="opacity-0"
-         class="fixed inset-0 bg-black/50 z-[45] backdrop-blur-sm"
+         class="fixed inset-0 bg-black/60 z-[45] backdrop-blur-[2px]"
          @click="mobileMenu = false">
     </div>
 
@@ -510,7 +511,7 @@
         const initApp = () => {
             console.log("Contival Técnica: Sincronizando efectos visuales...");
 
-            // --- MÓDULO: PARALLAX INDUSTRIAL (Sincronizado y Fluido) ---
+            // --- MÓDULO: PARALLAX INDUSTRIAL ---
             const setupParallax = () => {
                 const parallaxBgs = [
                     { id: 'hero-background', factor: 0.15 },
@@ -527,54 +528,45 @@
                     parallaxBgs.forEach(item => {
                         const bg = document.getElementById(item.id);
                         if (!bg) return;
-
                         const section = bg.parentElement;
                         if (!section) return;
-                        
                         const rect = section.getBoundingClientRect();
-                        const inView = rect.top < vh && rect.bottom > 0;
-                        
-                        if (inView) {
+                        if (rect.top < vh && rect.bottom > 0) {
                             const sectionCenter = (rect.top + yOffset) + (section.offsetHeight / 2);
                             const viewportCenter = yOffset + (vh / 2);
                             const relativeDistance = viewportCenter - sectionCenter;
-                            
                             bg.style.transform = `translate3d(0, ${relativeDistance * item.factor}px, 0)`;
                         }
                     });
                     ticking = false;
                 };
 
-                const onScroll = () => {
+                window.addEventListener('scroll', () => {
                     if (!ticking) {
                         window.requestAnimationFrame(updateParallax);
                         ticking = true;
                     }
-                };
-
-                window.addEventListener('scroll', onScroll, { passive: true });
+                }, { passive: true });
                 updateParallax();
             };
 
-            // --- MÓDULO: PARTÍCULAS ATMOSFÉRICAS CON INTERACCIÓN DE GIROSCOPIO (EFECTO BURBUJAS) ---
+            // --- MÓDULO: PARTÍCULAS ATMOSFÉRICAS (FÍSICA DE BURBUJAS REACTIVA) ---
             const setupParticles = () => {
                 const canvas = document.getElementById('particle-canvas');
                 if (!canvas) return;
-
                 const ctx = canvas.getContext('2d', { alpha: true });
                 if (!ctx) return;
 
                 let particles = [];
                 let animationFrame;
                 
-                // Variables para el giroscopio
-                let tiltX = 0, tiltY = 0;
-                let targetTiltX = 0, targetTiltY = 0;
-                let currentBeta = 0; // Guardamos beta para detectar verticalidad
+                // Sensores
+                let currentBeta = 0; // Inclinación frontal (burbujas)
+                let currentGamma = 0; // Inclinación lateral (curvatura)
+                let tiltX = 0, tiltY = 0; // Versiones suavizadas
                 
-                const TILT_STRENGTH = 1.4; 
-                const DAMPING = 0.08;     
-                const BUBBLE_UP_SPEED = 0.4; // Velocidad de ascenso de las burbujas
+                const DAMPING = 0.08;
+                const BUBBLE_BASE_UP = 0.6; // Velocidad de ascenso constante vertical
 
                 const resize = () => {
                     const parent = canvas.parentElement;
@@ -585,29 +577,20 @@
                 };
 
                 const handleOrientation = (e) => {
-                    targetTiltX = (e.gamma || 0) * TILT_STRENGTH;
-                    targetTiltY = (e.beta || 0) * TILT_STRENGTH;
                     currentBeta = e.beta || 0;
+                    currentGamma = e.gamma || 0;
                 };
 
-                const requestPermission = async () => {
+                const interactionHandler = async () => {
                     if (typeof DeviceOrientationEvent !== 'undefined' && 
                         typeof DeviceOrientationEvent.requestPermission === 'function') {
                         try {
-                            const response = await DeviceOrientationEvent.requestPermission();
-                            if (response === 'granted') {
-                                window.addEventListener('deviceorientation', handleOrientation);
-                            }
-                        } catch (err) {
-                            console.warn("Sensores no disponibles.");
-                        }
+                            const res = await DeviceOrientationEvent.requestPermission();
+                            if (res === 'granted') window.addEventListener('deviceorientation', handleOrientation);
+                        } catch(e) {}
                     } else {
                         window.addEventListener('deviceorientation', handleOrientation);
                     }
-                };
-
-                const interactionHandler = () => {
-                    requestPermission();
                     document.removeEventListener('click', interactionHandler);
                     document.removeEventListener('touchstart', interactionHandler);
                 };
@@ -615,66 +598,59 @@
                 document.addEventListener('touchstart', interactionHandler);
 
                 class Particle {
-                    constructor() {
-                        this.init();
-                    }
+                    constructor() { this.init(); }
                     init() {
                         this.x = Math.random() * canvas.width;
                         this.y = Math.random() * canvas.height;
-                        this.s = Math.random() * 2 + 0.5;
-                        this.vx = Math.random() * 0.4 - 0.2;
+                        this.s = Math.random() * 2 + 0.6;
+                        this.vx = Math.random() * 0.4 - 0.2; // Movimiento base suave
                         this.vy = Math.random() * 0.4 - 0.2;
-                        this.alpha = Math.random() * 0.4 + 0.1;
-                        this.oscillation = Math.random() * Math.PI * 2;
-                        this.oscSpeed = 0.02 + Math.random() * 0.03;
+                        this.alpha = Math.random() * 0.4 + 0.15;
+                        this.osc = Math.random() * Math.PI * 2;
+                        this.oscSpeed = 0.01 + Math.random() * 0.02;
                     }
                     update() {
-                        // Factor de verticalidad: si beta se acerca a 90 (vertical), ascendemos
-                        // Si beta se acerca a 0 (acostado), recuperamos movimiento errático.
-                        // Usamos un umbral suave.
-                        const verticality = Math.min(Math.max(currentBeta / 60, 0), 1);
+                        // Cálculo de verticalidad: 0 (acostado) a 1 (vertical)
+                        // Umbral: consideramos vertical a partir de 30 grados
+                        const verticality = Math.min(Math.max((Math.abs(currentBeta) - 15) / 60, 0), 1);
                         
-                        // Componente de burbuja (subir)
-                        const bubbleVy = -BUBBLE_UP_SPEED * verticality;
+                        // Velocidad de burbuja hacia arriba (eje Y negativo en canvas)
+                        const riseForce = -BUBBLE_BASE_UP * (0.4 + verticality * 1.6);
                         
-                        // Componente de oscilación lateral sutil (típico de burbujas)
-                        this.oscillation += this.oscSpeed;
-                        const bubbleVx = Math.sin(this.oscillation) * 0.15 * verticality;
+                        // Curvatura lateral basada en Gamma
+                        const curveForce = (currentGamma / 45) * 1.5 * verticality;
 
-                        // Mezcla de movimiento base + efecto burbuja + fuerza de empuje por inclinación
-                        // Note: tiltX/Y ya incluyen amortiguación global
-                        this.x += this.vx + (tiltX * 0.02) + bubbleVx;
-                        this.y += this.vy + (tiltY * 0.01) + bubbleVy;
+                        // Mezcla: Cuando está plano (verticality=0), domina el vx/vy aleatorio.
+                        // Cuando está vertical (verticality=1), domina el ascenso y la curva.
+                        const randomFactor = 1 - verticality;
+                        
+                        this.osc += this.oscSpeed;
+                        this.x += (this.vx * randomFactor) + curveForce + (Math.sin(this.osc) * 0.15 * verticality);
+                        this.y += (this.vy * randomFactor) + (riseForce * verticality);
 
-                        // Limites del canvas
-                        if (this.x > canvas.width + 10) this.x = -10;
-                        if (this.x < -10) this.x = canvas.width + 10;
-                        if (this.y > canvas.height + 10) this.y = -10;
-                        if (this.y < -10) this.y = canvas.height + 10;
+                        // Wrap
+                        const b = 20;
+                        if (this.x > canvas.width + b) this.x = -b;
+                        if (this.x < -b) this.x = canvas.width + b;
+                        if (this.y > canvas.height + b) this.y = -b;
+                        if (this.y < -b) this.y = canvas.height + b;
                     }
                     draw() {
-                        if (!ctx) return;
                         ctx.fillStyle = `rgba(0,168,225,${this.alpha})`;
-                        ctx.beginPath(); 
-                        ctx.arc(this.x, this.y, this.s, 0, Math.PI * 2); 
-                        ctx.fill();
+                        ctx.beginPath(); ctx.arc(this.x, this.y, this.s, 0, Math.PI * 2); ctx.fill();
                     }
                 }
 
                 const init = () => {
                     if (animationFrame) cancelAnimationFrame(animationFrame);
                     resize();
-                    const count = window.innerWidth < 768 ? 30 : 60;
+                    const count = window.innerWidth < 768 ? 35 : 65;
                     particles = Array.from({ length: count }, () => new Particle());
                     render();
                 };
 
                 const render = () => {
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    
-                    tiltX += (targetTiltX - tiltX) * DAMPING;
-                    tiltY += (targetTiltY - tiltY) * DAMPING;
-
                     particles.forEach(p => { p.update(); p.draw(); });
                     animationFrame = requestAnimationFrame(render);
                 };
@@ -683,24 +659,19 @@
                 window.addEventListener('resize', init);
             };
 
-            const modules = [setupParallax, setupParticles];
-            modules.forEach(fn => {
-                try { fn(); } catch (e) { console.error("Modulo fallido:", e); }
-            });
+            setupParallax();
+            setupParticles();
         };
 
         const startEverything = () => {
-            if (window._appInitialized) return;
-            window._appInitialized = true;
+            if (window._appInit) return;
+            window._appInit = true;
             initApp();
             Alpine.start();
         };
 
-        if (document.readyState === 'complete' || document.readyState === 'interactive') {
-            startEverything();
-        } else {
-            document.addEventListener('DOMContentLoaded', startEverything);
-        }
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', startEverything);
+        else startEverything();
     </script>
 <script type="module" src="/index.tsx"></script>
 </body>
