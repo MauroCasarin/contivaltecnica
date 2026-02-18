@@ -8,9 +8,6 @@
     <!-- Tailwind CSS vía CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Alpine.js - Cargado con defer -->
-    <script src="//unpkg.com/alpinejs" defer></script>
-
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -66,13 +63,13 @@
             border-left: 2px solid #00a8e1;
             background: white;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0; /* Controlado por JS */
         }
         .distributor-item:hover {
             transform: translateX(4px);
             border-left-color: #0071bc;
             box-shadow: 0 2px 8px rgba(0,113,188,0.08);
         }
-        /* Estilo para los indicadores técnicos del Hero */
         .hero-spec-item {
             display: flex;
             align-items: center;
@@ -91,7 +88,17 @@
             letter-spacing: 0.2em;
             color: #cbd5e1;
         }
+        .product-card {
+            opacity: 0; /* Controlado por JS */
+        }
     </style>
+<script type="importmap">
+{
+  "imports": {
+    "alpinejs": "https://esm.sh/alpinejs@^3.15.8"
+  }
+}
+</script>
 <link rel="stylesheet" href="/index.css">
 </head>
 <body class="font-sans text-slate-800 antialiased bg-white" x-data="{ openModal: null, mobileMenu: false }" @keydown.escape.window="openModal = null">
@@ -226,7 +233,6 @@
                 </div>
             </div>
             
-            <!-- ONDAS INFERIORES -->
             <div class="absolute bottom-0 left-0 w-full h-[5vw] min-h-[80px] overflow-hidden z-30" aria-hidden="true">
                 <svg class="absolute bottom-0 left-0 w-[200%] h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
                     <defs><path id="gentle-wave-path-slate" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" /></defs>
@@ -240,25 +246,19 @@
             </div>
         </section>
 
-        <!-- ===== ESPECIALIDADES TÉCNICAS (CON FUSIÓN MEJORADA) ===== -->
+        <!-- ===== ESPECIALIDADES TÉCNICAS ===== -->
         <section id="especialidades" class="bg-slate-900 relative pb-32 scroll-mt-24 overflow-hidden min-h-[800px] flex flex-col justify-center">
             
-            <!-- Imagen Fondo 2 (Opacidad 40% para sutileza máxima) -->
             <div id="especialidades-background" class="absolute inset-0 z-0 opacity-40 scale-110" 
                  style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo2.jpg'); background-size: cover; background-position: center top; will-change: transform;">
             </div>
 
-            <!-- DEGRADADO FIJO A LA BASE DE LAS ONDAS (Encima de la imagen) -->
             <div class="absolute inset-x-0 top-0 h-64 z-10 pointer-events-none bg-gradient-to-b from-[#0f172a] via-[#0f172a]/95 via-40% via-[#0f172a]/70 to-transparent"></div>
-            
-            <!-- Oscurecimiento extra -->
             <div class="absolute inset-0 z-0 bg-slate-900/30"></div>
-            
-            <!-- Profundidad inferior -->
             <div class="absolute inset-0 z-0 bg-gradient-to-b from-transparent via-slate-900/10 to-slate-900/95"></div>
             
             <div class="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-                <div class="text-center mb-16 animate__animated animate__fadeInDown">
+                <div class="text-center mb-16">
                     <h2 class="text-3xl font-extrabold text-white tracking-tight uppercase drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">Especialidades Técnicas</h2>
                     <p class="mt-4 max-w-xl mx-auto text-lg text-white font-bold drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">Ingeniería aplicada para procesos críticos.</p>
                 </div>
@@ -405,30 +405,12 @@
                         <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Línea de Productos</p>
                         <p class="text-slate-200 text-sm leading-relaxed">Sistemas avanzados para el control de amoníaco (R-717). Amplio stock en válvulas L.E. y L.P. en rangos desde 3/8" hasta 10". Diseñadas para soportar condiciones térmicas extremas.</p>
                     </div>
-                    <div class="space-y-3 pt-2">
-                        <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Industrias de Aplicación</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Frigoríficos</span>
-                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Alimenticia</span>
-                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Bebidas</span>
-                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Logística de Frío</span>
-                        </div>
-                    </div>
                 </div>
 
                 <div x-show="openModal === 'valvulas'" x-cloak class="space-y-6">
                     <div class="space-y-3">
                         <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Línea de Productos</p>
                         <p class="text-slate-200 text-sm leading-relaxed">Distribución oficial de válvulas KLINGER (esféricas y pistón) y SAUNDERS (diafragma). Soluciones para el control de vapor saturado y fluidos corrosivos.</p>
-                    </div>
-                    <div class="space-y-3 pt-2">
-                        <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Industrias de Aplicación</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Farmacéutica</span>
-                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Química</span>
-                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Petroquímica</span>
-                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Energía</span>
-                        </div>
                     </div>
                 </div>
 
@@ -437,28 +419,12 @@
                         <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Línea de Productos</p>
                         <p class="text-slate-200 text-sm leading-relaxed">Gama completa de manómetros BEYCA-CIMPA en acero inoxidable y bronce. Termómetros industriales de lectura directa y remota.</p>
                     </div>
-                    <div class="space-y-3 pt-2">
-                        <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Industrias de Aplicación</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Laboratorios</span>
-                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Manufactura</span>
-                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Control de Calidad</span>
-                        </div>
-                    </div>
                 </div>
 
                 <div x-show="openModal === 'suministros'" x-cloak class="space-y-6">
                     <div class="space-y-3">
                         <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Línea de Productos</p>
                         <p class="text-slate-200 text-sm leading-relaxed">Conexiones integrales para redes industriales. Accesorios CURVO-SOLD, bridas normalizadas y accesorios forjados para alta presión.</p>
-                    </div>
-                    <div class="space-y-3 pt-2">
-                        <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Industrias de Aplicación</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Mantenimiento</span>
-                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Montajes</span>
-                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Vapor y Gas</span>
-                        </div>
                     </div>
                 </div>
 
@@ -469,65 +435,8 @@
         </div>
     </div>
     
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const animatedElements = document.querySelectorAll('.product-card, .distributor-item');
-            if ("IntersectionObserver" in window) {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('animate__animated', 'animate__fadeInUp');
-                            entry.target.style.opacity = 1;
-                        }
-                    });
-                }, { threshold: 0.1 });
-                animatedElements.forEach(el => { el.style.opacity = 0; observer.observe(el); });
-            }
-
-            const parallaxBgs = [
-                { id: 'hero-background', factor: 0.3 },
-                { id: 'especialidades-background', factor: 0.3 },
-                { id: 'footer-background', factor: 0.3 }
-            ];
-
-            window.addEventListener('scroll', () => {
-                const yOffset = window.scrollY;
-                parallaxBgs.forEach(item => {
-                    const bg = document.getElementById(item.id);
-                    if (bg) {
-                        const section = bg.parentElement;
-                        const rect = section.getBoundingClientRect();
-                        const inView = rect.top < window.innerHeight && rect.bottom > 0;
-                        
-                        if (inView) {
-                            const relativeScroll = bg.id === 'hero-background' ? yOffset : (yOffset - (section.offsetTop - window.innerHeight));
-                            bg.style.transform = `translate3d(0, ${relativeScroll * item.factor}px, 0)`;
-                        }
-                    }
-                });
-            });
-
-            const canvas = document.getElementById('particle-canvas');
-            if (canvas) {
-                const ctx = canvas.getContext('2d');
-                let particles = [];
-                const resize = () => { 
-                    if (canvas.parentElement) {
-                        canvas.width = canvas.parentElement.offsetWidth; 
-                        canvas.height = canvas.parentElement.offsetHeight; 
-                    }
-                };
-                class P {
-                    constructor() { this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height; this.s = Math.random() * 2 + 1; this.vx = Math.random() * 0.4 - 0.2; this.vy = Math.random() * 0.4 - 0.2; }
-                    upd() { this.x += this.vx; this.y += this.vy; if(this.x>canvas.width)this.x=0; if(this.x<0)this.x=canvas.width; if(this.y>canvas.height)this.y=0; if(this.y<0)this.y=canvas.height; }
-                    drw() { ctx.fillStyle = 'rgba(0,168,225,0.2)'; ctx.beginPath(); ctx.arc(this.x, this.y, this.s, 0, Math.PI*2); ctx.fill(); }
-                }
-                const init = () => { resize(); particles = Array.from({length: 80}, () => new P()); };
-                const loop = () => { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>{p.upd();p.drw();}); requestAnimationFrame(loop); };
-                init(); loop(); window.addEventListener('resize', init);
-            }
-        });
-    </script>
+    <!-- Alpine.js vía módulo en index.tsx para evitar conflictos -->
+    <script type="module" src="./index.tsx"></script>
 <script type="module" src="/index.tsx"></script>
 </body>
 </html>
