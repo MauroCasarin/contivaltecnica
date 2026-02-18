@@ -528,7 +528,7 @@
                 updateParallax();
             };
 
-            // --- MÓDULO: PARTÍCULAS ATMOSFÉRICAS ---
+            // --- MÓDULO: PARTÍCULAS ATMOSFÉRICAS CON INTERACCIÓN DE GIROSCOPIO ---
             const setupParticles = () => {
                 const canvas = document.getElementById('particle-canvas');
                 if (!canvas) return;
@@ -539,6 +539,12 @@
                 let particles = [];
                 let animationFrame;
                 
+                // Variables para el giroscopio
+                let tiltX = 0, tiltY = 0;
+                let targetTiltX = 0, targetTiltY = 0;
+                const TILT_STRENGTH = 1.2; // Intensidad del efecto
+                const DAMPING = 0.08;     // Suavizado del movimiento
+
                 const resize = () => {
                     const parent = canvas.parentElement;
                     if (parent) {
@@ -546,6 +552,40 @@
                         canvas.height = parent.offsetHeight;
                     }
                 };
+
+                // Manejador de orientación del dispositivo
+                const handleOrientation = (e) => {
+                    // gamma: eje X (inclinación lateral)
+                    // beta: eje Y (inclinación frontal)
+                    targetTiltX = (e.gamma || 0) * TILT_STRENGTH;
+                    targetTiltY = (e.beta || 0) * TILT_STRENGTH;
+                };
+
+                // Solicitud de permisos para iOS
+                const requestPermission = async () => {
+                    if (typeof DeviceOrientationEvent !== 'undefined' && 
+                        typeof DeviceOrientationEvent.requestPermission === 'function') {
+                        try {
+                            const response = await DeviceOrientationEvent.requestPermission();
+                            if (response === 'granted') {
+                                window.addEventListener('deviceorientation', handleOrientation);
+                            }
+                        } catch (err) {
+                            console.warn("Sensor de orientación no disponible o denegado.");
+                        }
+                    } else {
+                        window.addEventListener('deviceorientation', handleOrientation);
+                    }
+                };
+
+                // Activación por primera interacción del usuario (Requerido para sensores en iOS)
+                const interactionHandler = () => {
+                    requestPermission();
+                    document.removeEventListener('click', interactionHandler);
+                    document.removeEventListener('touchstart', interactionHandler);
+                };
+                document.addEventListener('click', interactionHandler);
+                document.addEventListener('touchstart', interactionHandler);
 
                 class Particle {
                     constructor() {
@@ -566,7 +606,10 @@
                     draw() {
                         if (!ctx) return;
                         ctx.fillStyle = `rgba(0,168,225,${this.alpha})`;
-                        ctx.beginPath(); ctx.arc(this.x, this.y, this.s, 0, Math.PI * 2); ctx.fill();
+                        ctx.beginPath(); 
+                        // Aplicamos el desplazamiento por inclinación de forma sutil en el dibujo
+                        ctx.arc(this.x + tiltX, this.y + tiltY, this.s, 0, Math.PI * 2); 
+                        ctx.fill();
                     }
                 }
 
@@ -580,6 +623,11 @@
 
                 const render = () => {
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    
+                    // Suavizado (Lerp) de la inclinación
+                    tiltX += (targetTiltX - tiltX) * DAMPING;
+                    tiltY += (targetTiltY - tiltY) * DAMPING;
+
                     particles.forEach(p => { p.update(); p.draw(); });
                     animationFrame = requestAnimationFrame(render);
                 };
