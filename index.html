@@ -312,7 +312,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <!-- TARJETA: AMONÍACO Y REFRIGERACIÓN (ACTUALIZADA) -->
+                    <!-- TARJETA: AMONÍACO Y REFRIGERACIÓN -->
                     <div 
                         x-data="{ showComparativa: false }"
                         @click="openModal = 'refrigeracion'" 
@@ -390,7 +390,7 @@
                         </div>
                     </div>
                     
-                    <!-- TARJETA: VÁLVULAS DE PROCESO -->
+                    <!-- TARJETA: VÁLVULAS DE PROCESO (MODIFICADA: BOTÓN COMPARATIVA) -->
                     <div 
                         x-data="{ showTabla: false }"
                         @click="openModal = 'valvulas'" 
@@ -405,11 +405,12 @@
                             <li class="flex items-start gap-x-2"><svg class="w-4 h-4 mt-0.5 text-brand-cyan flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M4.5 12.75l6 6 9-13.5" /></svg><span>KLINGER y SAUNDERS.</span></li>
                         </ul>
 
+                        <!-- Botón Simplificado -->
                         <button 
                             @click.stop="showTabla = !showTabla"
-                            class="mt-auto flex items-center justify-between w-full px-3 py-2 border border-brand-cyan/40 rounded-lg text-brand-cyan hover:bg-brand-cyan/10 transition-colors group"
+                            class="mt-auto flex items-center justify-between w-full px-4 py-2 border border-brand-cyan/40 rounded-lg text-brand-cyan hover:bg-brand-cyan/10 transition-all group"
                         >
-                            <span class="text-[11px] font-bold uppercase tracking-wider">Tabla Comparativa</span>
+                            <span class="text-[11px] font-bold uppercase tracking-[0.15em]">COMPARATIVA</span>
                             <svg :class="showTabla ? 'rotate-180' : ''" class="w-4 h-4 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                             </svg>
@@ -437,7 +438,7 @@
                                     </tr>
                                 </thead>
                                 <tbody class="text-slate-300 font-medium">
-                                    <tr class="border-b border-slate-700/40">
+                                    <tr class="border-b border-slate-700/40 bg-slate-800/40">
                                         <td class="py-2.5 pr-3 font-bold text-white sticky left-0 bg-slate-900 z-10">Industria Ideal</td>
                                         <td class="py-2.5 px-3">Oil & Gas, Química, Aire Comprimido.</td>
                                         <td class="py-2.5 px-3">Energía, Textil, Lavanderías Industriales.</td>
@@ -449,10 +450,10 @@
                                         <td class="py-2.5 px-3">Vapor, aceite térmico, agua sobrecalentada.</td>
                                         <td class="py-2.5 pl-3">Ácidos, lodos (slurry), leche, jarabes.</td>
                                     </tr>
-                                    <tr class="border-b border-slate-700/40">
+                                    <tr class="border-b border-slate-700/40 bg-slate-800/40">
                                         <td class="py-2.5 pr-3 font-bold text-white sticky left-0 bg-slate-900 z-10">Regulación (Control)</td>
                                         <td class="py-2.5 px-3">Mala (On/Off).</td>
-                                        <td class="py-2.5 px-3">Excelente.</td>
+                                        <td class="py-2.5 px-3 font-bold text-cyan-400">Excelente.</td>
                                         <td class="py-2.5 pl-3">Buena.</td>
                                     </tr>
                                     <tr class="border-b border-slate-700/40">
@@ -461,11 +462,11 @@
                                         <td class="py-2.5 px-3">Bajo (Re-empacable).</td>
                                         <td class="py-2.5 pl-3">Cambio de membrana.</td>
                                     </tr>
-                                    <tr class="border-b border-slate-700/40">
+                                    <tr class="border-b border-slate-700/40 bg-slate-800/40">
                                         <td class="py-2.5 pr-3 font-bold text-white sticky left-0 bg-slate-900 z-10">Limpieza (Higiene)</td>
                                         <td class="py-2.5 px-3">Baja.</td>
                                         <td class="py-2.5 px-3">Media.</td>
-                                        <td class="py-2.5 pl-3">Muy limpia (Aséptica).</td>
+                                        <td class="py-2.5 pl-3 font-bold text-cyan-400">Muy limpia (Aséptica).</td>
                                     </tr>
                                     <tr>
                                         <td class="py-2.5 pr-3 font-bold text-white sticky left-0 bg-slate-900 z-10">Punto Fuerte</td>
