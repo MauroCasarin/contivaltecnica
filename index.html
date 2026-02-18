@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
 <head>
@@ -305,21 +304,21 @@
         </div>
     </footer>
 
-    <!-- ===== SISTEMA DE MODALES (CORREGIDO) ===== -->
+    <!-- ===== SISTEMA DE MODALES (DETALLES E INDUSTRIAS) ===== -->
     <div 
         x-show="openModal" 
         x-cloak
         x-transition:enter="transition ease-out duration-300"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
+        x-transition:enter-start="opacity-0 scale-95"
+        x-transition:enter-end="opacity-100 scale-100"
         x-transition:leave="transition ease-in duration-200"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0"
-        class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/90 backdrop-blur-md"
+        x-transition:leave-start="opacity-100 scale-100"
+        x-transition:leave-end="opacity-0 scale-95"
+        class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/95 backdrop-blur-xl"
     >
         <div 
             @click.away="openModal = null" 
-            class="relative w-full max-w-xl bg-slate-800 text-white rounded-lg shadow-2xl ring-1 ring-brand-cyan/50 flex flex-col max-h-[90vh] overflow-hidden"
+            class="relative w-full max-w-xl bg-slate-800 text-white rounded-lg shadow-2xl ring-1 ring-brand-cyan/40 flex flex-col max-h-[90vh] overflow-hidden"
         >
             <div class="flex items-start justify-between p-6 border-b border-slate-700">
                 <h3 class="text-xl font-bold text-brand-cyan uppercase tracking-wide" 
@@ -332,26 +331,78 @@
                     <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                 </button>
             </div>
-            <div class="p-6 overflow-y-auto space-y-6">
-                <!-- Contenido Dinámico -->
-                <div x-show="openModal === 'refrigeracion'" x-cloak class="space-y-4">
-                    <p class="text-brand-cyan font-bold text-sm tracking-widest uppercase">Válvulas L.E. y L.P.</p>
-                    <p class="text-slate-300 leading-relaxed">Especialistas en sistemas de control de amoníaco con un rango de 3/8" a 10". Ingeniería para entornos de alta exigencia térmica en plantas frigoríficas e industriales.</p>
+            <div class="p-6 overflow-y-auto space-y-8">
+                
+                <!-- Contenido: Amoníaco -->
+                <div x-show="openModal === 'refrigeracion'" x-cloak class="space-y-6">
+                    <div class="space-y-3">
+                        <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Línea de Productos</p>
+                        <p class="text-slate-200 text-sm leading-relaxed">Sistemas avanzados para el control de amoníaco (R-717). Amplio stock en válvulas L.E. y L.P. en rangos desde 3/8" hasta 10". Diseñadas para soportar condiciones térmicas extremas con máxima eficiencia energética.</p>
+                    </div>
+                    <div class="space-y-3 pt-2">
+                        <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Industrias de Aplicación</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Frigoríficos</span>
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Alimenticia</span>
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Bebidas</span>
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Logística de Frío</span>
+                        </div>
+                    </div>
                 </div>
-                <div x-show="openModal === 'valvulas'" x-cloak class="space-y-4">
-                    <p class="text-brand-cyan font-bold text-sm tracking-widest uppercase">Tecnología de Flujo</p>
-                    <p class="text-slate-300 leading-relaxed">Distribución de válvulas KLINGER y SAUNDERS. Soluciones específicas para vapor y fluidos industriales críticos, garantizando estanqueidad total y máxima seguridad operativa.</p>
+
+                <!-- Contenido: Válvulas -->
+                <div x-show="openModal === 'valvulas'" x-cloak class="space-y-6">
+                    <div class="space-y-3">
+                        <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Línea de Productos</p>
+                        <p class="text-slate-200 text-sm leading-relaxed">Distribución oficial de válvulas KLINGER (esféricas y pistón) y SAUNDERS (diafragma). Soluciones para el control de vapor saturado, fluidos corrosivos y de alta viscosidad.</p>
+                    </div>
+                    <div class="space-y-3 pt-2">
+                        <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Industrias de Aplicación</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Farmacéutica</span>
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Química</span>
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Petroquímica</span>
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Generación de Energía</span>
+                        </div>
+                    </div>
                 </div>
-                <div x-show="openModal === 'instrumentacion'" x-cloak class="space-y-4">
-                    <p class="text-brand-cyan font-bold text-sm tracking-widest uppercase">Precisión de Medida</p>
-                    <p class="text-slate-300 leading-relaxed">Manómetros BEYCA-CIMPA en acero inoxidable y termómetros industriales de alta resolución para un monitoreo constante y preciso de todas las variables de planta.</p>
+
+                <!-- Contenido: Instrumentación -->
+                <div x-show="openModal === 'instrumentacion'" x-cloak class="space-y-6">
+                    <div class="space-y-3">
+                        <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Línea de Productos</p>
+                        <p class="text-slate-200 text-sm leading-relaxed">Gama completa de manómetros BEYCA-CIMPA en acero inoxidable y bronce. Termómetros industriales de lectura directa y remota para control de procesos térmicos de precisión.</p>
+                    </div>
+                    <div class="space-y-3 pt-2">
+                        <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Industrias de Aplicación</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Laboratorios</span>
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Manufactura</span>
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Control de Calidad</span>
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Plantas de Proceso</span>
+                        </div>
+                    </div>
                 </div>
-                <div x-show="openModal === 'suministros'" x-cloak class="space-y-4">
-                    <p class="text-brand-cyan font-bold text-sm tracking-widest uppercase">Infraestructura Crítica</p>
-                    <p class="text-slate-300 leading-relaxed">Accesorios para soldar de la línea CURVO-SOLD, bridas normalizadas ASA 150-600 y una gama completa de suministros forjados para redes industriales de alta presión.</p>
+
+                <!-- Contenido: Suministros -->
+                <div x-show="openModal === 'suministros'" x-cloak class="space-y-6">
+                    <div class="space-y-3">
+                        <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Línea de Productos</p>
+                        <p class="text-slate-200 text-sm leading-relaxed">Conexiones integrales para redes industriales. Accesorios CURVO-SOLD, bridas normalizadas bajo normas ANSI/ASA, y accesorios forjados para alta presión y temperatura.</p>
+                    </div>
+                    <div class="space-y-3 pt-2">
+                        <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Industrias de Aplicación</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Mantenimiento Industrial</span>
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Montajes Mecánicos</span>
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Empresas de Ingeniería</span>
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Redes de Vapor y Gas</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="pt-4">
-                    <button @click="openModal = null" class="w-full bg-slate-700 hover:bg-brand-blue text-white font-bold py-3 px-4 rounded transition-all duration-300 uppercase text-xs tracking-widest">Cerrar Detalle</button>
+
+                <div class="pt-6 border-t border-slate-700">
+                    <button @click="openModal = null" class="w-full bg-brand-blue hover:bg-brand-cyan text-white font-bold py-4 px-4 rounded transition-all duration-300 uppercase text-xs tracking-widest shadow-lg">Cerrar Información</button>
                 </div>
             </div>
         </div>
