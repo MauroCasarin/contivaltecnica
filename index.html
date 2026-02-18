@@ -9,15 +9,17 @@
     <!-- REQUISITO IMPRESCINDIBLE: Tailwind CSS vía CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Google Fonts: Inter para una tipografía moderna y legible -->
+    <!-- Alpine.js - Cargado en head con defer para estabilidad de componentes -->
+    <script src="//unpkg.com/alpinejs" defer></script>
+
+    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Animate.css for animations -->
+    <!-- Animate.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
-    <!-- Configuración personalizada de Tailwind CSS -->
     <script>
         tailwind.config = {
             theme: {
@@ -36,6 +38,8 @@
         }
     </script>
     <style>
+        [x-cloak] { display: none !important; }
+        
         .wave-g > use {
             animation: move-forever 40s cubic-bezier(.55,.5,.45,.5) infinite;
         }
@@ -72,26 +76,23 @@
     </style>
 <link rel="stylesheet" href="/index.css">
 </head>
-<body class="font-sans text-slate-800 antialiased bg-white" x-data="{ openModal: null, mobileMenu: false }">
+<body class="font-sans text-slate-800 antialiased bg-white" x-data="{ openModal: null, mobileMenu: false }" @keydown.escape.window="openModal = null">
     
     <!-- ===== HEADER ===== -->
     <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 shadow-sm transition-all duration-300">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
-                <!-- Logo a Color -->
                 <div class="flex-shrink-0">
                     <a href="#inicio" class="block">
                         <img class="h-10 w-auto" src="https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/ec7bd95b784026814da2aa44ed944de09efad62c/contivaltecnica%20logo.svg" alt="Logo Contival Técnica">
                     </a>
                 </div>
-                <!-- Navegación Desktop -->
                 <nav class="hidden md:flex items-center space-x-8">
                     <a href="#inicio" class="text-sm font-bold text-brand-dark hover:text-brand-blue transition-colors uppercase tracking-wider">Inicio</a>
                     <a href="#distribucion" class="text-sm font-bold text-brand-dark hover:text-brand-blue transition-colors uppercase tracking-wider">Distribución</a>
-                    <a href="#productos" class="text-sm font-bold text-brand-dark hover:text-brand-blue transition-colors uppercase tracking-wider">Productos</a>
+                    <a href="#especialidades" class="text-sm font-bold text-brand-dark hover:text-brand-blue transition-colors uppercase tracking-wider">Especialidades</a>
                     <a href="#contacto" class="text-sm font-bold text-brand-dark hover:text-brand-blue transition-colors uppercase tracking-wider">Contacto</a>
                 </nav>
-                <!-- Botón Móvil -->
                 <div class="md:hidden">
                     <button @click="mobileMenu = !mobileMenu" class="p-2 text-brand-dark hover:text-brand-blue">
                         <svg x-show="!mobileMenu" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
@@ -100,12 +101,11 @@
                 </div>
             </div>
         </div>
-        <!-- Menú Móvil -->
-        <div x-show="mobileMenu" x-transition @click.away="mobileMenu = false" class="md:hidden bg-white border-t border-slate-100 py-4 shadow-xl" style="display:none;">
+        <div x-show="mobileMenu" x-transition x-cloak @click.away="mobileMenu = false" class="md:hidden bg-white border-t border-slate-100 py-4 shadow-xl">
             <div class="flex flex-col space-y-4 px-4">
                 <a href="#inicio" @click="mobileMenu = false" class="text-sm font-bold text-brand-dark uppercase tracking-wider">Inicio</a>
                 <a href="#distribucion" @click="mobileMenu = false" class="text-sm font-bold text-brand-dark uppercase tracking-wider">Distribución</a>
-                <a href="#productos" @click="mobileMenu = false" class="text-sm font-bold text-brand-dark uppercase tracking-wider">Productos</a>
+                <a href="#especialidades" @click="mobileMenu = false" class="text-sm font-bold text-brand-dark uppercase tracking-wider">Especialidades</a>
                 <a href="#contacto" @click="mobileMenu = false" class="text-sm font-bold text-brand-dark uppercase tracking-wider">Contacto</a>
             </div>
         </div>
@@ -141,7 +141,7 @@
             </div>
         </section>
 
-        <!-- ===== SECCIÓN DE DISTRIBUCIÓN (ESTILO REFINADO) ===== -->
+        <!-- ===== SECCIÓN DE DISTRIBUCIÓN ===== -->
         <section id="distribucion" class="pt-12 bg-slate-50 relative pb-24 scroll-mt-24">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="max-w-3xl mx-auto">
@@ -152,31 +152,22 @@
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <!-- SARCO -->
                         <div class="distributor-item p-4 rounded-r shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
                             <h3 class="text-brand-blue font-bold text-sm uppercase mb-0.5 tracking-tight">SARCO</h3>
                             <p class="text-slate-500 text-[11px] font-medium leading-tight">Línea completa de productos</p>
                         </div>
-                        
-                        <!-- JEFFERSON -->
                         <div class="distributor-item p-4 rounded-r shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
                             <h3 class="text-brand-blue font-bold text-sm uppercase mb-0.5 tracking-tight">JEFFERSON</h3>
                             <p class="text-slate-500 text-[11px] font-medium leading-tight">Válvulas solenoide</p>
                         </div>
-                        
-                        <!-- SAUNDERS -->
                         <div class="distributor-item p-4 rounded-r shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
                             <h3 class="text-brand-blue font-bold text-sm uppercase mb-0.5 tracking-tight">SAUNDERS</h3>
                             <p class="text-slate-500 text-[11px] font-medium leading-tight">Válvulas a diafragma</p>
                         </div>
-                        
-                        <!-- KLINGER -->
                         <div class="distributor-item p-4 rounded-r shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
                             <h3 class="text-brand-blue font-bold text-sm uppercase mb-0.5 tracking-tight">KLINGER</h3>
                             <p class="text-slate-500 text-[11px] font-medium leading-tight">Válvulas y repuestos</p>
                         </div>
-                        
-                        <!-- BEYCA-CIMPA -->
                         <div class="distributor-item p-4 rounded-r shadow-[0_1px_3px_rgba(0,0,0,0.02)] md:col-span-2">
                             <h3 class="text-brand-blue font-bold text-sm uppercase mb-0.5 tracking-tight">BEYCA-CIMPA</h3>
                             <p class="text-slate-500 text-[11px] font-medium leading-tight">Manómetros y termómetros</p>
@@ -185,7 +176,6 @@
                 </div>
             </div>
             
-            <!-- Separador Wave a Slate -->
             <div class="absolute bottom-0 left-0 w-full h-[5vw] min-h-[80px] overflow-hidden" aria-hidden="true">
                 <svg class="absolute bottom-0 left-0 w-[200%] h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
                     <defs><path id="gentle-wave-path-slate" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" /></defs>
@@ -199,16 +189,16 @@
             </div>
         </section>
 
-        <!-- ===== SECCIÓN DE PRODUCTOS ===== -->
-        <section id="productos" class="pt-16 bg-slate-900 relative pb-32 scroll-mt-24">
+        <!-- ===== SECCIÓN DE ESPECIALIDADES TÉCNICAS ===== -->
+        <section id="especialidades" class="pt-16 bg-slate-900 relative pb-32 scroll-mt-24">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
-                     <h2 class="text-2xl font-extrabold text-white tracking-tight sm:text-3xl uppercase">Soluciones Industriales</h2>
+                     <h2 class="text-2xl font-extrabold text-white tracking-tight sm:text-3xl uppercase">Especialidades Técnicas</h2>
                     <p class="mt-4 max-w-xl mx-auto text-base text-slate-400">Ingeniería aplicada para procesos críticos.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <!-- Refrigeración -->
-                    <div @click="openModal = 'refrigeracion'" class="product-card bg-slate-900 rounded-xl shadow-2xl p-6 ring-1 ring-slate-800 hover:ring-brand-cyan transition-all duration-300 flex flex-col cursor-pointer hover:-translate-y-1">
+                    <div @click.stop="openModal = 'refrigeracion'" class="product-card bg-slate-900 rounded-xl shadow-2xl p-6 ring-1 ring-slate-800 hover:ring-brand-cyan transition-all duration-300 flex flex-col cursor-pointer hover:-translate-y-1">
                         <div class="mb-4">
                             <svg class="w-8 h-8 text-brand-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v18m0-18l-3 3m3-3l3 3m-3 15l-3-3m3 3l3-3M3 12h18M3 12l3-3m-3 3l3 3m15-3l-3-3m3 3l-3 3" /></svg>
                         </div>
@@ -219,7 +209,7 @@
                         </ul>
                     </div>
                     <!-- Válvulas -->
-                    <div @click="openModal = 'valvulas'" class="product-card bg-slate-900 rounded-xl shadow-2xl p-6 ring-1 ring-slate-800 hover:ring-brand-cyan transition-all duration-300 flex flex-col cursor-pointer hover:-translate-y-1">
+                    <div @click.stop="openModal = 'valvulas'" class="product-card bg-slate-900 rounded-xl shadow-2xl p-6 ring-1 ring-slate-800 hover:ring-brand-cyan transition-all duration-300 flex flex-col cursor-pointer hover:-translate-y-1">
                         <div class="mb-4">
                             <svg class="w-8 h-8 text-brand-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
                         </div>
@@ -230,7 +220,7 @@
                         </ul>
                     </div>
                     <!-- Instrumentación -->
-                    <div @click="openModal = 'instrumentacion'" class="product-card bg-slate-900 rounded-xl shadow-2xl p-6 ring-1 ring-slate-800 hover:ring-brand-cyan transition-all duration-300 flex flex-col cursor-pointer hover:-translate-y-1">
+                    <div @click.stop="openModal = 'instrumentacion'" class="product-card bg-slate-900 rounded-xl shadow-2xl p-6 ring-1 ring-slate-800 hover:ring-brand-cyan transition-all duration-300 flex flex-col cursor-pointer hover:-translate-y-1">
                         <div class="mb-4">
                             <svg class="w-8 h-8 text-brand-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6zM13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" /></svg>
                         </div>
@@ -241,9 +231,9 @@
                         </ul>
                     </div>
                     <!-- Suministros -->
-                    <div @click="openModal = 'suministros'" class="product-card bg-slate-900 rounded-xl shadow-2xl p-6 ring-1 ring-slate-800 hover:ring-brand-cyan transition-all duration-300 flex flex-col cursor-pointer hover:-translate-y-1">
+                    <div @click.stop="openModal = 'suministros'" class="product-card bg-slate-900 rounded-xl shadow-2xl p-6 ring-1 ring-slate-800 hover:ring-brand-cyan transition-all duration-300 flex flex-col cursor-pointer hover:-translate-y-1">
                         <div class="mb-4">
-                            <svg class="w-8 h-8 text-brand-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.423 20.11l3.29-1.212m-3.29 1.212a9.25 9.25 0 01-8.132-8.131m8.132 8.131l-.499-3.31m3.789-1.213L16.485 19l-2.43 2.903m3.235-4.516a9.25 9.25 0 01-8.132-8.131m8.132 8.131l.499-3.31m-3.789 1.213L7.515 5l2.43-2.903m3.235 4.516a9.25 9.25 0 018.132 8.131m-8.132-8.131l-.499 3.31" /></svg>
+                            <svg class="w-8 h-8 text-brand-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.423 20.11l3.29-1.212m-3.29 1.212a9.25 9.25 0 01-8.132-8.131m8.132 8.131l-.499-3.31m3.789-1.213L16.485 19l-2.43 2.903m3.235-4.516a9.25 9.25 0 01-8.132-8.131m8.132 8.131l.499-3.31" /></svg>
                         </div>
                         <h3 class="text-lg font-bold text-white mb-3">Suministros</h3>
                         <ul class="space-y-2 text-sm text-slate-400">
@@ -253,7 +243,7 @@
                     </div>
                 </div>
             </div>
-            <!-- Separador Wave a Dark -->
+            
             <div class="absolute bottom-0 left-0 w-full h-[5vw] min-h-[80px] overflow-hidden" aria-hidden="true">
                 <svg class="absolute bottom-0 left-0 w-[200%] h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
                     <defs><path id="gentle-wave-path-dark" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" /></defs>
@@ -299,7 +289,6 @@
     <footer class="bg-brand-dark relative overflow-hidden">
         <div id="footer-background" class="absolute inset-0 z-0 opacity-10" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center; will-change: transform;"></div>
         <div class="absolute inset-0 z-0 bg-brand-dark/90"></div>
-    
         <div class="relative z-10">
             <div class="bg-slate-700/70 backdrop-blur-sm py-6">
                 <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -308,7 +297,6 @@
                     </a>
                 </div>
             </div>
-    
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
                 <div class="border-t border-slate-700 pt-4 text-center">
                      <p class="text-[10px] text-slate-400 tracking-wider">WEB: <a href="https://www.instagram.com/3d_mc_3d/" target="_blank" class="font-semibold text-slate-300 hover:text-brand-cyan">Mauro Casarin</a></p>
@@ -317,37 +305,58 @@
         </div>
     </footer>
 
-    <!-- ===== MODALES DE DETALLES ===== -->
-    <template x-if="openModal">
-        <div class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm" x-transition @keydown.escape.window="openModal = null">
-            <div @click.away="openModal = null" class="relative w-full max-w-xl bg-slate-800 text-white rounded-lg shadow-2xl ring-1 ring-brand-cyan/50 flex flex-col max-h-[80vh]">
-                <div class="flex items-start justify-between p-5 border-b border-slate-700">
-                    <h3 class="text-xl font-bold text-brand-cyan uppercase tracking-wide" x-text="openModal === 'refrigeracion' ? 'Amoníaco y Refrigeración' : openModal === 'valvulas' ? 'Válvulas de Proceso' : openModal === 'instrumentacion' ? 'Instrumentación' : 'Suministros'"></h3>
-                    <button @click="openModal = null" class="text-slate-400 hover:text-white text-2xl">&times;</button>
+    <!-- ===== SISTEMA DE MODALES (CORREGIDO) ===== -->
+    <div 
+        x-show="openModal" 
+        x-cloak
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/90 backdrop-blur-md"
+    >
+        <div 
+            @click.away="openModal = null" 
+            class="relative w-full max-w-xl bg-slate-800 text-white rounded-lg shadow-2xl ring-1 ring-brand-cyan/50 flex flex-col max-h-[90vh] overflow-hidden"
+        >
+            <div class="flex items-start justify-between p-6 border-b border-slate-700">
+                <h3 class="text-xl font-bold text-brand-cyan uppercase tracking-wide" 
+                    x-text="openModal === 'refrigeracion' ? 'Amoníaco y Refrigeración' : 
+                           openModal === 'valvulas' ? 'Válvulas de Proceso' : 
+                           openModal === 'instrumentacion' ? 'Instrumentación' : 
+                           'Suministros'">
+                </h3>
+                <button @click="openModal = null" class="text-slate-400 hover:text-white transition-colors">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto space-y-6">
+                <!-- Contenido Dinámico -->
+                <div x-show="openModal === 'refrigeracion'" x-cloak class="space-y-4">
+                    <p class="text-brand-cyan font-bold text-sm tracking-widest uppercase">Válvulas L.E. y L.P.</p>
+                    <p class="text-slate-300 leading-relaxed">Especialistas en sistemas de control de amoníaco con un rango de 3/8" a 10". Ingeniería para entornos de alta exigencia térmica en plantas frigoríficas e industriales.</p>
                 </div>
-                <div class="p-5 overflow-y-auto">
-                    <div x-show="openModal === 'refrigeracion'" class="space-y-4 text-slate-300 text-sm">
-                        <p class="font-semibold text-white">Válvulas L.E. y L.P.</p>
-                        <p>Especialistas en sistemas de control de amoníaco con un rango de 3/8" a 10". Ingeniería para entornos de alta exigencia térmica.</p>
-                    </div>
-                    <div x-show="openModal === 'valvulas'" class="space-y-4 text-slate-300 text-sm">
-                        <p class="font-semibold text-white">Esféricas, KLINGER y SAUNDERS</p>
-                        <p>Válvulas diseñadas para vapor y fluidos industriales críticos, garantizando estanqueidad y seguridad operativa.</p>
-                    </div>
-                    <div x-show="openModal === 'instrumentacion'" class="space-y-4 text-slate-300 text-sm">
-                        <p class="font-semibold text-white">Precisión Industrial</p>
-                        <p>Manómetros en acero inoxidable y termómetros de alta precisión para monitoreo constante de planta.</p>
-                    </div>
-                    <div x-show="openModal === 'suministros'" class="space-y-4 text-slate-300 text-sm">
-                        <p class="font-semibold text-white">Conducción Segura</p>
-                        <p>Accesorios para soldar CURVO-SOLD, bridas ASA 150-600 y suministros de alta calidad para redes industriales.</p>
-                    </div>
+                <div x-show="openModal === 'valvulas'" x-cloak class="space-y-4">
+                    <p class="text-brand-cyan font-bold text-sm tracking-widest uppercase">Tecnología de Flujo</p>
+                    <p class="text-slate-300 leading-relaxed">Distribución de válvulas KLINGER y SAUNDERS. Soluciones específicas para vapor y fluidos industriales críticos, garantizando estanqueidad total y máxima seguridad operativa.</p>
+                </div>
+                <div x-show="openModal === 'instrumentacion'" x-cloak class="space-y-4">
+                    <p class="text-brand-cyan font-bold text-sm tracking-widest uppercase">Precisión de Medida</p>
+                    <p class="text-slate-300 leading-relaxed">Manómetros BEYCA-CIMPA en acero inoxidable y termómetros industriales de alta resolución para un monitoreo constante y preciso de todas las variables de planta.</p>
+                </div>
+                <div x-show="openModal === 'suministros'" x-cloak class="space-y-4">
+                    <p class="text-brand-cyan font-bold text-sm tracking-widest uppercase">Infraestructura Crítica</p>
+                    <p class="text-slate-300 leading-relaxed">Accesorios para soldar de la línea CURVO-SOLD, bridas normalizadas ASA 150-600 y una gama completa de suministros forjados para redes industriales de alta presión.</p>
+                </div>
+                <div class="pt-4">
+                    <button @click="openModal = null" class="w-full bg-slate-700 hover:bg-brand-blue text-white font-bold py-3 px-4 rounded transition-all duration-300 uppercase text-xs tracking-widest">Cerrar Detalle</button>
                 </div>
             </div>
         </div>
-    </template>
+    </div>
     
-    <script src="//unpkg.com/alpinejs" defer></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const animatedElements = document.querySelectorAll('.product-card, .distributor-item');
