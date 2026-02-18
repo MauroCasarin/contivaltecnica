@@ -131,7 +131,8 @@
             <div class="flex items-center justify-between h-20">
                 <div class="flex-shrink-0">
                     <a href="#inicio" class="block">
-                        <img class="h-10 w-auto" src="https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/ec7bd95b784026814da2aa44ed944ed944de09efad62c/contivaltecnica%20logo.svg" alt="Logo Contival Técnica">
+                        <!-- URL Corregida -->
+                        <img class="h-10 w-auto" src="https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/6e42fc8dcfc1dc1095324dfe61cd4dab4a7799ba/contivaltecnica%20logo.svg" alt="Logo Contival Técnica">
                     </a>
                 </div>
                 <nav class="hidden md:flex items-center space-x-8">
@@ -162,7 +163,6 @@
         <!-- ===== HERO SECTION ===== -->
         <section id="inicio" class="relative text-white overflow-hidden scroll-mt-20">
             <canvas id="particle-canvas"></canvas>
-            <!-- Ajuste scale-150 para asegurar cobertura completa durante el desplazamiento -->
             <div id="hero-background" class="absolute inset-0 z-0 w-full h-full scale-150" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center; will-change: transform;"></div>
             <div class="absolute inset-0 z-0 bg-black/60"></div>
             <div class="absolute inset-0 z-0 bg-gradient-to-br from-brand-blue/40 via-brand-cyan/20 to-brand-dark/60"></div>
@@ -231,7 +231,6 @@
                         </h2>
                     </div>
                     
-                    <!-- Skeleton Container -->
                     <div x-show="loadingDist" class="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <template x-for="i in 5">
                             <div class="p-4 rounded-r bg-white border-l-2 border-slate-200 shadow-sm flex flex-col gap-2">
@@ -241,7 +240,6 @@
                         </template>
                     </div>
 
-                    <!-- Real Content -->
                     <div x-show="!loadingDist" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" class="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <div class="distributor-item p-4 rounded-r shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
                             <h3 class="text-brand-blue font-bold text-sm uppercase mb-0.5 tracking-tight">SARCO</h3>
@@ -282,7 +280,6 @@
 
         <!-- ===== ESPECIALIDADES TÉCNICAS ===== -->
         <section id="especialidades" class="bg-slate-900 relative pb-32 scroll-mt-24 overflow-hidden min-h-[800px] flex flex-col justify-center">
-            <!-- Ajuste scale-150 -->
             <div id="especialidades-background" class="absolute inset-0 z-0 opacity-40 scale-150" 
                  style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo2.jpg'); background-size: cover; background-position: center top; will-change: transform;">
             </div>
@@ -297,7 +294,6 @@
                     <p class="mt-4 max-w-xl mx-auto text-lg text-white font-bold drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">Ingeniería aplicada para procesos críticos.</p>
                 </div>
 
-                <!-- Skeleton Container -->
                 <div x-show="loadingSpec" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <template x-for="i in 4">
                         <div class="bg-slate-900/60 backdrop-blur-md rounded-xl p-6 ring-1 ring-slate-700 flex flex-col gap-4">
@@ -311,9 +307,7 @@
                     </template>
                 </div>
 
-                <!-- Real Content -->
                 <div x-show="!loadingSpec" x-transition:enter="transition ease-out duration-700" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <!-- Refrigeración -->
                     <div @click.stop="openModal = 'refrigeracion'" class="product-card bg-slate-900/85 backdrop-blur-md rounded-xl shadow-2xl p-6 ring-1 ring-slate-700 hover:ring-brand-cyan transition-all duration-300 flex flex-col cursor-pointer hover:-translate-y-1">
                         <div class="mb-4">
                             <svg class="w-8 h-8 text-brand-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v18m0-18l-3 3m3-3l3 3m-3 15l-3-3m3 3l3-3M3 12h18M3 12l3-3m-3 3l3 3m15-3l-3-3m3 3l-3 3" /></svg>
@@ -324,7 +318,6 @@
                             <li class="flex items-start gap-x-2"><svg class="w-4 h-4 mt-0.5 text-brand-cyan flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M4.5 12.75l6 6 9-13.5" /></svg><span>Hasta 10 pulgadas.</span></li>
                         </ul>
                     </div>
-                    <!-- Válvulas -->
                     <div @click.stop="openModal = 'valvulas'" class="product-card bg-slate-900/85 backdrop-blur-md rounded-xl shadow-2xl p-6 ring-1 ring-slate-700 hover:ring-brand-cyan transition-all duration-300 flex flex-col cursor-pointer hover:-translate-y-1">
                         <div class="mb-4">
                             <svg class="w-8 h-8 text-brand-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
@@ -335,7 +328,6 @@
                             <li class="flex items-start gap-x-2"><svg class="w-4 h-4 mt-0.5 text-brand-cyan flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M4.5 12.75l6 6 9-13.5" /></svg><span>KLINGER y SAUNDERS.</span></li>
                         </ul>
                     </div>
-                    <!-- Instrumentación -->
                     <div @click.stop="openModal = 'instrumentacion'" class="product-card bg-slate-900/85 backdrop-blur-md rounded-xl shadow-2xl p-6 ring-1 ring-slate-700 hover:ring-brand-cyan transition-all duration-300 flex flex-col cursor-pointer hover:-translate-y-1">
                         <div class="mb-4">
                             <svg class="w-8 h-8 text-brand-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6zM13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" /></svg>
@@ -346,7 +338,6 @@
                             <li class="flex items-start gap-x-2"><svg class="w-4 h-4 mt-0.5 text-brand-cyan flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M4.5 12.75l6 6 9-13.5" /></svg><span>Termómetros industriales.</span></li>
                         </ul>
                     </div>
-                    <!-- Suministros -->
                     <div @click.stop="openModal = 'suministros'" class="product-card bg-slate-900/85 backdrop-blur-md rounded-xl shadow-2xl p-6 ring-1 ring-slate-700 hover:ring-brand-cyan transition-all duration-300 flex flex-col cursor-pointer hover:-translate-y-1">
                         <div class="mb-4">
                             <svg class="w-8 h-8 text-brand-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.423 20.11l3.29-1.212m-3.29 1.212a9.25 9.25 0 01-8.132-8.131m8.132 8.131l-.499-3.31m3.789-1.213L16.485 19l-2.43 2.903m3.235-4.516a9.25 9.25 0 01-8.132-8.131m8.132 8.131l.499-3.31" /></svg>
@@ -403,14 +394,14 @@
 
     <!-- ===== FOOTER ===== -->
     <footer class="bg-brand-dark relative overflow-hidden">
-        <!-- Ajuste scale-150 -->
         <div id="footer-background" class="absolute inset-0 z-0 opacity-10 scale-150" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center; will-change: transform;"></div>
         <div class="absolute inset-0 z-0 bg-brand-dark/90"></div>
         <div class="relative z-10">
             <div class="bg-slate-700/70 backdrop-blur-sm py-6">
                 <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <a href="#inicio" class="inline-block transition-transform hover:scale-105">
-                         <img class="h-10 w-auto logo-white" src="https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/ec7bd95b784026814da2aa44ed944de09efad62c/contivaltecnica%20logo.svg" alt="Logo Contival Técnica">
+                         <!-- URL Corregida -->
+                         <img class="h-10 w-auto logo-white" src="https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/6e42fc8dcfc1dc1095324dfe61cd4dab4a7799ba/contivaltecnica%20logo.svg" alt="Logo Contival Técnica">
                     </a>
                 </div>
             </div>
