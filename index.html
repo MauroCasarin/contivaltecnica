@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contival Técnica | Control Avanzado de Fluidos</title>
+    <title>Contival Técnica | Distribuidora de Productos</title>
     
     <!-- REQUISITO IMPRESCINDIBLE: Tailwind CSS vía CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -17,7 +17,7 @@
     <!-- Animate.css for animations -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
-    <!-- Configuración personalizada de Tailwind CSS basada en el logo -->
+    <!-- Configuración personalizada de Tailwind CSS -->
     <script>
         tailwind.config = {
             theme: {
@@ -26,43 +26,27 @@
                         sans: ['Inter', 'sans-serif'],
                     },
                     colors: {
-                        'brand-dark': '#2a2f3b',   // Gris oscuro del logo
-                        'brand-blue': '#0071bc',   // Azul principal del logo
-                        'brand-cyan': '#00a8e1',   // Cian/Azul claro del logo
-                        'slate-900': '#0f172a',    // Consistent slate color
+                        'brand-dark': '#2a2f3b',
+                        'brand-blue': '#0071bc',
+                        'brand-cyan': '#00a8e1',
+                        'slate-900': '#0f172a',
                     }
                 }
             }
         }
     </script>
-    <!-- Custom styles for hero effects -->
     <style>
         .wave-g > use {
             animation: move-forever 40s cubic-bezier(.55,.5,.45,.5) infinite;
         }
-        .wave-g > use:nth-child(1) {
-            animation-delay: -2s;
-            animation-duration: 15s;
-        }
-        .wave-g > use:nth-child(2) {
-            animation-delay: -3s;
-            animation-duration: 20s;
-        }
-        .wave-g > use:nth-child(3) {
-            animation-delay: -4s;
-            animation-duration: 25s;
-        }
-        .wave-g > use:nth-child(4) {
-            animation-delay: -5s;
-            animation-duration: 35s;
-        }
+        .wave-g > use:nth-child(1) { animation-delay: -2s; animation-duration: 15s; }
+        .wave-g > use:nth-child(2) { animation-delay: -3s; animation-duration: 20s; }
+        .wave-g > use:nth-child(3) { animation-delay: -4s; animation-duration: 25s; }
+        .wave-g > use:nth-child(4) { animation-delay: -5s; animation-duration: 35s; }
+        
         @keyframes move-forever {
-            0% {
-                transform: translate3d(-90px,0,0);
-            }
-            100% { 
-                transform: translate3d(85px,0,0);
-            }
+            0% { transform: translate3d(-90px,0,0); }
+            100% { transform: translate3d(85px,0,0); }
         }
         #particle-canvas {
             position: absolute;
@@ -72,96 +56,71 @@
             height: 100%;
             z-index: 10;
         }
-        /* Filter to make the logo white */
         .logo-white {
             filter: brightness(0) invert(1);
         }
     </style>
 <link rel="stylesheet" href="/index.css">
 </head>
-<body class="font-sans text-slate-800 antialiased bg-white" x-data="{ openModal: null }">
+<body class="font-sans text-slate-800 antialiased bg-white" x-data="{ openModal: null, mobileMenu: false }">
     
     <!-- ===== HEADER ===== -->
-    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm relative overflow-hidden" x-data="{ open: false }">
-        <!-- Full-width animated background -->
-        <div class="absolute inset-0 z-0 opacity-80" style="filter: blur(10px);">
-            <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 10 150 28" preserveAspectRatio="none">
-                <g class="wave-g">
-                    <use xlink:href="#gentle-wave-path" x="48" y="0" fill="rgba(226, 232, 240, 0.7)" />
-                    <use xlink:href="#gentle-wave-path" x="48" y="3" fill="rgba(203, 213, 225, 0.5)" />
-                    <use xlink:href="#gentle-wave-path" x="48" y="5" fill="rgba(148, 163, 184, 0.3)" />
-                </g>
-            </svg>
-        </div>
-
-        <!-- Header Content -->
-        <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
+    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 shadow-sm transition-all duration-300">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
-                <!-- Logo -->
+                <!-- Logo a Color -->
                 <div class="flex-shrink-0">
-                    <a href="#" aria-label="Página de inicio de Contival Técnica">
+                    <a href="#inicio" class="block">
                         <img class="h-10 w-auto" src="https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/ec7bd95b784026814da2aa44ed944de09efad62c/contivaltecnica%20logo.svg" alt="Logo Contival Técnica">
                     </a>
                 </div>
                 <!-- Navegación Desktop -->
-                <nav class="hidden md:flex md:items-center md:space-x-10">
-                    <a href="#inicio" class="font-semibold text-brand-dark hover:text-brand-blue transition-colors duration-300">Inicio</a>
-                    <a href="#productos" class="font-semibold text-brand-dark hover:text-brand-blue transition-colors duration-300">Productos</a>
-                    <a href="#marcas" class="font-semibold text-brand-dark hover:text-brand-blue transition-colors duration-300">Marcas</a>
-                    <a href="#contacto" class="font-semibold text-brand-dark hover:text-brand-blue transition-colors duration-300">Contacto</a>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#inicio" class="text-sm font-bold text-brand-dark hover:text-brand-blue transition-colors uppercase tracking-wider">Inicio</a>
+                    <a href="#marcas" class="text-sm font-bold text-brand-dark hover:text-brand-blue transition-colors uppercase tracking-wider">Marcas</a>
+                    <a href="#productos" class="text-sm font-bold text-brand-dark hover:text-brand-blue transition-colors uppercase tracking-wider">Productos</a>
+                    <a href="#contacto" class="text-sm font-bold text-brand-dark hover:text-brand-blue transition-colors uppercase tracking-wider">Contacto</a>
                 </nav>
-                <!-- Botón Menú Móvil -->
+                <!-- Botón Móvil -->
                 <div class="md:hidden">
-                    <button @click="open = !open" class="inline-flex items-center justify-center p-2 rounded-md text-slate-600 hover:text-brand-blue hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand-blue">
-                        <span class="sr-only">Abrir menú principal</span>
-                        <svg x-show="!open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-                        </svg>
-                        <svg x-show="open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" style="display: none;">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
+                    <button @click="mobileMenu = !mobileMenu" class="p-2 text-brand-dark hover:text-brand-blue">
+                        <svg x-show="!mobileMenu" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+                        <svg x-show="mobileMenu" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display:none;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                     </button>
                 </div>
             </div>
         </div>
-        <!-- Menú desplegable Móvil -->
-        <div x-show="open" @click.away="open = false" class="md:hidden border-t border-slate-200" style="display: none;">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#inicio" @click="open = false" class="block px-3 py-2 rounded-md text-base font-medium text-brand-dark hover:text-white hover:bg-brand-blue">Inicio</a>
-                <a href="#productos" @click="open = false" class="block px-3 py-2 rounded-md text-base font-medium text-brand-dark hover:text-white hover:bg-brand-blue">Productos</a>
-                <a href="#marcas" @click="open = false" class="block px-3 py-2 rounded-md text-base font-medium text-brand-dark hover:text-white hover:bg-brand-blue">Marcas</a>
-                <a href="#contacto" @click="open = false" class="block px-3 py-2 rounded-md text-base font-medium text-brand-dark hover:text-white hover:bg-brand-blue">Contacto</a>
+        <!-- Menú Móvil -->
+        <div x-show="mobileMenu" x-transition @click.away="mobileMenu = false" class="md:hidden bg-white border-t border-slate-100 py-4 shadow-xl" style="display:none;">
+            <div class="flex flex-col space-y-4 px-4">
+                <a href="#inicio" @click="mobileMenu = false" class="text-sm font-bold text-brand-dark uppercase tracking-wider">Inicio</a>
+                <a href="#marcas" @click="mobileMenu = false" class="text-sm font-bold text-brand-dark uppercase tracking-wider">Marcas</a>
+                <a href="#productos" @click="mobileMenu = false" class="text-sm font-bold text-brand-dark uppercase tracking-wider">Productos</a>
+                <a href="#contacto" @click="mobileMenu = false" class="text-sm font-bold text-brand-dark uppercase tracking-wider">Contacto</a>
             </div>
         </div>
     </header>
 
     <main>
         <!-- ===== HERO SECTION ===== -->
-        <section id="inicio" class="relative text-white overflow-hidden">
-            <!-- Particle Canvas (Now local to Hero) -->
+        <section id="inicio" class="relative text-white overflow-hidden scroll-mt-20">
             <canvas id="particle-canvas"></canvas>
-
-            <!-- Background Layers -->
             <div id="hero-background" class="absolute inset-0 z-0 w-full h-full" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center; will-change: transform;"></div>
             <div class="absolute inset-0 z-0 bg-black/60"></div>
             <div class="absolute inset-0 z-0 bg-gradient-to-br from-brand-blue/30 via-brand-cyan/20 to-brand-dark/50"></div>
             
-            <!-- Content -->
             <div class="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 text-center">
-                <h1 class="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight mb-6">
-                    CONTROL AVANZADO DE FLUIDOS.<br class="hidden md:block"> INGENIERÍA DE PRECISIÓN.
+                <h1 class="text-3xl md:text-5xl font-extrabold leading-tight tracking-tight mb-4">
+                    DISTRIBUIDORA de PRODUCTOS para el<br class="hidden md:block"> CONTROL AVANZADO de FLUIDOS
                 </h1>
-                <p class="max-w-3xl mx-auto text-lg md:text-xl text-slate-300 mb-0">
+                <p class="max-w-2xl mx-auto text-base md:text-lg text-slate-300">
                     Soluciones robustas y fiables para la industria moderna.
                 </p>
             </div>
 
-            <!-- Wave Separator to White -->
-            <div class="absolute bottom-0 left-0 w-full h-[7vw] min-h-[100px] max-h-[150px] overflow-hidden" aria-hidden="true">
-                <svg class="absolute bottom-0 left-0 w-[200%] h-full" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-                    <defs>
-                        <path id="gentle-wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
-                    </defs>
+            <div class="absolute bottom-0 left-0 w-full h-[5vw] min-h-[80px] overflow-hidden" aria-hidden="true">
+                <svg class="absolute bottom-0 left-0 w-[200%] h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                    <defs><path id="gentle-wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" /></defs>
                     <g class="wave-g">
                         <use xlink:href="#gentle-wave-path" x="48" y="0" fill="rgba(255,255,255,0.7)" />
                         <use xlink:href="#gentle-wave-path" x="48" y="3" fill="rgba(255,255,255,0.5)" />
@@ -172,46 +131,39 @@
             </div>
         </section>
 
-        <!-- ===== SECCIÓN DE MARCAS ===== -->
-        <section id="marcas" class="pt-20 bg-white relative pb-32">
+        <!-- ===== SECCIÓN DE MARCAS (TAMAÑO REDUCIDO) ===== -->
+        <section id="marcas" class="pt-12 bg-white relative pb-24 scroll-mt-24">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center">
-                    <h2 class="text-3xl font-extrabold text-brand-dark tracking-tight sm:text-4xl">
+                    <h2 class="text-xl font-extrabold text-brand-dark tracking-widest uppercase mb-10">
                         Marcas con las que trabajamos
                     </h2>
-                    <p class="mt-4 max-w-2xl mx-auto text-lg text-slate-600">
-                        Solo distribuimos componentes de la más alta calidad y confianza internacional.
-                    </p>
                 </div>
-                <div class="mt-12">
-                    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-                        <div class="flex justify-center items-center p-6 bg-slate-100 rounded-lg">
-                            <span class="text-lg sm:text-xl font-bold text-slate-500 tracking-wider uppercase">JEFFERSON</span>
-                        </div>
-                        <div class="flex justify-center items-center p-6 bg-slate-100 rounded-lg">
-                            <span class="text-lg sm:text-xl font-bold text-slate-500 tracking-wider uppercase">SPIRAX SARCO</span>
-                        </div>
-                        <div class="flex justify-center items-center p-6 bg-slate-100 rounded-lg">
-                             <span class="text-lg sm:text-xl font-bold text-slate-500 tracking-wider uppercase">KLINGER</span>
-                        </div>
-                        <div class="flex justify-center items-center p-6 bg-slate-100 rounded-lg">
-                            <span class="text-lg sm:text-xl font-bold text-slate-500 tracking-wider uppercase">BEYCA</span>
-                        </div>
-                        <div class="flex justify-center items-center p-6 bg-slate-100 rounded-lg">
-                            <span class="text-lg sm:text-xl font-bold text-slate-500 tracking-wider uppercase">CIMPA</span>
-                        </div>
-                        <div class="flex justify-center items-center p-6 bg-slate-100 rounded-lg">
-                            <span class="text-lg sm:text-xl font-bold text-slate-500 tracking-wider uppercase">CURVO-SOLD</span>
-                        </div>
+                <div class="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6 max-w-4xl mx-auto">
+                    <div class="flex justify-center items-center p-2 bg-slate-50 rounded border border-slate-100">
+                        <span class="text-[10px] sm:text-xs font-bold text-slate-500 tracking-tighter uppercase">JEFFERSON</span>
+                    </div>
+                    <div class="flex justify-center items-center p-2 bg-slate-50 rounded border border-slate-100">
+                        <span class="text-[10px] sm:text-xs font-bold text-slate-500 tracking-tighter uppercase">SPIRAX SARCO</span>
+                    </div>
+                    <div class="flex justify-center items-center p-2 bg-slate-50 rounded border border-slate-100">
+                         <span class="text-[10px] sm:text-xs font-bold text-slate-500 tracking-tighter uppercase">KLINGER</span>
+                    </div>
+                    <div class="flex justify-center items-center p-2 bg-slate-50 rounded border border-slate-100">
+                        <span class="text-[10px] sm:text-xs font-bold text-slate-500 tracking-tighter uppercase">BEYCA</span>
+                    </div>
+                    <div class="flex justify-center items-center p-2 bg-slate-50 rounded border border-slate-100">
+                        <span class="text-[10px] sm:text-xs font-bold text-slate-500 tracking-tighter uppercase">CIMPA</span>
+                    </div>
+                    <div class="flex justify-center items-center p-2 bg-slate-50 rounded border border-slate-100">
+                        <span class="text-[10px] sm:text-xs font-bold text-slate-500 tracking-tighter uppercase">CURVO-SOLD</span>
                     </div>
                 </div>
             </div>
-            <!-- Wave Separator to Slate -->
-            <div class="absolute bottom-0 left-0 w-full h-[7vw] min-h-[100px] max-h-[150px] overflow-hidden" aria-hidden="true">
-                <svg class="absolute bottom-0 left-0 w-[200%] h-full" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-                    <defs>
-                        <path id="gentle-wave-path-slate" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
-                    </defs>
+            <!-- Separador Wave a Slate -->
+            <div class="absolute bottom-0 left-0 w-full h-[5vw] min-h-[80px] overflow-hidden" aria-hidden="true">
+                <svg class="absolute bottom-0 left-0 w-[200%] h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                    <defs><path id="gentle-wave-path-slate" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" /></defs>
                     <g class="wave-g">
                         <use xlink:href="#gentle-wave-path-slate" x="48" y="0" fill="rgba(15, 23, 42, 0.7)" />
                         <use xlink:href="#gentle-wave-path-slate" x="48" y="3" fill="rgba(15, 23, 42, 0.5)" />
@@ -222,93 +174,64 @@
             </div>
         </section>
 
-        <!-- ===== SECCIÓN DE PRODUCTOS (REDESIGN) ===== -->
-        <section id="productos" class="pt-20 bg-slate-900 relative pb-32">
+        <!-- ===== SECCIÓN DE PRODUCTOS ===== -->
+        <section id="productos" class="pt-16 bg-slate-900 relative pb-32 scroll-mt-24">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                     <h2 class="text-3xl font-extrabold text-white tracking-tight sm:text-4xl">
-                        Nuestras Soluciones para la Industria
-                    </h2>
-                    <p class="mt-4 max-w-2xl mx-auto text-lg text-slate-400">
-                        Componentes de alta ingeniería para cada aplicación crítica de su proceso.
-                    </p>
+                <div class="text-center mb-12">
+                     <h2 class="text-2xl font-extrabold text-white tracking-tight sm:text-3xl uppercase">Soluciones Industriales</h2>
+                    <p class="mt-4 max-w-xl mx-auto text-base text-slate-400">Ingeniería aplicada para procesos críticos.</p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    
-                    <!-- Card 1: Refrigeración -->
-                    <div @click="openModal = 'refrigeracion'" class="product-card bg-slate-900 rounded-xl shadow-2xl p-8 ring-1 ring-slate-800 hover:ring-brand-cyan transition-all duration-300 flex flex-col cursor-pointer hover:-translate-y-1">
-                        <div class="mb-6">
-                            <!-- Snowflake/Cooling Icon -->
-                            <svg class="w-10 h-10 text-brand-cyan" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18m0-18l-3 3m3-3l3 3m-3 15l-3-3m3 3l3-3M3 12h18M3 12l3-3m-3 3l3 3m15-3l-3-3m3 3l-3 3" />
-                            </svg>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Refrigeración -->
+                    <div @click="openModal = 'refrigeracion'" class="product-card bg-slate-900 rounded-xl shadow-2xl p-6 ring-1 ring-slate-800 hover:ring-brand-cyan transition-all duration-300 flex flex-col cursor-pointer hover:-translate-y-1">
+                        <div class="mb-4">
+                            <svg class="w-8 h-8 text-brand-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v18m0-18l-3 3m3-3l3 3m-3 15l-3-3m3 3l3-3M3 12h18M3 12l3-3m-3 3l3 3m15-3l-3-3m3 3l-3 3" /></svg>
                         </div>
-                        <h3 class="text-xl font-bold text-white mb-4">Control de Amoníaco y Refrigeración</h3>
-                        <ul class="space-y-3 text-slate-400 flex-grow">
-                            <li class="flex items-start gap-x-3"><svg class="w-5 h-5 mt-1 text-brand-cyan flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg><span>Especialistas en Válvulas de Expansión (L.E.) y de Paso (L.P.).</span></li>
-                            <li class="flex items-start gap-x-3"><svg class="w-5 h-5 mt-1 text-brand-cyan flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg><span>Amplio rango de medidas: 3/8” hasta 10”.</span></li>
-                            <li class="flex items-start gap-x-3"><svg class="w-5 h-5 mt-1 text-brand-cyan flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg><span>Soluciones para gases combustibles y refrigeración industrial.</span></li>
+                        <h3 class="text-lg font-bold text-white mb-3">Amoníaco y Refrigeración</h3>
+                        <ul class="space-y-2 text-sm text-slate-400">
+                            <li class="flex items-start gap-x-2"><svg class="w-4 h-4 mt-0.5 text-brand-cyan flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M4.5 12.75l6 6 9-13.5" /></svg><span>Válvulas L.E. y L.P.</span></li>
+                            <li class="flex items-start gap-x-2"><svg class="w-4 h-4 mt-0.5 text-brand-cyan flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M4.5 12.75l6 6 9-13.5" /></svg><span>Hasta 10 pulgadas.</span></li>
                         </ul>
                     </div>
-
-                    <!-- Card 2: Válvulas -->
-                     <div @click="openModal = 'valvulas'" class="product-card bg-slate-900 rounded-xl shadow-2xl p-8 ring-1 ring-slate-800 hover:ring-brand-cyan transition-all duration-300 flex flex-col cursor-pointer hover:-translate-y-1">
-                        <div class="mb-6">
-                            <!-- Gate Valve / Industrial Valve Icon -->
-                            <svg class="w-10 h-10 text-brand-cyan" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-                            </svg>
+                    <!-- Válvulas -->
+                    <div @click="openModal = 'valvulas'" class="product-card bg-slate-900 rounded-xl shadow-2xl p-6 ring-1 ring-slate-800 hover:ring-brand-cyan transition-all duration-300 flex flex-col cursor-pointer hover:-translate-y-1">
+                        <div class="mb-4">
+                            <svg class="w-8 h-8 text-brand-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
                         </div>
-                        <h3 class="text-xl font-bold text-white mb-4">Válvulas de Proceso y Vapor</h3>
-                        <ul class="space-y-3 text-slate-400 flex-grow">
-                            <li class="flex items-start gap-x-3"><svg class="w-5 h-5 mt-1 text-brand-cyan flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg><span>Válvulas Esféricas para Vapor (1 pieza, Bipartidas, Económicas).</span></li>
-                            <li class="flex items-start gap-x-3"><svg class="w-5 h-5 mt-1 text-brand-cyan flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg><span>Válvulas Solenoides de 3, 4 y 5 vías para uso general.</span></li>
-                            <li class="flex items-start gap-x-3"><svg class="w-5 h-5 mt-1 text-brand-cyan flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg><span>Especialidades: KLINGER a pistón y SAUNDERS a diafragma.</span></li>
+                        <h3 class="text-lg font-bold text-white mb-3">Válvulas de Proceso</h3>
+                        <ul class="space-y-2 text-sm text-slate-400">
+                            <li class="flex items-start gap-x-2"><svg class="w-4 h-4 mt-0.5 text-brand-cyan flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M4.5 12.75l6 6 9-13.5" /></svg><span>Válvulas Esféricas Vapor.</span></li>
+                            <li class="flex items-start gap-x-2"><svg class="w-4 h-4 mt-0.5 text-brand-cyan flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M4.5 12.75l6 6 9-13.5" /></svg><span>KLINGER y SAUNDERS.</span></li>
                         </ul>
                     </div>
-
-                    <!-- Card 3: Instrumentación -->
-                    <div @click="openModal = 'instrumentacion'" class="product-card bg-slate-900 rounded-xl shadow-2xl p-8 ring-1 ring-slate-800 hover:ring-brand-cyan transition-all duration-300 flex flex-col cursor-pointer hover:-translate-y-1">
-                        <div class="mb-6">
-                            <!-- Gauge / Measurement Icon -->
-                            <svg class="w-10 h-10 text-brand-cyan" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z" />
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" />
-                            </svg>
+                    <!-- Instrumentación -->
+                    <div @click="openModal = 'instrumentacion'" class="product-card bg-slate-900 rounded-xl shadow-2xl p-6 ring-1 ring-slate-800 hover:ring-brand-cyan transition-all duration-300 flex flex-col cursor-pointer hover:-translate-y-1">
+                        <div class="mb-4">
+                            <svg class="w-8 h-8 text-brand-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6zM13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" /></svg>
                         </div>
-                        <h3 class="text-xl font-bold text-white mb-4">Instrumentación y Medición</h3>
-                        <ul class="space-y-3 text-slate-400 flex-grow">
-                            <li class="flex items-start gap-x-3"><svg class="w-5 h-5 mt-1 text-brand-cyan flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg><span>Manómetros de alta precisión en Acero Inoxidable.</span></li>
-                            <li class="flex items-start gap-x-3"><svg class="w-5 h-5 mt-1 text-brand-cyan flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg><span>Termómetros a Tensión de Mercurio para procesos críticos.</span></li>
-                            <li class="flex items-start gap-x-3"><svg class="w-5 h-5 mt-1 text-brand-cyan flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg><span>Equipos para mantenimiento e instrumentación de planta.</span></li>
+                        <h3 class="text-lg font-bold text-white mb-3">Instrumentación</h3>
+                        <ul class="space-y-2 text-sm text-slate-400">
+                            <li class="flex items-start gap-x-2"><svg class="w-4 h-4 mt-0.5 text-brand-cyan flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M4.5 12.75l6 6 9-13.5" /></svg><span>Manómetros Acero Inox.</span></li>
+                            <li class="flex items-start gap-x-2"><svg class="w-4 h-4 mt-0.5 text-brand-cyan flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M4.5 12.75l6 6 9-13.5" /></svg><span>Termómetros industriales.</span></li>
                         </ul>
                     </div>
-
-                    <!-- Card 4: Suministros -->
-                    <div @click="openModal = 'suministros'" class="product-card bg-slate-900 rounded-xl shadow-2xl p-8 ring-1 ring-slate-800 hover:ring-brand-cyan transition-all duration-300 flex flex-col cursor-pointer hover:-translate-y-1">
-                        <div class="mb-6">
-                            <!-- Nut/Bolt / Hardware Icon -->
-                            <svg class="w-10 h-10 text-brand-cyan" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M11.423 20.11l3.29-1.212m-3.29 1.212a9.25 9.25 0 01-8.132-8.131m8.132 8.131l-.499-3.31m3.789-1.213L16.485 19l-2.43 2.903m3.235-4.516a9.25 9.25 0 01-8.132-8.131m8.132 8.131l.499-3.31m-3.789 1.213L7.515 5l2.43-2.903m3.235 4.516a9.25 9.25 0 018.132 8.131m-8.132-8.131l-.499 3.31" />
-                            </svg>
+                    <!-- Suministros -->
+                    <div @click="openModal = 'suministros'" class="product-card bg-slate-900 rounded-xl shadow-2xl p-6 ring-1 ring-slate-800 hover:ring-brand-cyan transition-all duration-300 flex flex-col cursor-pointer hover:-translate-y-1">
+                        <div class="mb-4">
+                            <svg class="w-8 h-8 text-brand-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.423 20.11l3.29-1.212m-3.29 1.212a9.25 9.25 0 01-8.132-8.131m8.132 8.131l-.499-3.31m3.789-1.213L16.485 19l-2.43 2.903m3.235-4.516a9.25 9.25 0 01-8.132-8.131m8.132 8.131l.499-3.31m-3.789 1.213L7.515 5l2.43-2.903m3.235 4.516a9.25 9.25 0 018.132 8.131m-8.132-8.131l-.499 3.31" /></svg>
                         </div>
-                        <h3 class="text-xl font-bold text-white mb-4">Suministros y Conducción</h3>
-                        <ul class="space-y-3 text-slate-400 flex-grow">
-                            <li class="flex items-start gap-x-3"><svg class="w-5 h-5 mt-1 text-brand-cyan flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg><span>Línea CURVO-SOLD: Accesorios para soldar.</span></li>
-                            <li class="flex items-start gap-x-3"><svg class="w-5 h-5 mt-1 text-brand-cyan flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg><span>Bridas laminadas y forjadas (ASA 150-600).</span></li>
-                            <li class="flex items-start gap-x-3"><svg class="w-5 h-5 mt-1 text-brand-cyan flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg><span>Accesorios Acero Forjado (Series 2000/3000).</span></li>
-                            <li class="flex items-start gap-x-3"><svg class="w-5 h-5 mt-1 text-brand-cyan flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg><span>Válvulas Esclusas, Globo y Empaquetaduras.</span></li>
+                        <h3 class="text-lg font-bold text-white mb-3">Suministros</h3>
+                        <ul class="space-y-2 text-sm text-slate-400">
+                            <li class="flex items-start gap-x-2"><svg class="w-4 h-4 mt-0.5 text-brand-cyan flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M4.5 12.75l6 6 9-13.5" /></svg><span>CURVO-SOLD y Bridas.</span></li>
+                            <li class="flex items-start gap-x-2"><svg class="w-4 h-4 mt-0.5 text-brand-cyan flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M4.5 12.75l6 6 9-13.5" /></svg><span>Accesorios forjados.</span></li>
                         </ul>
                     </div>
-
                 </div>
             </div>
-            <!-- Wave Separator to Brand Dark -->
-            <div class="absolute bottom-0 left-0 w-full h-[7vw] min-h-[100px] max-h-[150px] overflow-hidden" aria-hidden="true">
-                <svg class="absolute bottom-0 left-0 w-[200%] h-full" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-                    <defs>
-                        <path id="gentle-wave-path-dark" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
-                    </defs>
+            <!-- Separador Wave a Dark -->
+            <div class="absolute bottom-0 left-0 w-full h-[5vw] min-h-[80px] overflow-hidden" aria-hidden="true">
+                <svg class="absolute bottom-0 left-0 w-[200%] h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                    <defs><path id="gentle-wave-path-dark" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" /></defs>
                     <g class="wave-g">
                         <use xlink:href="#gentle-wave-path-dark" x="48" y="0" fill="rgba(42, 47, 59, 0.7)" />
                         <use xlink:href="#gentle-wave-path-dark" x="48" y="3" fill="rgba(42, 47, 59, 0.5)" />
@@ -319,388 +242,124 @@
             </div>
         </section>
 
-    </main>
-
-    <!-- ===== SECCIÓN DE CONTACTO (NUEVA) ===== -->
-    <section id="contacto" class="bg-brand-dark pt-28 pb-20 sm:pb-24">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <!-- Frase destacada -->
-                <div class="text-center lg:text-left">
-                    <h2 class="text-3xl md:text-4xl font-extrabold text-white leading-tight tracking-tight">
-                        CONTROL AVANZADO DE FLUIDOS.<br>INGENIERÍA DE PRECISIÓN.
-                    </h2>
-                </div>
-                <!-- Información de contacto -->
-                <div class="space-y-6">
-                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 text-center sm:text-left">
-                        <div class="flex-shrink-0 bg-slate-700/50 p-3 rounded-full">
-                            <svg class="w-6 h-6 text-brand-cyan" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <a href="https://www.google.com/maps/place/Contival+T%C3%A9cnica+S.R.L./@-34.6412405,-58.5332612,17z/data=!3m1!4b1!4m6!3m5!1s0x95bcc86acb7ef37d:0x8a780ccf3b48a2dd!8m2!3d-34.6412405!4d-58.5332612!16s%2Fg%2F1thmm5bv?entry=ttu&g_ep=EgoyMDI2MDIxMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="group">
-                                <p class="text-lg text-slate-300 group-hover:text-brand-cyan group-hover:underline transition-colors duration-300">Buenos Aires 3416, B1702CJD Ciudadela, Provincia de Buenos Aires.</p>
-                            </a>
-                        </div>
+        <!-- ===== SECCIÓN DE CONTACTO ===== -->
+        <section id="contacto" class="bg-brand-dark pt-20 pb-20 sm:pb-24 scroll-mt-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="text-center lg:text-left">
+                        <h2 class="text-2xl md:text-3xl font-extrabold text-white leading-tight tracking-tight">
+                            DISTRIBUIDORA de PRODUCTOS para el<br> CONTROL AVANZADO de FLUIDOS
+                        </h2>
                     </div>
-                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-                        <div class="flex-shrink-0 bg-slate-700/50 p-3 rounded-full">
-                            <svg class="w-6 h-6 text-brand-cyan" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 6.75z" />
-                            </svg>
+                    <div class="space-y-6">
+                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                            <div class="flex-shrink-0 bg-slate-700/50 p-3 rounded-full">
+                                <svg class="w-6 h-6 text-brand-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0zM19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" /></svg>
+                            </div>
+                            <a href="https://www.google.com/maps/place/Contival+T%C3%A9cnica+S.R.L./" target="_blank" class="text-base text-slate-300 hover:text-brand-cyan transition-colors">Buenos Aires 3416, Ciudadela, Buenos Aires.</a>
                         </div>
-                        <div>
-                            <p class="text-lg text-slate-300 font-semibold">011 4657-8390</p>
+                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                            <div class="flex-shrink-0 bg-slate-700/50 p-3 rounded-full">
+                                <svg class="w-6 h-6 text-brand-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 6.75z" /></svg>
+                            </div>
+                            <p class="text-base text-slate-300 font-semibold">011 4657-8390</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <!-- ===== FOOTER (MINIMALISTA) ===== -->
+    <!-- ===== FOOTER ===== -->
     <footer class="bg-brand-dark relative overflow-hidden">
-        <!-- Parallax background -->
-        <div id="footer-background" class="absolute inset-0 z-0" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center; will-change: transform;"></div>
+        <div id="footer-background" class="absolute inset-0 z-0 opacity-10" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center; will-change: transform;"></div>
         <div class="absolute inset-0 z-0 bg-brand-dark/90"></div>
     
-        <!-- Content -->
         <div class="relative z-10">
-            <!-- Logo Section with full-width background -->
             <div class="bg-slate-700/70 backdrop-blur-sm py-6">
                 <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <a href="#inicio" aria-label="Volver al inicio" class="inline-block transition-transform duration-300 hover:scale-105">
+                    <a href="#inicio" class="inline-block transition-transform hover:scale-105">
                          <img class="h-10 w-auto logo-white" src="https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/ec7bd95b784026814da2aa44ed944de09efad62c/contivaltecnica%20logo.svg" alt="Logo Contival Técnica">
                     </a>
                 </div>
             </div>
     
-            <!-- Credit Section -->
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                <div class="border-t border-slate-700 pt-6 text-center">
-                     <p class="text-xs text-slate-400 tracking-wider">
-                         WEB: 
-                         <a href="https://www.instagram.com/3d_mc_3d/" target="_blank" rel="noopener noreferrer" class="font-semibold text-slate-300 hover:text-brand-cyan transition-colors">
-                             Mauro Casarin
-                         </a>
-                     </p>
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                <div class="border-t border-slate-700 pt-4 text-center">
+                     <p class="text-[10px] text-slate-400 tracking-wider">WEB: <a href="https://www.instagram.com/3d_mc_3d/" target="_blank" class="font-semibold text-slate-300 hover:text-brand-cyan">Mauro Casarin</a></p>
                 </div>
             </div>
         </div>
     </footer>
+
+    <!-- ===== MODALES DE DETALLES ===== -->
+    <template x-if="openModal">
+        <div class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm" x-transition @keydown.escape.window="openModal = null">
+            <div @click.away="openModal = null" class="relative w-full max-w-xl bg-slate-800 text-white rounded-lg shadow-2xl ring-1 ring-brand-cyan/50 flex flex-col max-h-[80vh]">
+                <div class="flex items-start justify-between p-5 border-b border-slate-700">
+                    <h3 class="text-xl font-bold text-brand-cyan uppercase tracking-wide" x-text="openModal === 'refrigeracion' ? 'Amoníaco y Refrigeración' : openModal === 'valvulas' ? 'Válvulas de Proceso' : openModal === 'instrumentacion' ? 'Instrumentación' : 'Suministros'"></h3>
+                    <button @click="openModal = null" class="text-slate-400 hover:text-white text-2xl">&times;</button>
+                </div>
+                <div class="p-5 overflow-y-auto">
+                    <div x-show="openModal === 'refrigeracion'" class="space-y-4 text-slate-300 text-sm">
+                        <p class="font-semibold text-white">Válvulas L.E. y L.P.</p>
+                        <p>Especialistas en sistemas de control de amoníaco con un rango de 3/8" a 10". Ingeniería para entornos de alta exigencia térmica.</p>
+                    </div>
+                    <div x-show="openModal === 'valvulas'" class="space-y-4 text-slate-300 text-sm">
+                        <p class="font-semibold text-white">Esféricas, KLINGER y SAUNDERS</p>
+                        <p>Válvulas diseñadas para vapor y fluidos industriales críticos, garantizando estanqueidad y seguridad operativa.</p>
+                    </div>
+                    <div x-show="openModal === 'instrumentacion'" class="space-y-4 text-slate-300 text-sm">
+                        <p class="font-semibold text-white">Precisión Industrial</p>
+                        <p>Manómetros en acero inoxidable y termómetros de alta precisión para monitoreo constante de planta.</p>
+                    </div>
+                    <div x-show="openModal === 'suministros'" class="space-y-4 text-slate-300 text-sm">
+                        <p class="font-semibold text-white">Conducción Segura</p>
+                        <p>Accesorios para soldar CURVO-SOLD, bridas ASA 150-600 y suministros de alta calidad para redes industriales.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
     
-    <!-- ===== MODALS ===== -->
-    <!-- Modal for Refrigeración -->
-    <div x-show="openModal === 'refrigeracion'" @keydown.escape.window="openModal = null" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" style="display: none;">
-        <div @click.away="openModal = null" class="relative w-full max-w-2xl bg-slate-800 text-white rounded-lg shadow-xl ring-1 ring-brand-cyan/50 flex flex-col max-h-[85vh]">
-            <div class="flex items-start justify-between p-6 border-b border-slate-700 flex-shrink-0">
-                <h3 class="text-2xl font-bold text-brand-cyan">Control de Amoníaco y Refrigeración</h3>
-                <button @click="openModal = null" class="text-slate-400 hover:text-white transition-colors text-3xl leading-none p-1 -mt-2 -mr-2">&times;</button>
-            </div>
-            <div class="p-6 overflow-y-auto">
-                <div class="space-y-4 text-slate-300">
-                    <div>
-                        <h4 class="font-semibold text-white">Válvulas de Expansión (L.E.) y de Paso (L.P.)</h4>
-                        <p class="text-sm mt-1">Regulan el flujo de refrigerante para una operación eficiente. Las de expansión controlan el ingreso al evaporador y las de paso permiten cortes seguros para mantenimiento.</p>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-white">Amplio rango de medidas: 3/8” hasta 10”</h4>
-                        <p class="text-sm mt-1">Disponibles desde 3/8” a 10”, adaptándose a sistemas compactos y grandes plantas industriales para optimizar el rendimiento y la escalabilidad.</p>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-white">Soluciones para gases combustibles y refrigeración industrial</h4>
-                        <p class="text-sm mt-1">Componentes certificados para el manejo seguro de gases como amoníaco, diseñados para resistir condiciones extremas, prevenir fugas y garantizar máxima seguridad.</p>
-                    </div>
-                </div>
-                <div class="border-t border-slate-700 mt-6 pt-4">
-                    <h5 class="font-bold text-white mb-3">Industrias de Aplicación</h5>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="bg-slate-700 text-brand-cyan text-xs font-semibold px-3 py-1 rounded-full">Frigorífica</span>
-                        <span class="bg-slate-700 text-brand-cyan text-xs font-semibold px-3 py-1 rounded-full">Alimenticia y Bebidas</span>
-                        <span class="bg-slate-700 text-brand-cyan text-xs font-semibold px-3 py-1 rounded-full">Química</span>
-                        <span class="bg-slate-700 text-brand-cyan text-xs font-semibold px-3 py-1 rounded-full">Petroquímica</span>
-                        <span class="bg-slate-700 text-brand-cyan text-xs font-semibold px-3 py-1 rounded-full">Pesquera</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal for Válvulas -->
-    <div x-show="openModal === 'valvulas'" @keydown.escape.window="openModal = null" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" style="display: none;">
-        <div @click.away="openModal = null" class="relative w-full max-w-2xl bg-slate-800 text-white rounded-lg shadow-xl ring-1 ring-brand-cyan/50 flex flex-col max-h-[85vh]">
-            <div class="flex items-start justify-between p-6 border-b border-slate-700 flex-shrink-0">
-                <h3 class="text-2xl font-bold text-brand-cyan">Válvulas de Proceso y Vapor</h3>
-                <button @click="openModal = null" class="text-slate-400 hover:text-white transition-colors text-3xl leading-none p-1 -mt-2 -mr-2">&times;</button>
-            </div>
-            <div class="p-6 overflow-y-auto">
-                <div class="space-y-4 text-slate-300">
-                    <div>
-                        <h4 class="font-semibold text-white">Válvulas Esféricas para Vapor</h4>
-                        <p class="text-sm mt-1">Proporcionan un corte rápido y hermético en líneas de vapor. Su diseño robusto maximiza la eficiencia energética con una mínima caída de presión.</p>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-white">Válvulas Solenoides de 3, 4 y 5 vías</h4>
-                        <p class="text-sm mt-1">Esenciales para automatizar procesos. Dirigen, mezclan o desvían fluidos con respuesta instantánea a señales eléctricas para un control preciso.</p>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-white">Especialidades: KLINGER a pistón y SAUNDERS a diafragma</h4>
-                        <p class="text-sm mt-1">KLINGER a pistón: durabilidad superior en vapor y fluidos térmicos. SAUNDERS a diafragma: la elección ideal para fluidos corrosivos, abrasivos y aplicaciones sanitarias.</p>
-                    </div>
-                </div>
-                <div class="border-t border-slate-700 mt-6 pt-4">
-                    <h5 class="font-bold text-white mb-3">Industrias de Aplicación</h5>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="bg-slate-700 text-brand-cyan text-xs font-semibold px-3 py-1 rounded-full">Papelera</span>
-                        <span class="bg-slate-700 text-brand-cyan text-xs font-semibold px-3 py-1 rounded-full">Energética</span>
-                        <span class="bg-slate-700 text-brand-cyan text-xs font-semibold px-3 py-1 rounded-full">Textil</span>
-                        <span class="bg-slate-700 text-brand-cyan text-xs font-semibold px-3 py-1 rounded-full">Farmacéutica</span>
-                        <span class="bg-slate-700 text-brand-cyan text-xs font-semibold px-3 py-1 rounded-full">Alimenticia</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal for Instrumentación -->
-    <div x-show="openModal === 'instrumentacion'" @keydown.escape.window="openModal = null" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" style="display: none;">
-        <div @click.away="openModal = null" class="relative w-full max-w-2xl bg-slate-800 text-white rounded-lg shadow-xl ring-1 ring-brand-cyan/50 flex flex-col max-h-[85vh]">
-            <div class="flex items-start justify-between p-6 border-b border-slate-700 flex-shrink-0">
-                <h3 class="text-2xl font-bold text-brand-cyan">Instrumentación y Medición</h3>
-                <button @click="openModal = null" class="text-slate-400 hover:text-white transition-colors text-3xl leading-none p-1 -mt-2 -mr-2">&times;</button>
-            </div>
-            <div class="p-6 overflow-y-auto">
-                <div class="space-y-4 text-slate-300">
-                    <div>
-                        <h4 class="font-semibold text-white">Manómetros de alta precisión en Acero Inoxidable</h4>
-                        <p class="text-sm mt-1">Indispensables para monitorear la presión en puntos críticos. Su construcción en acero inoxidable asegura durabilidad y lecturas fiables para la seguridad y eficiencia.</p>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-white">Termómetros a Tensión de Mercurio</h4>
-                        <p class="text-sm mt-1">Ofrecen mediciones de temperatura estables y precisas, ideales para entornos con alta vibración o interferencia electromagnética donde la fiabilidad es crítica.</p>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-white">Equipos para mantenimiento e instrumentación de planta</h4>
-                        <p class="text-sm mt-1">Portfolio completo de herramientas para calibración y mantenimiento, asegurando que los sistemas operen siempre con la máxima eficiencia y dentro de especificaciones.</p>
-                    </div>
-                </div>
-                <div class="border-t border-slate-700 mt-6 pt-4">
-                    <h5 class="font-bold text-white mb-3">Industrias de Aplicación</h5>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="bg-slate-700 text-brand-cyan text-xs font-semibold px-3 py-1 rounded-full">Petróleo y Gas</span>
-                        <span class="bg-slate-700 text-brand-cyan text-xs font-semibold px-3 py-1 rounded-full">Tratamiento de Aguas</span>
-                        <span class="bg-slate-700 text-brand-cyan text-xs font-semibold px-3 py-1 rounded-full">Minería</span>
-                        <span class="bg-slate-700 text-brand-cyan text-xs font-semibold px-3 py-1 rounded-full">Siderurgia</span>
-                        <span class="bg-slate-700 text-brand-cyan text-xs font-semibold px-3 py-1 rounded-full">Laboratorios</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal for Suministros -->
-    <div x-show="openModal === 'suministros'" @keydown.escape.window="openModal = null" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" style="display: none;">
-        <div @click.away="openModal = null" class="relative w-full max-w-2xl bg-slate-800 text-white rounded-lg shadow-xl ring-1 ring-brand-cyan/50 flex flex-col max-h-[85vh]">
-            <div class="flex items-start justify-between p-6 border-b border-slate-700 flex-shrink-0">
-                <h3 class="text-2xl font-bold text-brand-cyan">Suministros y Conducción</h3>
-                <button @click="openModal = null" class="text-slate-400 hover:text-white transition-colors text-3xl leading-none p-1 -mt-2 -mr-2">&times;</button>
-            </div>
-            <div class="p-6 overflow-y-auto">
-                <div class="space-y-4 text-slate-300">
-                    <div>
-                        <h4 class="font-semibold text-white">Línea CURVO-SOLD: Accesorios para soldar</h4>
-                        <p class="text-sm mt-1">Crean uniones soldadas permanentes y libres de fugas, formando la base de redes de conducción seguras y duraderas para cualquier aplicación industrial.</p>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-white">Bridas laminadas y forjadas (ASA 150-600)</h4>
-                        <p class="text-sm mt-1">Facilitan la conexión y desconexión de equipos. Las clases ASA garantizan la seguridad y compatibilidad según la presión y temperatura de servicio.</p>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-white">Accesorios Acero Forjado (Series 2000/3000)</h4>
-                        <p class="text-sm mt-1">Diseñados para alta presión y temperatura, son ideales para puntos de alta exigencia en sistemas de vapor y proceso, garantizando máxima integridad.</p>
-                    </div>
-                     <div>
-                        <h4 class="font-semibold text-white">Válvulas Esclusas, Globo y Empaquetaduras</h4>
-                        <p class="text-sm mt-1">Válvulas Esclusa para corte total y Globo para regulación precisa. Empaquetaduras como sellos vitales que previenen fugas y aseguran la eficiencia del sistema.</p>
-                    </div>
-                </div>
-                <div class="border-t border-slate-700 mt-6 pt-4">
-                    <h5 class="font-bold text-white mb-3">Industrias de Aplicación</h5>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="bg-slate-700 text-brand-cyan text-xs font-semibold px-3 py-1 rounded-full">Construcción Naval</span>
-                        <span class="bg-slate-700 text-brand-cyan text-xs font-semibold px-3 py-1 rounded-full">Montajes Industriales</span>
-                        <span class="bg-slate-700 text-brand-cyan text-xs font-semibold px-3 py-1 rounded-full">Generación de Energía</span>
-                        <span class="bg-slate-700 text-brand-cyan text-xs font-semibold px-3 py-1 rounded-full">Azucarera</span>
-                        <span class="bg-slate-700 text-brand-cyan text-xs font-semibold px-3 py-1 rounded-full">Celulosa</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Alpine.js para interactividad del menú móvil (requerido para x-data) -->
     <script src="//unpkg.com/alpinejs" defer></script>
-
-    <!-- Script for scroll animations -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            // Product card animation
             const animatedElements = document.querySelectorAll('.product-card');
             if ("IntersectionObserver" in window) {
-                const observer = new IntersectionObserver((entries, observer) => {
+                const observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
                             entry.target.classList.add('animate__animated', 'animate__fadeInUp');
                             entry.target.style.opacity = 1;
-                            observer.unobserve(entry.target);
                         }
                     });
-                }, { threshold: 0.15 });
-                animatedElements.forEach((el, index) => {
-                    el.style.opacity = 0; // Hide element initially
-                    el.style.animationDelay = `${index * 100}ms`; // Stagger the animation
-                    observer.observe(el);
-                });
-            } else {
-                animatedElements.forEach(el => {
-                    el.style.opacity = 1;
-                });
+                }, { threshold: 0.1 });
+                animatedElements.forEach(el => { el.style.opacity = 0; observer.observe(el); });
             }
 
-            // Parallax effect for Hero and Footer
             const parallaxBgs = document.querySelectorAll('#hero-background, #footer-background');
-            if (parallaxBgs.length > 0) {
-                let ticking = false;
-                window.addEventListener('scroll', () => {
-                    if (!ticking) {
-                        window.requestAnimationFrame(() => {
-                            // Parallax effect: moves at 50% of the scroll speed.
-                            const yOffset = window.scrollY * 0.5; 
-                            parallaxBgs.forEach(bg => {
-                                // Use translate3d to hint at hardware acceleration for smoother mobile performance
-                                bg.style.transform = `translate3d(0, ${yOffset}px, 0)`;
-                            });
-                            ticking = false;
-                        });
-                        ticking = true;
-                    }
-                });
-            }
+            window.addEventListener('scroll', () => {
+                const yOffset = window.scrollY * 0.4; 
+                parallaxBgs.forEach(bg => { bg.style.transform = `translate3d(0, ${yOffset}px, 0)`; });
+            });
 
-
-            // ===== PARTICLE ANIMATION (LOCAL TO HERO) =====
             const canvas = document.getElementById('particle-canvas');
             if (canvas) {
                 const ctx = canvas.getContext('2d');
-                let particlesArray;
-                const heroSection = document.getElementById('inicio');
-
-                // Accelerometer data
-                let accelX = 0;
-                let accelY = 0;
-
-                const handleMotionEvent = (event) => {
-                    if(event.accelerationIncludingGravity.x && event.accelerationIncludingGravity.y) {
-                        accelX = event.accelerationIncludingGravity.x * 0.2;
-                        accelY = event.accelerationIncludingGravity.y * 0.2;
-                    }
-                };
-                
-                const requestMotionPermission = () => {
-                    if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
-                        DeviceMotionEvent.requestPermission()
-                            .then(permissionState => {
-                                if (permissionState === 'granted') {
-                                    window.addEventListener('devicemotion', handleMotionEvent);
-                                }
-                            })
-                            .catch(console.error);
-                    } else {
-                        // handle non-iOS 13+ devices
-                        window.addEventListener('devicemotion', handleMotionEvent);
-                    }
-                    document.body.removeEventListener('click', requestMotionPermission);
-                    document.body.removeEventListener('touchstart', requestMotionPermission);
-                };
-
-                document.body.addEventListener('click', requestMotionPermission);
-                document.body.addEventListener('touchstart', requestMotionPermission);
-
-
-                function setCanvasSize() {
-                    if (heroSection) {
-                        canvas.width = heroSection.offsetWidth;
-                        canvas.height = heroSection.offsetHeight;
-                    }
+                let particles = [];
+                const resize = () => { canvas.width = canvas.parentElement.offsetWidth; canvas.height = canvas.parentElement.offsetHeight; };
+                class P {
+                    constructor() { this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height; this.s = Math.random() * 2 + 1; this.vx = Math.random() * 0.4 - 0.2; this.vy = Math.random() * 0.4 - 0.2; }
+                    upd() { this.x += this.vx; this.y += this.vy; if(this.x>canvas.width)this.x=0; if(this.x<0)this.x=canvas.width; if(this.y>canvas.height)this.y=0; if(this.y<0)this.y=canvas.height; }
+                    drw() { ctx.fillStyle = 'rgba(0,168,225,0.2)'; ctx.beginPath(); ctx.arc(this.x, this.y, this.s, 0, Math.PI*2); ctx.fill(); }
                 }
-
-                class Particle {
-                    constructor() {
-                        this.x = Math.random() * canvas.width;
-                        this.y = Math.random() * canvas.height;
-                        this.size = Math.random() * 2 + 1;
-                        this.speedX = (Math.random() * 0.4 - 0.2);
-                        this.speedY = (Math.random() * 0.4 - 0.2);
-                        this.color = Math.random() > 0.3 ? `rgba(0, 168, 225, ${Math.random() * 0.4 + 0.1})` : `rgba(255, 255, 255, ${Math.random() * 0.3 + 0.1})`;
-                    }
-                    update() {
-                        // Add inherent speed and accelerometer influence
-                        this.x += this.speedX + accelX;
-                        // Invert Y axis for accelerometer because canvas Y=0 is at the top
-                        this.y += this.speedY - accelY;
-
-                        // Wrap around screen edges
-                        if (this.x > canvas.width) this.x = 0;
-                        if (this.x < 0) this.x = canvas.width;
-                        if (this.y > canvas.height) this.y = 0;
-                        if (this.y < 0) this.y = canvas.height;
-                    }
-                    draw() {
-                        ctx.fillStyle = this.color;
-                        ctx.beginPath();
-                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                        ctx.fill();
-                    }
-                }
-
-                function init() {
-                    setCanvasSize();
-                    particlesArray = [];
-                    // Adjust particle density for the section size
-                    let numberOfParticles = (canvas.width * canvas.height) / 15000;
-                    numberOfParticles = Math.min(numberOfParticles, 120); // Max 120 particles
-                    for (let i = 0; i < numberOfParticles; i++) {
-                        particlesArray.push(new Particle());
-                    }
-                }
-
-                function animate() {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    for (let i = 0; i < particlesArray.length; i++) {
-                        particlesArray[i].update();
-                        particlesArray[i].draw();
-                    }
-                    requestAnimationFrame(animate);
-                }
-                
-                init();
-                animate();
-
-                let resizeTimer;
-                window.addEventListener('resize', () => {
-                    clearTimeout(resizeTimer);
-                    resizeTimer = setTimeout(() => {
-                        init();
-                    }, 250);
-                });
+                const init = () => { resize(); particles = Array.from({length: 80}, () => new P()); };
+                const loop = () => { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>{p.upd();p.drw();}); requestAnimationFrame(loop); };
+                init(); loop(); window.addEventListener('resize', init);
             }
         });
     </script>
-
 <script type="module" src="/index.tsx"></script>
 </body>
 </html>
