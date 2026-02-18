@@ -1,18 +1,17 @@
 import Alpine from 'alpinejs';
 
 // Inicialización de Alpine.js
-// Fix: Property 'Alpine' does not exist on type 'Window & typeof globalThis'.
 (window as any).Alpine = Alpine;
 Alpine.start();
 
 /**
  * Lógica principal de Contival Técnica
- * Maneja efectos visuales y rendimiento de la interfaz
+ * Optimizada para PC y Dispositivos Móviles
  */
 const initApp = () => {
-    console.log("Contival Técnica App Running");
+    console.log("Contival Técnica App Running - High Performance Mode");
 
-    // 1. Intersection Observer para animaciones al entrar en pantalla
+    // 1. Intersection Observer para animaciones (Optimizado)
     const setupAnimations = () => {
         const animatedElements = document.querySelectorAll('.product-card, .distributor-item');
         
@@ -23,29 +22,35 @@ const initApp = () => {
                         const target = entry.target as HTMLElement;
                         target.classList.add('animate__animated', 'animate__fadeInUp');
                         target.style.opacity = '1';
+                        observer.unobserve(target); // Dejamos de observar tras animar para ahorrar recursos
                     }
                 });
-            }, { threshold: 0.1 });
+            }, { 
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
 
             animatedElements.forEach(el => {
                 (el as HTMLElement).style.opacity = '0';
                 observer.observe(el);
             });
         } else {
-            // Fallback para navegadores antiguos
             animatedElements.forEach(el => (el as HTMLElement).style.opacity = '1');
         }
     };
 
-    // 2. Parallax Sincronizado para Fondos Industriales (Optimizado)
+    // 2. Motor de Parallax Multi-Dispositivo (Optimizado)
     const setupParallax = () => {
         const parallaxBgs = [
-            { id: 'hero-background', factor: 0.15 },
-            { id: 'especialidades-background', factor: 0.15 },
-            { id: 'footer-background', factor: 0.15 }
+            { id: 'hero-background', factor: 0.12 },
+            { id: 'especialidades-background', factor: 0.10 },
+            { id: 'footer-background', factor: 0.12 }
         ];
 
-        const onScroll = () => {
+        // Función de renderizado por frame para mayor fluidez
+        let ticking = false;
+
+        const updateParallax = () => {
             const yOffset = window.scrollY;
             const vh = window.innerHeight;
 
@@ -59,43 +64,48 @@ const initApp = () => {
                     const inView = rect.top < vh && rect.bottom > 0;
                     
                     if (inView) {
-                        /**
-                         * NUEVO CÁLCULO DE PARALLAX: Centrado en el Viewport
-                         * Calcula la distancia del centro de la sección al centro de la pantalla.
-                         * Esto asegura que la imagen esté centrada cuando la sección está centrada,
-                         * permitiendo un movimiento más natural y evitando cortes.
-                         */
-                        const sectionCenter = section.offsetTop + section.offsetHeight / 2;
+                        // Cálculo robusto: posición relativa al viewport
+                        const sectionTopAbsolute = rect.top + yOffset;
+                        const sectionCenter = sectionTopAbsolute + section.offsetHeight / 2;
                         const viewportCenter = yOffset + vh / 2;
                         const relativeDistance = viewportCenter - sectionCenter;
                         
-                        // Aplicamos el movimiento sutil mediante transformaciones 3D
+                        // Usamos transform3d para aceleración por GPU
                         bg.style.transform = `translate3d(0, ${relativeDistance * item.factor}px, 0)`;
                     }
                 }
             });
+            ticking = false;
         };
 
-        // Escuchamos el scroll con passive: true para no bloquear el hilo principal
+        const onScroll = () => {
+            if (!ticking) {
+                window.requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+        };
+
         window.addEventListener('scroll', onScroll, { passive: true });
-        // Ejecutamos una vez al inicio para posicionar correctamente
-        onScroll();
+        window.addEventListener('resize', updateParallax);
+        updateParallax();
     };
 
-    // 3. Sistema de Partículas Ambientales (Efecto Polvo Industrial/Atmósfera)
+    // 3. Sistema de Partículas Ambientales (Optimizado)
     const setupParticles = () => {
         const canvas = document.getElementById('particle-canvas') as HTMLCanvasElement;
         if (!canvas) return;
 
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext('2d', { alpha: true });
         if (!ctx) return;
 
         let particles: Particle[] = [];
+        let animationFrame: number;
         
         const resize = () => {
-            if (canvas.parentElement) {
-                canvas.width = canvas.parentElement.offsetWidth;
-                canvas.height = canvas.parentElement.offsetHeight;
+            const parent = canvas.parentElement;
+            if (parent) {
+                canvas.width = parent.offsetWidth;
+                canvas.height = parent.offsetHeight;
             }
         };
 
@@ -105,13 +115,15 @@ const initApp = () => {
             s: number;
             vx: number;
             vy: number;
+            alpha: number;
 
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.s = Math.random() * 2 + 1;
-                this.vx = Math.random() * 0.4 - 0.2;
-                this.vy = Math.random() * 0.4 - 0.2;
+                this.s = Math.random() * 1.5 + 0.5;
+                this.vx = Math.random() * 0.3 - 0.15;
+                this.vy = Math.random() * 0.3 - 0.15;
+                this.alpha = Math.random() * 0.3 + 0.1;
             }
 
             update() {
@@ -125,7 +137,7 @@ const initApp = () => {
 
             draw() {
                 if (!ctx) return;
-                ctx.fillStyle = 'rgba(0,168,225,0.2)';
+                ctx.fillStyle = `rgba(0,168,225,${this.alpha})`;
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.s, 0, Math.PI * 2);
                 ctx.fill();
@@ -133,8 +145,12 @@ const initApp = () => {
         }
 
         const init = () => {
+            cancelAnimationFrame(animationFrame);
             resize();
-            particles = Array.from({ length: 80 }, () => new Particle());
+            // Menos partículas en pantallas pequeñas para ahorrar batería
+            const count = window.innerWidth < 768 ? 40 : 80;
+            particles = Array.from({ length: count }, () => new Particle());
+            render();
         };
 
         const render = () => {
@@ -143,11 +159,10 @@ const initApp = () => {
                 p.update();
                 p.draw();
             });
-            requestAnimationFrame(render);
+            animationFrame = requestAnimationFrame(render);
         };
 
         init();
-        render();
         window.addEventListener('resize', init);
     };
 

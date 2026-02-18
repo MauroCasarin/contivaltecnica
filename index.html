@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es" class="scroll-smooth overflow-x-hidden">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -55,6 +55,7 @@
             width: 100%;
             height: 100%;
             z-index: 10;
+            pointer-events: none;
         }
         .logo-white {
             filter: brightness(0) invert(1);
@@ -102,6 +103,11 @@
             0% { background-position: 200% 0; }
             100% { background-position: -200% 0; }
         }
+        /* Prevención de parpadeo en móviles */
+        section {
+            backface-visibility: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
     </style>
 <script type="importmap">
 {
@@ -112,7 +118,7 @@
 </script>
 <link rel="stylesheet" href="/index.css">
 </head>
-<body class="font-sans text-slate-800 antialiased bg-white" 
+<body class="font-sans text-slate-800 antialiased bg-white overflow-x-hidden w-full" 
     x-data="{ 
         openModal: null, 
         mobileMenu: false, 
@@ -131,7 +137,6 @@
             <div class="flex items-center justify-between h-20">
                 <div class="flex-shrink-0">
                     <a href="#inicio" class="block">
-                        <!-- URL Corregida -->
                         <img class="h-10 w-auto" src="https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/6e42fc8dcfc1dc1095324dfe61cd4dab4a7799ba/contivaltecnica%20logo.svg" alt="Logo Contival Técnica">
                     </a>
                 </div>
@@ -142,7 +147,7 @@
                     <a href="#contacto" class="text-sm font-bold text-brand-dark hover:text-brand-blue transition-colors uppercase tracking-wider">Contacto</a>
                 </nav>
                 <div class="md:hidden">
-                    <button @click="mobileMenu = !mobileMenu" class="p-2 text-brand-dark hover:text-brand-blue">
+                    <button @click="mobileMenu = !mobileMenu" class="p-2 text-brand-dark hover:text-brand-blue" aria-label="Menú">
                         <svg x-show="!mobileMenu" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
                         <svg x-show="mobileMenu" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display:none;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                     </button>
@@ -159,9 +164,9 @@
         </div>
     </header>
 
-    <main>
+    <main class="w-full">
         <!-- ===== HERO SECTION ===== -->
-        <section id="inicio" class="relative text-white overflow-hidden scroll-mt-20">
+        <section id="inicio" class="relative text-white overflow-hidden scroll-mt-20 min-h-[500px]">
             <canvas id="particle-canvas"></canvas>
             <div id="hero-background" class="absolute inset-0 z-0 w-full h-full scale-150" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center; will-change: transform;"></div>
             <div class="absolute inset-0 z-0 bg-black/60"></div>
@@ -222,7 +227,7 @@
         </section>
 
         <!-- ===== DISTRIBUCIÓN ===== -->
-        <section id="distribucion" class="pt-12 bg-slate-50 relative pb-24 scroll-mt-24">
+        <section id="distribucion" class="pt-12 bg-slate-50 relative pb-24 scroll-mt-24 overflow-hidden">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="max-w-3xl mx-auto">
                     <div class="text-center mb-10">
@@ -365,7 +370,7 @@
         </section>
 
         <!-- ===== CONTACTO ===== -->
-        <section id="contacto" class="bg-brand-dark pt-20 pb-20 sm:pb-24 scroll-mt-24">
+        <section id="contacto" class="bg-brand-dark pt-20 pb-20 sm:pb-24 scroll-mt-24 overflow-hidden">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     <div class="text-center lg:text-left">
@@ -393,21 +398,21 @@
     </main>
 
     <!-- ===== FOOTER ===== -->
-    <footer class="bg-brand-dark relative overflow-hidden">
+    <footer class="bg-brand-dark relative overflow-hidden w-full">
         <div id="footer-background" class="absolute inset-0 z-0 opacity-10 scale-150" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center; will-change: transform;"></div>
         <div class="absolute inset-0 z-0 bg-brand-dark/90"></div>
         <div class="relative z-10">
             <div class="bg-slate-700/70 backdrop-blur-sm py-6">
                 <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <a href="#inicio" class="inline-block transition-transform hover:scale-105">
-                         <!-- URL Corregida -->
                          <img class="h-10 w-auto logo-white" src="https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/6e42fc8dcfc1dc1095324dfe61cd4dab4a7799ba/contivaltecnica%20logo.svg" alt="Logo Contival Técnica">
                     </a>
                 </div>
             </div>
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
                 <div class="border-t border-slate-700 pt-4 text-center">
-                     <p class="text-[10px] text-slate-400 tracking-wider">WEB: <a href="https://www.instagram.com/3d_mc_3d/" target="_blank" class="font-semibold text-slate-300 hover:text-brand-cyan">Mauro Casarin</a></p>
+                     <p class="text-[10px] text-slate-400 tracking-wider uppercase">Contival Técnica S.R.L. © <span x-text="new Date().getFullYear()"></span></p>
+                     <p class="text-[10px] text-slate-400 tracking-wider mt-1">WEB: <a href="https://www.instagram.com/3d_mc_3d/" target="_blank" class="font-semibold text-slate-300 hover:text-brand-cyan">Mauro Casarin</a></p>
                 </div>
             </div>
         </div>
@@ -436,7 +441,7 @@
                            openModal === 'instrumentacion' ? 'Instrumentación' : 
                            'Suministros'">
                 </h3>
-                <button @click="openModal = null" class="text-slate-400 hover:text-white transition-colors">
+                <button @click="openModal = null" class="text-slate-400 hover:text-white transition-colors" aria-label="Cerrar">
                     <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                 </button>
             </div>
