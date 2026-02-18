@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
 <head>
@@ -6,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contival Técnica | Control de Vapor, Gases y Fluidos Industriales</title>
     
-    <!-- REQUISITO IMPRESCINDIBLE: Tailwind CSS vía CDN -->
+    <!-- Tailwind CSS vía CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Alpine.js - Cargado en head con defer para estabilidad de componentes -->
+    <!-- Alpine.js - Cargado con defer -->
     <script src="//unpkg.com/alpinejs" defer></script>
 
     <!-- Google Fonts: Inter -->
@@ -73,8 +72,24 @@
             border-left-color: #0071bc;
             box-shadow: 0 2px 8px rgba(0,113,188,0.08);
         }
-        .badge-hero {
-            @apply flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/5 backdrop-blur-md text-xs font-bold uppercase tracking-widest text-white transition-all duration-300 hover:bg-white/10 hover:border-brand-cyan/50;
+        /* Estilo para los indicadores técnicos del Hero (No botones) */
+        .hero-indicator {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+        }
+        .hero-indicator-icon {
+            color: #00a8e1;
+            width: 20px;
+            height: 20px;
+        }
+        .hero-indicator-text {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #e2e8f0;
         }
     </style>
 <link rel="stylesheet" href="/index.css">
@@ -115,7 +130,7 @@
     </header>
 
     <main>
-        <!-- ===== HERO SECTION ACTUALIZADA ===== -->
+        <!-- ===== HERO SECTION ===== -->
         <section id="inicio" class="relative text-white overflow-hidden scroll-mt-20">
             <canvas id="particle-canvas"></canvas>
             <div id="hero-background" class="absolute inset-0 z-0 w-full h-full" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center; will-change: transform;"></div>
@@ -127,23 +142,37 @@
                     Distribuidora de Soluciones para el Control de<br class="hidden md:block"> 
                     <span class="text-brand-cyan">Vapor, Gases y Fluidos</span> Industriales
                 </h1>
-                <p class="max-w-3xl mx-auto text-base md:text-xl text-slate-300 mb-10 animate__animated animate__fadeIn animate__delay-1s leading-relaxed">
+                <p class="max-w-3xl mx-auto text-base md:text-xl text-slate-300 mb-12 animate__animated animate__fadeIn animate__delay-1s leading-relaxed">
                     Especialistas en equipamiento de alta performance para procesos industriales críticos y eficiencia energética en plantas.
                 </p>
 
-                <!-- Badges Visuales de Categorías -->
-                <div class="flex flex-wrap justify-center gap-4 animate__animated animate__fadeInUp animate__delay-1s">
-                    <div class="badge-hero group">
-                        <svg class="w-4 h-4 text-brand-cyan group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                        Línea de Vapor
+                <!-- INDICADORES TÉCNICOS (Corregidos: No parecen botones) -->
+                <div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 animate__animated animate__fadeInUp animate__delay-1s border-t border-white/10 pt-8">
+                    <!-- Vapor -->
+                    <div class="hero-indicator">
+                        <svg class="hero-indicator-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                        <span class="hero-indicator-text">Línea de Vapor</span>
                     </div>
-                    <div class="badge-hero group">
-                        <svg class="w-4 h-4 text-brand-cyan group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg>
-                        Gases Industriales
+                    
+                    <!-- Gases -->
+                    <div class="hero-indicator">
+                        <svg class="hero-indicator-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <circle cx="12" cy="12" r="3" stroke-width="2"/>
+                            <circle cx="19" cy="7" r="2" stroke-width="2" opacity="0.6"/>
+                            <circle cx="5" cy="17" r="2" stroke-width="2" opacity="0.6"/>
+                            <path d="M12 9V5M12 19v-4M15 12h4M9 12H5" stroke-width="2" opacity="0.4"/>
+                        </svg>
+                        <span class="hero-indicator-text">Gases Industriales</span>
                     </div>
-                    <div class="badge-hero group">
-                        <svg class="w-4 h-4 text-brand-cyan group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.423 15.423a2 2 0 01-2.828 0l-1.414-1.414a2 2 0 010-2.828l1.414-1.414a2 2 0 012.828 0l1.414 1.414a2 2 0 010 2.828l-1.414 1.414zm-9 0a2 2 0 01-2.828 0l-1.414-1.414a2 2 0 010-2.828l1.414-1.414a2 2 0 012.828 0l1.414 1.414a2 2 0 010 2.828l-1.414 1.414z" /></svg>
-                        Fluidos y Líquidos
+
+                    <!-- Fluidos -->
+                    <div class="hero-indicator">
+                        <svg class="hero-indicator-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16.3c2.2 0 4-1.8 4-4 0-2.2-4-6.3-4-6.3S3 10.1 3 12.3c0 2.2 1.8 4 4 4zM17 16.3c2.2 0 4-1.8 4-4 0-2.2-4-6.3-4-6.3S13 10.1 13 12.3c0 2.2 1.8 4 4 4z" />
+                        </svg>
+                        <span class="hero-indicator-text">Fluidos y Líquidos</span>
                     </div>
                 </div>
             </div>
@@ -161,7 +190,7 @@
             </div>
         </section>
 
-        <!-- ===== SECCIÓN DE DISTRIBUCIÓN ===== -->
+        <!-- ===== DISTRIBUCIÓN ===== -->
         <section id="distribucion" class="pt-12 bg-slate-50 relative pb-24 scroll-mt-24">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="max-w-3xl mx-auto">
@@ -209,7 +238,7 @@
             </div>
         </section>
 
-        <!-- ===== SECCIÓN DE ESPECIALIDADES TÉCNICAS ===== -->
+        <!-- ===== ESPECIALIDADES TÉCNICAS ===== -->
         <section id="especialidades" class="pt-16 bg-slate-900 relative pb-32 scroll-mt-24">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
@@ -277,7 +306,7 @@
             </div>
         </section>
 
-        <!-- ===== SECCIÓN DE CONTACTO ===== -->
+        <!-- ===== CONTACTO ===== -->
         <section id="contacto" class="bg-brand-dark pt-20 pb-20 sm:pb-24 scroll-mt-24">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -325,7 +354,7 @@
         </div>
     </footer>
 
-    <!-- ===== SISTEMA DE MODALES (DETALLES E INDUSTRIAS) ===== -->
+    <!-- ===== MODALES ===== -->
     <div 
         x-show="openModal" 
         x-cloak
@@ -354,11 +383,10 @@
             </div>
             <div class="p-6 overflow-y-auto space-y-8">
                 
-                <!-- Contenido: Amoníaco -->
                 <div x-show="openModal === 'refrigeracion'" x-cloak class="space-y-6">
                     <div class="space-y-3">
                         <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Línea de Productos</p>
-                        <p class="text-slate-200 text-sm leading-relaxed">Sistemas avanzados para el control de amoníaco (R-717). Amplio stock en válvulas L.E. y L.P. en rangos desde 3/8" hasta 10". Diseñadas para soportar condiciones térmicas extremas con máxima eficiencia energética.</p>
+                        <p class="text-slate-200 text-sm leading-relaxed">Sistemas avanzados para el control de amoníaco (R-717). Amplio stock en válvulas L.E. y L.P. en rangos desde 3/8" hasta 10". Diseñadas para soportar condiciones térmicas extremas.</p>
                     </div>
                     <div class="space-y-3 pt-2">
                         <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Industrias de Aplicación</p>
@@ -371,11 +399,10 @@
                     </div>
                 </div>
 
-                <!-- Contenido: Válvulas -->
                 <div x-show="openModal === 'valvulas'" x-cloak class="space-y-6">
                     <div class="space-y-3">
                         <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Línea de Productos</p>
-                        <p class="text-slate-200 text-sm leading-relaxed">Distribución oficial de válvulas KLINGER (esféricas y pistón) y SAUNDERS (diafragma). Soluciones para el control de vapor saturado, fluidos corrosivos y de alta viscosidad.</p>
+                        <p class="text-slate-200 text-sm leading-relaxed">Distribución oficial de válvulas KLINGER (esféricas y pistón) y SAUNDERS (diafragma). Soluciones para el control de vapor saturado y fluidos corrosivos.</p>
                     </div>
                     <div class="space-y-3 pt-2">
                         <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Industrias de Aplicación</p>
@@ -383,16 +410,15 @@
                             <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Farmacéutica</span>
                             <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Química</span>
                             <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Petroquímica</span>
-                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Generación de Energía</span>
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Energía</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Contenido: Instrumentación -->
                 <div x-show="openModal === 'instrumentacion'" x-cloak class="space-y-6">
                     <div class="space-y-3">
                         <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Línea de Productos</p>
-                        <p class="text-slate-200 text-sm leading-relaxed">Gama completa de manómetros BEYCA-CIMPA en acero inoxidable y bronce. Termómetros industriales de lectura directa y remota para control de procesos térmicos de precisión.</p>
+                        <p class="text-slate-200 text-sm leading-relaxed">Gama completa de manómetros BEYCA-CIMPA en acero inoxidable y bronce. Termómetros industriales de lectura directa y remota.</p>
                     </div>
                     <div class="space-y-3 pt-2">
                         <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Industrias de Aplicación</p>
@@ -400,24 +426,21 @@
                             <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Laboratorios</span>
                             <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Manufactura</span>
                             <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Control de Calidad</span>
-                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Plantas de Proceso</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Contenido: Suministros -->
                 <div x-show="openModal === 'suministros'" x-cloak class="space-y-6">
                     <div class="space-y-3">
                         <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Línea de Productos</p>
-                        <p class="text-slate-200 text-sm leading-relaxed">Conexiones integrales para redes industriales. Accesorios CURVO-SOLD, bridas normalizadas bajo normas ANSI/ASA, y accesorios forjados para alta presión y temperatura.</p>
+                        <p class="text-slate-200 text-sm leading-relaxed">Conexiones integrales para redes industriales. Accesorios CURVO-SOLD, bridas normalizadas y accesorios forjados para alta presión.</p>
                     </div>
                     <div class="space-y-3 pt-2">
                         <p class="text-brand-cyan font-bold text-xs tracking-widest uppercase opacity-70">Industrias de Aplicación</p>
                         <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Mantenimiento Industrial</span>
-                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Montajes Mecánicos</span>
-                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Empresas de Ingeniería</span>
-                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Redes de Vapor y Gas</span>
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Mantenimiento</span>
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Montajes</span>
+                            <span class="px-3 py-1 bg-slate-700/50 text-slate-300 rounded text-xs border border-slate-600">Vapor y Gas</span>
                         </div>
                     </div>
                 </div>
@@ -430,6 +453,9 @@
     </div>
     
     <script>
+        // Inicialización básica para evitar errores locales
+        console.log("Contival Técnica Web Initialized");
+
         document.addEventListener("DOMContentLoaded", () => {
             const animatedElements = document.querySelectorAll('.product-card, .distributor-item');
             if ("IntersectionObserver" in window) {
@@ -454,7 +480,12 @@
             if (canvas) {
                 const ctx = canvas.getContext('2d');
                 let particles = [];
-                const resize = () => { canvas.width = canvas.parentElement.offsetWidth; canvas.height = canvas.parentElement.offsetHeight; };
+                const resize = () => { 
+                    if (canvas.parentElement) {
+                        canvas.width = canvas.parentElement.offsetWidth; 
+                        canvas.height = canvas.parentElement.offsetHeight; 
+                    }
+                };
                 class P {
                     constructor() { this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height; this.s = Math.random() * 2 + 1; this.vx = Math.random() * 0.4 - 0.2; this.vy = Math.random() * 0.4 - 0.2; }
                     upd() { this.x += this.vx; this.y += this.vy; if(this.x>canvas.width)this.x=0; if(this.x<0)this.x=canvas.width; if(this.y>canvas.height)this.y=0; if(this.y<0)this.y=canvas.height; }
