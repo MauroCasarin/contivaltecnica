@@ -390,7 +390,7 @@
                         </div>
                     </div>
                     
-                    <!-- TARJETA: VÁLVULAS DE PROCESO (MODIFICADA: BOTÓN COMPARATIVA) -->
+                    <!-- TARJETA: VÁLVULAS DE PROCESO -->
                     <div 
                         x-data="{ showTabla: false }"
                         @click="openModal = 'valvulas'" 
@@ -479,16 +479,95 @@
                         </div>
                     </div>
 
-                    <div @click.stop="openModal = 'instrumentacion'" class="product-card bg-slate-900/85 backdrop-blur-md rounded-xl shadow-2xl p-6 ring-1 ring-slate-700 hover:ring-brand-cyan transition-all duration-300 flex flex-col cursor-pointer hover:-translate-y-1">
+                    <!-- TARJETA: INSTRUMENTACIÓN -->
+                    <div 
+                        x-data="{ showInstrumentacion: false }"
+                        @click="openModal = 'instrumentacion'" 
+                        class="product-card bg-slate-900/85 backdrop-blur-md rounded-xl shadow-2xl p-6 ring-1 ring-slate-700 hover:ring-brand-cyan transition-all duration-300 flex flex-col cursor-pointer hover:-translate-y-1 relative"
+                    >
                         <div class="mb-4">
                             <svg class="w-8 h-8 text-brand-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6zM13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" /></svg>
                         </div>
                         <h3 class="text-lg font-bold text-white mb-3">Instrumentación</h3>
-                        <ul class="space-y-2 text-sm text-slate-100 font-bold">
-                            <li class="flex items-start gap-x-2"><svg class="w-4 h-4 mt-0.5 text-brand-cyan flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M4.5 12.75l6 6 9-13.5" /></svg><span>Manómetros Acero Inox.</span></li>
-                            <li class="flex items-start gap-x-2"><svg class="w-4 h-4 mt-0.5 text-brand-cyan flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M4.5 12.75l6 6 9-13.5" /></svg><span>Termómetros industriales.</span></li>
+                        <ul class="space-y-2 text-sm text-slate-100 font-bold mb-5">
+                            <li class="flex items-start gap-x-2"><svg class="w-4 h-4 mt-0.5 text-brand-cyan flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M4.5 12.75l6 6 9-13.5" /></svg><span>Manómetros</span></li>
+                            <li class="flex items-start gap-x-2"><svg class="w-4 h-4 mt-0.5 text-brand-cyan flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M4.5 12.75l6 6 9-13.5" /></svg><span>Termómetros</span></li>
                         </ul>
+
+                        <!-- Botón Simplificado COMPARATIVA -->
+                        <button 
+                            @click.stop="showInstrumentacion = !showInstrumentacion"
+                            class="mt-auto flex items-center justify-between w-full px-4 py-2 border border-brand-cyan/40 rounded-lg text-brand-cyan hover:bg-brand-cyan/10 transition-all group"
+                        >
+                            <span class="text-[11px] font-bold uppercase tracking-[0.15em]">COMPARATIVA</span>
+                            <svg :class="showInstrumentacion ? 'rotate-180' : ''" class="w-4 h-4 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+
+                        <!-- Tabla Comparativa Desplegable Instrumentación -->
+                        <div 
+                            x-show="showInstrumentacion" 
+                            x-cloak 
+                            @click.stop
+                            x-transition:enter="transition ease-out duration-300"
+                            x-transition:enter-start="opacity-0 -translate-y-4"
+                            x-transition:enter-end="opacity-100 translate-y-0"
+                            x-transition:leave="transition ease-in duration-200"
+                            x-transition:leave-start="opacity-100 translate-y-0"
+                            x-transition:leave-end="opacity-0 -translate-y-4"
+                            class="mt-4 overflow-x-auto custom-scrollbar border-t border-slate-700/50 pt-4"
+                        >
+                            <table class="w-full text-[10px] text-left border-collapse min-w-[450px]">
+                                <thead>
+                                    <tr class="border-b border-slate-700/80">
+                                        <th class="py-2 pr-2 text-brand-cyan uppercase font-extrabold sticky left-0 bg-slate-900 z-10">Característica</th>
+                                        <th class="py-2 px-2 text-brand-cyan uppercase font-extrabold text-center">Manómetro de Bronce</th>
+                                        <th class="py-2 pl-2 text-brand-cyan uppercase font-extrabold text-center">Acero Inoxidable</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-slate-300 font-medium">
+                                    <tr class="border-b border-slate-700/40 bg-slate-800/40">
+                                        <td class="py-2.5 pr-2 font-bold text-white sticky left-0 bg-slate-900 z-10">Material Interno</td>
+                                        <td class="py-2.5 px-2 text-center">Tubo Bourdon y conexión latón.</td>
+                                        <td class="py-2.5 pl-2 text-center">Tubo Bourdon AISI 316.</td>
+                                    </tr>
+                                    <tr class="border-b border-slate-700/40">
+                                        <td class="py-2.5 pr-2 font-bold text-white sticky left-0 bg-slate-900 z-10">Fluidos Compatibles</td>
+                                        <td class="py-2.5 px-2 text-center">Agua, aire, aceites lubricantes.</td>
+                                        <td class="py-2.5 pl-2 text-center text-cyan-400 font-bold">Químicos, vapor, gases corrosivos.</td>
+                                    </tr>
+                                    <tr class="border-b border-slate-700/40 bg-slate-800/40">
+                                        <td class="py-2.5 pr-2 font-bold text-white sticky left-0 bg-slate-900 z-10">Resistencia Corrosión</td>
+                                        <td class="py-2.5 px-2 text-center text-red-400/80">Baja (se oxida con humedad).</td>
+                                        <td class="py-2.5 pl-2 text-center text-green-400 font-bold">Excelente (resiste agresivos).</td>
+                                    </tr>
+                                    <tr class="border-b border-slate-700/40">
+                                        <td class="py-2.5 pr-2 font-bold text-white sticky left-0 bg-slate-900 z-10">Rango de Presión</td>
+                                        <td class="py-2.5 px-2 text-center">Hasta 600 - 1,000 bar.</td>
+                                        <td class="py-2.5 pl-2 text-center text-cyan-400">Superior a 2,000 bar.</td>
+                                    </tr>
+                                    <tr class="border-b border-slate-700/40 bg-slate-800/40">
+                                        <td class="py-2.5 pr-2 font-bold text-white sticky left-0 bg-slate-900 z-10">Industria Ideal</td>
+                                        <td class="py-2.5 px-2 text-center">Neumática, Talleres.</td>
+                                        <td class="py-2.5 pl-2 text-center">Petroquímica, Farmacéutica.</td>
+                                    </tr>
+                                    <tr class="border-b border-slate-700/40">
+                                        <td class="py-2.5 pr-2 font-bold text-white sticky left-0 bg-slate-900 z-10">Costo Inicial</td>
+                                        <td class="py-2.5 px-2 text-center font-bold text-green-400">Económico (Bajo).</td>
+                                        <td class="py-2.5 pl-2 text-center">Inversión a largo plazo.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2.5 pr-2 font-bold text-white sticky left-0 bg-slate-900 z-10">Higiene</td>
+                                        <td class="py-2.5 px-2 text-center text-red-400/80">No apto grado alimenticio.</td>
+                                        <td class="py-2.5 pl-2 text-center text-cyan-400 font-bold">Certificable alimentario/médico.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
+
+                    <!-- TARJETA: SUMINISTROS -->
                     <div @click.stop="openModal = 'suministros'" class="product-card bg-slate-900/85 backdrop-blur-md rounded-xl shadow-2xl p-6 ring-1 ring-slate-700 hover:ring-brand-cyan transition-all duration-300 flex flex-col cursor-pointer hover:-translate-y-1">
                         <div class="mb-4">
                             <svg class="w-8 h-8 text-brand-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.423 20.11l3.29-1.212m-3.29 1.212a9.25 9.25 0 01-8.132-8.131m8.132 8.131l-.499-3.31m3.789-1.213L16.485 19l-2.43 2.903m3.235-4.516a9.25 9.25 0 01-8.132-8.131m8.132 8.131l.499-3.31" /></svg>
@@ -529,7 +608,7 @@
                             <div class="flex-shrink-0 bg-slate-700/50 p-3 rounded-full">
                                 <svg class="w-6 h-6 text-brand-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0zM19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" /></svg>
                             </div>
-                            <a href="https://www.google.com/maps/place/Contival+T%C3%A9cnica+S.R.L./" target="_blank" class="text-base text-slate-300 hover:text-brand-cyan transition-colors">Buenos Aires 3416, Ciudadela, Buenos Aires.</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Buenos+Aires+3416+B1702CJD+Ciudadela+Provincia+de+Buenos+Aires" target="_blank" class="text-base text-slate-300 hover:text-brand-cyan transition-colors">Buenos Aires 3416, B1702CJD Ciudadela, Provincia de Buenos Aires</a>
                         </div>
                         <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
                             <div class="flex-shrink-0 bg-slate-700/50 p-3 rounded-full">
