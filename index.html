@@ -822,26 +822,52 @@
                     { id: 'footer-background', factor: 0.15 }
                 ];
                 let ticking = false;
+                let tiltX = 0;
+                let tiltY = 0;
+
+                const handleOrientation = (event) => {
+                    // Captura de Orientación: gamma (lateral) y beta (frontal)
+                    // Aplicamos multiplicadores bajos para límites de seguridad (clamping sutil)
+                    tiltX = (event.gamma || 0) * 0.4; 
+                    tiltY = (event.beta || 0) * 0.2;
+                    
+                    if (!ticking) {
+                        window.requestAnimationFrame(updateParallax);
+                        ticking = true;
+                    }
+                };
+
+                window.addEventListener('deviceorientation', handleOrientation);
+
                 const updateParallax = () => {
                     const yOffset = window.scrollY;
                     const vh = window.innerHeight;
                     parallaxBgs.forEach(item => {
                         const bg = document.getElementById(item.id);
                         if (!bg) return;
+
+                        // Suavizado: Aplicamos la transición solicitada para evitar vibraciones
+                        bg.style.transition = 'transform 0.1s ease-out';
+
                         const section = bg.parentElement;
                         const rect = section.getBoundingClientRect();
                         if (rect.top < vh && rect.bottom > 0) {
                             const sectionCenter = (rect.top + yOffset) + (section.offsetHeight / 2);
                             const viewportCenter = yOffset + (vh / 2);
                             const relativeDistance = viewportCenter - sectionCenter;
-                            bg.style.transform = `translate3d(0, ${relativeDistance * item.factor}px, 0)`;
+                            
+                            // Fusión de Movimiento: Scroll (translateY) + Acelerómetro (tiltX, tiltY)
+                            const scrollY = relativeDistance * item.factor;
+                            bg.style.transform = `translate3d(${tiltX}px, ${scrollY + tiltY}px, 0)`;
                         }
                     });
                     ticking = false;
                 };
+
                 window.addEventListener('scroll', () => {
                     if (!ticking) { window.requestAnimationFrame(updateParallax); ticking = true; }
                 }, { passive: true });
+
                 updateParallax();
             };
 
