@@ -935,9 +935,9 @@
                         this.alpha = Math.random() * 0.3 + 0.1;
                     }
                     update() {
-                        // Actualización de Partículas: suma tiltX y tiltY con factor de suavizado
-                        this.x += this.vx + (tiltX * 0.1); 
-                        this.y += this.vy + (tiltY * 0.1);
+                        // Actualización de Partículas: Efecto de flotación inversa (restamos tiltX y tiltY)
+                        this.x += this.vx - (tiltX * 0.05); 
+                        this.y += this.vy - (tiltY * 0.1);
 
                         if (this.y < -10) this.y = canvas.height + 10;
                         if (this.y > canvas.height + 10) this.y = -10;
