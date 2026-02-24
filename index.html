@@ -697,6 +697,32 @@
         </section>
     </main>
 
+        <!-- ===== WHATSAPP FORM ===== -->
+        <section id="whatsapp-form" class="bg-brand-dark py-20">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-2xl mx-auto bg-slate-900/40 border border-cyan-500/20 rounded-lg p-8">
+                    <h2 class="text-2xl font-bold text-white text-center mb-6">Contacto Directo por WhatsApp</h2>
+                    <form id="contact-form" onsubmit="enviarWhatsApp(event)">
+                        <div class="mb-4">
+                            <label for="nombre" class="block text-cyan-400 text-sm font-bold mb-2">Nombre y Apellido</label>
+                            <input type="text" id="nombre" name="nombre" class="w-full bg-slate-800/50 border border-slate-700 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="telefono" class="block text-cyan-400 text-sm font-bold mb-2">Número de Contacto</label>
+                            <input type="text" id="telefono" name="telefono" class="w-full bg-slate-800/50 border border-slate-700 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500" required>
+                        </div>
+                        <div class="mb-6">
+                            <label for="consulta" class="block text-cyan-400 text-sm font-bold mb-2">Consulta</label>
+                            <textarea id="consulta" name="consulta" rows="4" class="w-full bg-slate-800/50 border border-slate-700 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500" required></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="bg-cyan-500 text-black font-bold py-3 px-6 rounded-lg hover:bg-cyan-400 transition-colors">Enviar Consulta a WhatsApp</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
     <!-- ===== FOOTER ===== -->
     <footer id="footer-section" class="bg-brand-dark relative overflow-hidden w-full">
         <div id="footer-background" class="absolute inset-0 z-0 opacity-10 scale-150" style="background-image: url('https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/refs/heads/main/Fondo.jpg'); background-size: cover; background-position: center;"></div>
@@ -817,6 +843,16 @@
     <script type="module">
         import Alpine from 'alpinejs';
         window.Alpine = Alpine;
+
+        window.enviarWhatsApp = function(event) {
+            event.preventDefault();
+            const nombre = document.getElementById('nombre').value;
+            const telefono = document.getElementById('telefono').value;
+            const consulta = document.getElementById('consulta').value;
+            const mensaje = `Hola Contival Técnica.\n\nMi nombre es: ${nombre}\n\nMi contacto es: ${telefono}\n\nConsulta: ${consulta}`;
+            const url = `https://wa.me/5491157002744?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, '_blank');
+        };
 
         const initApp = () => {
             const setupParallax = () => {
