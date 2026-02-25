@@ -114,6 +114,32 @@
             backface-visibility: hidden;
             -webkit-font-smoothing: antialiased;
         }
+.logo-shimmer {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+.logo-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -150%;
+  width: 60%; height: 100%;
+  background: linear-gradient(
+    to right, 
+    transparent, 
+    rgba(255, 255, 255, 0.2) 20%, 
+    rgba(255, 255, 255, 0.5) 50%, 
+    rgba(255, 255, 255, 0.2) 80%, 
+    transparent
+  );
+  transform: skewX(-25deg);
+  animation: shimmer 8s infinite; /* Más lento: 8 segundos */
+}
+@keyframes shimmer {
+  0% { left: -150%; }
+  20% { left: 150%; } /* El brillo pasa rápido pero espera mucho para volver */
+  100% { left: 150%; }
+}
     </style>
 <script type="importmap">
 {
@@ -152,7 +178,7 @@
             <div class="flex items-center justify-between h-20">
                 <div class="flex-shrink-0">
                     <a href="#inicio" class="block">
-                        <img class="h-10 w-auto" src="https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/6e42fc8dcfc1dc1095324dfe61cd4dab4a7799ba/contivaltecnica%20logo.svg" alt="Logo Contival Técnica">
+                        <div class="logo-shimmer inline-block"><img class="h-10 w-auto" src="https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/6e42fc8dcfc1dc1095324dfe61cd4dab4a7799ba/contivaltecnica%20logo.svg" alt="Logo Contival Técnica"></div>
                     </a>
                 </div>
                 <nav class="hidden md:flex items-center space-x-8">
@@ -731,7 +757,7 @@
             <div class="bg-slate-700/70 backdrop-blur-sm py-6">
                 <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <a href="#inicio" class="inline-block transition-transform hover:scale-105">
-                         <img class="h-10 w-auto logo-white" src="https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/6e42fc8dcfc1dc1095324dfe61cd4dab4a7799ba/contivaltecnica%20logo.svg" alt="Logo Contival Técnica">
+                         <div class="logo-shimmer"><img class="h-10 w-auto logo-white" src="https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/6e42fc8dcfc1dc1095324dfe61cd4dab4a7799ba/contivaltecnica%20logo.svg" alt="Logo Contival Técnica"></div>
                     </a>
                 </div>
             </div>
