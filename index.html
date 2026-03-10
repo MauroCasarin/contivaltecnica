@@ -705,18 +705,27 @@
                         </h2>
                     </div>
                     <div class="space-y-6">
-                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-                            <div class="flex-shrink-0 bg-slate-700/50 p-3 rounded-full">
+                        <!-- Ubicación -->
+                        <a href="https://www.google.com/maps/place/Contival+T%C3%A9cnica+S.R.L./@-34.6413371,-58.5334814,57m/data=!3m1!1e3!4m15!1m8!3m7!1s0x95bcc86ac94fd5f1:0x6a0cec1ab5f059eb!2sBuenos+Aires+3416,+B1702CJD+Ciudadela,+Provincia+de+Buenos+Aires!3b1!8m2!3d-34.641324!4d-58.5333018!16s%2Fg%2F11gr6fy0c8!3m5!1s0x95bcc86acb7ef37d:0x8a780ccf3b48a2dd!8m2!3d-34.6412405!4d-58.5332612!16s%2Fg%2F1thmm5bv?entry=ttu&g_ep=EgoyMDI2MDMwOC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 group">
+                            <div class="flex-shrink-0 bg-slate-700/50 p-3 rounded-full group-hover:bg-brand-cyan/20 transition-colors">
                                 <svg class="w-6 h-6 text-brand-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0zM19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" /></svg>
                             </div>
-                            <a href="https://www.google.com/maps/place/Contival+T%C3%A9cnica+S.R.L./@-34.6412405,-58.5358361,17z/data=!3m1!4b1!4m6!3m5!1s0x95bcc86acb7ef37d:0x8a780ccf3b48a2dd!8m2!3d-34.6412405!4d-58.5332612!16s%2Fg%2F1thmm5bv?entry=ttu&g_ep=EgoyMDI2MDMwMS4xIKXMDSoASAFQAw%3D%3D" target="_blank" class="text-base text-slate-300 hover:text-brand-cyan transition-colors">Buenos Aires 3416, B1702CJD Ciudadela, Provincia de Buenos Aires</a>
-                        </div>
-                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-                            <div class="flex-shrink-0 bg-slate-700/50 p-3 rounded-full">
+                            <span class="text-base text-slate-300 group-hover:text-brand-cyan transition-colors">Buenos Aires 3416, B1702CJD Ciudadela, Provincia de Buenos Aires</span>
+                        </a>
+                        <!-- Teléfono -->
+                        <a href="tel:+541146578390" class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 group">
+                            <div class="flex-shrink-0 bg-slate-700/50 p-3 rounded-full group-hover:bg-brand-cyan/20 transition-colors">
                                 <svg class="w-6 h-6 text-brand-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 6.75z" /></svg>
                             </div>
-                            <p class="text-base text-slate-300 font-semibold">011 4657-8390</p>
-                        </div>
+                            <p class="text-base text-slate-300 font-semibold group-hover:text-brand-cyan transition-colors">011 4657-8390</p>
+                        </a>
+                        <!-- Email -->
+                        <a href="mailto:ventas@contivaltecnica.com" class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 group">
+                            <div class="flex-shrink-0 bg-slate-700/50 p-3 rounded-full group-hover:bg-brand-cyan/20 transition-colors">
+                                <svg class="w-6 h-6 text-brand-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
+                            </div>
+                            <p class="text-base text-slate-300 font-semibold group-hover:text-brand-cyan transition-colors">ventas@contivaltecnica.com</p>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -876,7 +885,7 @@
             const telefono = document.getElementById('telefono').value;
             const consulta = document.getElementById('consulta').value;
             const mensaje = `Hola Contival Técnica.\n\nMi nombre es: ${nombre}\n\nMi contacto es: ${telefono}\n\nConsulta: ${consulta}`;
-            const url = `https://wa.me/5491157002744?text=${encodeURIComponent(mensaje)}`;
+            const url = `https://wa.me/5491122412484?text=${encodeURIComponent(mensaje)}`;
             window.open(url, '_blank');
         };
 
