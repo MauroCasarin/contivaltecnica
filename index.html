@@ -764,16 +764,21 @@
         <div class="absolute inset-0 z-0 bg-brand-dark/90"></div>
         <div class="relative z-10">
             <div class="bg-slate-700/70 backdrop-blur-sm py-6">
-                <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center gap-4">
                     <a href="#inicio" class="inline-block transition-transform hover:scale-105">
                          <div class="logo-shimmer"><img class="h-10 w-auto logo-white" src="https://raw.githubusercontent.com/MauroCasarin/contivaltecnica/6e42fc8dcfc1dc1095324dfe61cd4dab4a7799ba/contivaltecnica%20logo.svg" alt="Logo Contival Técnica"></div>
                     </a>
+                    <p class="text-[10px] text-slate-300 tracking-wider uppercase opacity-80">Contival Técnica S.R.L. © <span x-text="new Date().getFullYear()"></span></p>
                 </div>
             </div>
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
-                <div class="border-t border-slate-700 pt-4 text-center">
-                     <p class="text-[10px] text-slate-400 tracking-wider uppercase">Contival Técnica S.R.L. © <span x-text="new Date().getFullYear()"></span></p>
-                     <p class="text-[10px] text-slate-400 tracking-wider mt-1">WEB: <a href="https://www.instagram.com/3d_mc_3d/" target="_blank" class="font-semibold text-slate-300 hover:text-brand-cyan">Mauro Casarin</a></p>
+                <div class="text-center">
+                     <div class="mt-4 flex flex-col items-center gap-2">
+                        <p class="text-[10px] text-slate-400 tracking-wider">DESARROLLADA POR</p>
+                        <a href="https://www.instagram.com/3d_mc_3d/" target="_blank" class="inline-block transition-transform hover:scale-110">
+                            <img src="https://avatars.githubusercontent.com/u/70527971?v=4&size=64" alt="Mauro Casarin" class="h-5 w-5 rounded-full border border-slate-600" referrerPolicy="no-referrer">
+                        </a>
+                     </div>
                 </div>
             </div>
         </div>
@@ -953,27 +958,25 @@
                 let particles = [];
                 let animationFrame;
 
-                // Variables de Inclinación
+                // Variables de Inclinación (suavizadas)
                 let tiltX = 0;
                 let tiltY = 0;
 
                 // Evento de Orientación
                 const handleOrientation = (event) => {
-                    const beta = event.beta || 0;
-                    const gamma = event.gamma || 0;
+                    const beta = event.beta || 0;   // Inclinación adelante/atrás [-180, 180]
+                    const gamma = event.gamma || 0; // Inclinación izquierda/derecha [-90, 90]
 
-                    if (beta > 45) {
-                        // Dispositivo en vertical (beta > 45): las partículas suben (tiltY negativo)
-                        tiltY = -Math.min(beta - 45, 45) * 0.2;
-                        tiltX = gamma * 0.1;
-                    } else if (beta < 20) {
-                        // Modo Horizontal: los valores de inclinación tienden a cero
-                        tiltX *= 0.8;
-                        tiltY *= 0.8;
-                    } else {
-                        tiltX = gamma * 0.05;
-                        tiltY = (beta - 30) * 0.05;
-                    }
+                    // Calculamos el vector "hacia arriba" en el plano de la pantalla
+                    // Usamos Math.sin para una transición suave. 
+                    // Portrait vertical: beta=90 -> targetY = -1 (arriba)
+                    // Landscape: gamma=90 -> targetX = -1 (izquierda de la pantalla es "arriba" del mundo)
+                    const targetX = -Math.sin(gamma * Math.PI / 180);
+                    const targetY = -Math.sin(beta * Math.PI / 180);
+
+                    // Suavizado para evitar movimientos bruscos
+                    tiltX += (targetX - tiltX) * 0.1;
+                    tiltY += (targetY - tiltY) * 0.1;
                 };
 
                 // Permisos iOS
@@ -1004,20 +1007,34 @@
                     init() {
                         this.x = Math.random() * canvas.width;
                         this.y = Math.random() * canvas.height;
-                        this.s = Math.random() * 2 + 0.5;
-                        this.vx = (Math.random() - 0.5) * 0.4;
-                        this.vy = (Math.random() - 0.5) * 0.4 - 0.5;
-                        this.alpha = Math.random() * 0.3 + 0.1;
+                        this.s = Math.random() * 2.5 + 0.5; // Tamaño variable
+                        this.vx = (Math.random() - 0.5) * 0.3;
+                        this.vy = (Math.random() - 0.5) * 0.3;
+                        this.alpha = Math.random() * 0.4 + 0.1;
                     }
                     update() {
-                        // Actualización de Partículas: Efecto de flotación inversa (restamos tiltX y tiltY)
-                        this.x += this.vx - (tiltX * 0.05); 
-                        this.y += this.vy - (tiltY * 0.1);
+                        // Calculamos la intensidad de la inclinación
+                        const tiltMag = Math.sqrt(tiltX * tiltX + tiltY * tiltY);
+                        
+                        // Velocidad base + influencia del acelerómetro
+                        // Si está plano (tiltMag bajo), se mueven poco.
+                        // Si está a 90° (tiltMag alto), se mueven más rápido.
+                        const speedFactor = 0.3 + (tiltMag * 2.2);
+                        
+                        this.x += this.vx + (tiltX * speedFactor);
+                        this.y += this.vy + (tiltY * speedFactor);
 
-                        if (this.y < -10) this.y = canvas.height + 10;
-                        if (this.y > canvas.height + 10) this.y = -10;
-                        if (this.x < -10) this.x = canvas.width + 10;
-                        if (this.x > canvas.width + 10) this.x = -10;
+                        // Flotación mínima constante hacia arriba si está muy plano
+                        if (tiltMag < 0.2) {
+                            this.y -= 0.15;
+                        }
+
+                        // Wrap-around (reaparecer por el lado opuesto)
+                        const margin = 20;
+                        if (this.y < -margin) this.y = canvas.height + margin;
+                        if (this.y > canvas.height + margin) this.y = -margin;
+                        if (this.x < -margin) this.x = canvas.width + margin;
+                        if (this.x > canvas.width + margin) this.x = -margin;
                     }
                     draw() {
                         ctx.fillStyle = `rgba(0,168,225,${this.alpha})`;
